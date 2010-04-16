@@ -1,0 +1,19 @@
+Panel {
+   borderAlpha: 1;
+   borderThicknessLeft: 0;
+   borderThicknessTop: 0;
+   borderThicknessBottom: 0;
+   borderThicknessRight: 0;
+   roundedBottomCorners: false;
+   cornerRadius: 0;
+   headerHeight: 21;
+   backgroundAlpha: 1;
+   highlightAlphas: 0.3, 0;
+   shadowDistance: 2;
+   titleStyleName: "mypanelTitle";
+}
+
+
+.mypanelTitle {
+   textAlign: left;
+}
