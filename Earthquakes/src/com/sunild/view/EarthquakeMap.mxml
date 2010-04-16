@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:maps="com.google.maps.*"
+	xmlns:heat="com.michaelvandaniker.visualization.*"
+	xmlns:view="com.sunild.view.*"
+	width="100%" height="100%" xmlns:maps1="com.sunild.maps.*">
+	
+	<mx:Script>
+		<![CDATA[
+			import com.sunild.view.EarthquakeMarker;
+			import com.sunild.maps.GHeatMapOverlay;
+			import com.google.maps.services.GeocodingEvent;
+			import com.google.maps.services.ClientGeocoder;
+			import com.google.maps.controls.PositionControl;
+			import com.google.maps.controls.ScaleControlOptions;
+			import com.google.maps.controls.ScaleControl;
+			import com.sunild.events.NewDataSourceEvent;
+			import com.google.maps.examples.MarkerManager;
+			import com.sunild.events.FetchDataEvent;
+			import com.sunild.events.MapControlsEvent;
+			import com.google.maps.MapMoveEvent;
+			import com.google.maps.controls.ControlPosition;
+			import com.google.maps.controls.ZoomControl;
+			import com.sunild.vo.EarthquakeVO;
+			import com.sunild.model.EarthquakesModel;
+			import com.michaelvandaniker.visualization.GradientDictionary;
+			import com.michaelvandaniker.visualization.HeatMap;
+			import com.google.maps.MapType;
+			import com.google.maps.LatLng;
+			
+			[Bindable]
+			private var _model:EarthquakesModel = EarthquakesModel.getInstance();
+			
+			private var _useWeight:Boolean = true;
+			
+			private var _showMarkers:Boolean = false;
+			
+			private var _markerMgr:MarkerManager;
+			
+			//private var _heatMap:GHeatMapOverlay;
+			private var _heatMapOverlay:GHeatMapOverlay;
+			
+			// this components local list of map markers
+			private var _markers:Array = [];
+			
+			public function get markers():Array
+			{
+				return _markers;
+			}
+			
+			public function set markers(value:Array):void
+			{
+				_markers = value;
+				updateMarkers();
+			}			
+			
+			
+			private function onMapReady(event:Event):void
+			{				
+				// centered on United States
+				//map.setCenter( new LatLng(37.09024, -95.712891), 4, MapType.PHYSICAL_MAP_TYPE);
+				// centered on Alaska
+				//map.setCenter( new LatLng(63.588753, -154.4930619), 3, MapType.PHYSICAL_MAP_TYPE);
+				// centered on California
+				map.setCenter( new LatLng(36.778261, -119.4179324), 3, MapType.PHYSICAL_MAP_TYPE);
+				var pos:ControlPosition = new ControlPosition(ControlPosition.ANCHOR_BOTTOM_RIGHT,30,115);
+				var zoom:ZoomControl = new ZoomControl();
+				zoom.setControlPosition(pos);
+				map.addControl(zoom);
+				
+				var posControl:PositionControl = new PositionControl();
+				var posPos:ControlPosition = new ControlPosition(ControlPosition.ANCHOR_BOTTOM_RIGHT,10,320);
+				posControl.setControlPosition(posPos);
+				map.addControl(posControl);
+				
+				var scale:ScaleControl = new ScaleControl();
+				var scalePos:ControlPosition = new ControlPosition(ControlPosition.ANCHOR_TOP_LEFT,10,10);
+				scale.setControlPosition(scalePos);
+				map.addControl(scale);
+				map.enableScrollWheelZoom();
+				map.enableCrosshairs();
+				//map.addEventListener(MapMoveEvent.MOVE_STEP,refreshHeatMap,false,0,true);
+				
+				_markerMgr = new MarkerManager(map, {});
+				
+				var hm:HeatMap = new HeatMap();
+				hm.alpha = .57;
+				hm.transformationFunction = latLonToPoint;
+				hm.weightFunction = getMagnitude;
+				hm.gradientArray = GradientDictionary.RAINBOW;
+				hm.dataProvider = _model.earthquakeVOs;
+				_heatMapOverlay = new GHeatMapOverlay(hm);
+				map.addOverlay(_heatMapOverlay);
+				
+				var e:FetchDataEvent = new FetchDataEvent();
+				e.dispatch();
+			}
+			
+			
+			private function latLonToPoint(o:Object):Object
+			{
+				return map.fromLatLngToViewport( (o as EarthquakeVO).latLon );
+			}
+			
+			
+			private function getMagnitude(o:Object):Number
+			{
+				if (_useWeight) return (o as EarthquakeVO).magnitude;
+				return 1;
+			}
+			
+			
+			private function updateMarkers():void
+			{
+				if (_markers.length > 0)
+				{
+					if (_showMarkers)
+					{
+						_markerMgr.addMarkers(_markers, 1);
+						_markerMgr.refresh();
+					}
+					else
+					{
+						_markerMgr.clearMarkers()
+					}
+				}
+			}
+			
+			
+			
+			private function geocode(address:String):void
+			{
+				var g:ClientGeocoder = new ClientGeocoder();
+				g.addEventListener(GeocodingEvent.GEOCODING_SUCCESS,
+					function(event:GeocodingEvent):void {
+						var placemarks:Array = event.response.placemarks;
+						if (placemarks.length > 0) {
+							map.setCenter(placemarks[0].point);
+						}
+					}, false, 0, true);
+					
+				g.addEventListener(GeocodingEvent.GEOCODING_FAILURE,
+					function(event:GeocodingEvent):void {
+						trace("geocoding failed");
+					}, false, 0, true);
+				
+				g.geocode(address);				
+			}
+			
+			
+			private function handleMapControls(event:Event):void
+			{
+				var e:MapControlsEvent = event as MapControlsEvent;
+				
+				switch (e.type)
+				{
+					case MapControlsEvent.TOGGLE_ITEM:
+						switch (e.toggleName)
+						{
+							case "heatMapCB":
+								_heatMapOverlay.visible = ! _heatMapOverlay.visible;
+								break;
+							case "magnitudeCB":
+								_useWeight = ! _useWeight;
+								_heatMapOverlay.heatMap.invalidateProperties();
+								break;
+							
+							case "markerCB":
+								_showMarkers = ! _showMarkers;
+								updateMarkers();
+								break;
+							
+						}
+						break;
+					
+					case MapControlsEvent.GRADIENT_CHANGE:
+						_heatMapOverlay.heatMap.gradientArray = e.gradient;
+						break;
+						
+					case MapControlsEvent.DATA_SOURCE_CHANGE:
+						_markerMgr.clearMarkers();
+						var n:NewDataSourceEvent = new NewDataSourceEvent();
+						n.sourceUrl = e.sourceUrl;
+						n.dispatch();
+						break;
+						
+					case MapControlsEvent.GEOCODE_ADDRESS:
+						geocode(e.address);
+						break;
+				}
+				
+			}
+			
+		]]>
+	</mx:Script>
+	
+	<maps:Map id="map"
+		mapevent_mapready="onMapReady(event)"
+		width="100%" height="100%"
+		key="ABQIAAAAz6uBpjJEFtkV6sjMT9F0RRRJb9kvB4l8Ku26oIicI5Yo0uS6ohSuw3PuT0J1a71i-N9O5rXbpQOfLA" />
+
+		
+	<view:MapControls bottom="0"
+		toggleItem="handleMapControls(event);"
+		gradientChange="handleMapControls(event);"
+		dataSourceChange="handleMapControls(event);"
+		geocodeAddress="handleMapControls(event);" />
+		
+	
+</mx:Canvas>

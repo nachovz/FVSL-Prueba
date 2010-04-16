@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:UIComponent xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:degrafa="http://www.degrafa.com/2007">
+	
+	<mx:Script>
+		<![CDATA[
+			[Bindable]
+			public var magnitude:Number = 1;
+		]]>
+	</mx:Script>
+	
+	<degrafa:GeometryComposition id="targetComp" graphicsTarget="{[this]}" >
+		<degrafa:fills>
+			<degrafa:SolidFill id="blackFill" color="#000000" alpha="1" />
+			<degrafa:SolidFill id="whiteFill" color="#FFFFFF" alpha="1" />
+			<degrafa:SolidFill id="redFill" color="#FF0000" alpha="1" />
+		</degrafa:fills>
+		
+		<degrafa:strokes>
+			<degrafa:SolidStroke id="blackStroke" color="#000000" alpha="1" />
+			<degrafa:SolidStroke id="whiteStroke" color="#FFFFFF" alpha="1" />
+			<degrafa:SolidStroke id="redStroke" color="#FF0000" alpha="1" />
+		</degrafa:strokes>		
+		
+		<degrafa:geometry>
+			<degrafa:Circle radius="{8*magnitude}" stroke="{blackStroke}" fill="{blackFill}"/>
+			<degrafa:Circle radius="{6*magnitude}" stroke="{whiteStroke}" fill="{whiteFill}"/>
+			<degrafa:Circle radius="{4*magnitude}" stroke="{blackStroke}" fill="{blackFill}"/>
+			<degrafa:Circle radius="{2*magnitude}" stroke="{redStroke}" fill="{redFill}"/>
+		</degrafa:geometry>
+		
+	</degrafa:GeometryComposition>
+	
+	
+</mx:UIComponent>

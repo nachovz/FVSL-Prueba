@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cairngorm:ServiceLocator xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:cairngorm="com.adobe.cairngorm.business.*">
+	
+	<mx:Script>
+		<![CDATA[
+			
+			import com.sunild.model.EarthquakesModel;
+			
+			[Bindable]
+			private var _model:EarthquakesModel = EarthquakesModel.getInstance();
+		]]>
+	</mx:Script>
+		
+	<mx:HTTPService id="earthquakeData"
+		url="{_model.selectedUrl}"
+		resultFormat="e4x" />
+	
+</cairngorm:ServiceLocator>

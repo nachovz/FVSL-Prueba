@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
+	width="100%" height="110"
+	defaultButton="{addressBN}"
+	creationComplete="addressTI.setFocus();" >
+	
+	<mx:Metadata>
+		[Event(name="toggleItem", type="com.sunild.events.MapControlsEvent")]
+		[Event(name="dataSourceChange", type="com.sunild.events.MapControlsEvent")]
+		[Event(name="gradientChange", type="com.sunild.events.MapControlsEvent")]
+		[Event(name="geocodeAddress", type="com.sunild.events.MapControlsEvent")]
+	</mx:Metadata>
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.events.ListEvent;
+			import com.sunild.events.MapControlsEvent;
+			import com.sunild.model.EarthquakesModel;
+			
+			[Bindable]
+			private var _model:EarthquakesModel = EarthquakesModel.getInstance();
+			
+			// button images
+			[Embed(source="com/sunild/assets/button.png")]
+			[Bindable]
+			private var standardButton:Class;
+			
+			[Embed(source="com/sunild/assets/button_minimize_hover.png")]
+			private var minimizeHover:Class;
+			
+			private function handleCBClick(event:Event):void
+			{
+				var e:MapControlsEvent = new MapControlsEvent(MapControlsEvent.TOGGLE_ITEM);
+				e.toggleName = (event.target as DisplayObject).name
+				dispatchEvent(e);
+			}
+			
+			private function handleRBGroupChange(event:Event):void
+			{
+				var e:MapControlsEvent =
+					new	MapControlsEvent(MapControlsEvent.DATA_SOURCE_CHANGE);
+					
+				e.sourceUrl = EarthquakesModel.DATA_SOURCES[
+					(event.target as RadioButtonGroup).selectedValue ].url;
+				dispatchEvent(e);
+			}
+			
+			/*
+			private function comboBoxChange(event:Event):void
+			{
+				var e:MapControlsEvent =
+					new MapControlsEvent(MapControlsEvent.GRADIENT_CHANGE);
+				
+				e.gradient = (event.target as ComboBox).selectedItem.value;
+				dispatchEvent(e);
+			}
+			*/
+			
+			private function handleAddressBN():void
+			{
+				if (addressTI.text)
+				{
+					var e:MapControlsEvent =
+						new MapControlsEvent(MapControlsEvent.GEOCODE_ADDRESS);
+					
+					e.address = addressTI.text;
+					dispatchEvent(e);
+				}
+
+			}
+			
+			private function toggleViewState():void
+			{
+				currentState = (currentState == "minimized") ? "" : "minimized";
+				
+			}
+		]]>
+	</mx:Script>
+	
+	
+	<mx:states>
+		<mx:State name="minimized">
+			<mx:RemoveChild target="{controlsHB}" />
+		</mx:State>
+	</mx:states>
+	
+	<mx:transitions>
+		<mx:Transition fromState="" toState="minimized">
+			<mx:Sequence target="{controlsHB}">
+				<mx:WipeDown duration="500" showTarget="false"  />
+				<mx:RemoveChildAction />
+			</mx:Sequence>
+		</mx:Transition>
+		
+		<mx:Transition fromState="minimized" toState="">
+			<mx:Sequence target="{controlsHB}">
+				<mx:AddChildAction />
+				<mx:WipeUp duration="500" />
+			</mx:Sequence>
+		</mx:Transition>
+	</mx:transitions>
+
+	
+	<mx:HBox id="controlsHB"
+		width="100%"
+		blendMode="layer"
+		styleName="controlPanel">
+		<mx:VBox>
+			<mx:Label text="USGS Data Source" />
+			<mx:RadioButtonGroup id="dataGrp" change="handleRBGroupChange(event)" selectedValue="1" />
+			<mx:Repeater id="rpt" dataProvider="{EarthquakesModel.DATA_SOURCES}" >
+				<mx:RadioButton groupName="dataGrp"
+					label="{rpt.currentItem.label}"
+					value="{rpt.currentIndex}"/>
+			</mx:Repeater>
+		</mx:VBox>
+		
+		<mx:VBox>
+			<mx:Label text="Map Settings" />
+			<mx:CheckBox id="heatMapCB" name="heatMapCB"
+				 selected="true"
+				 label="Heat Map"
+				 click="handleCBClick(event);"/>
+			<mx:CheckBox id="markerCB" name="markerCB"
+				label="Epicenters"
+				click="handleCBClick(event);"/>
+			<mx:CheckBox id="magnitudeCB" name="magnitudeCB"
+				selected="true"
+				label="Magnitude weight"
+				click="handleCBClick(event);"/>
+		</mx:VBox>
+		
+		<!--
+		<mx:VBox>
+			<mx:Label text="Color Gradient" />
+			<mx:ComboBox id="gradientCB"
+				dataProvider="{EarthquakesModel.GRADIENT_LIST}"
+				change="comboBoxChange(event);" />
+		</mx:VBox>
+		-->
+		
+		<mx:VBox>
+			<mx:Label text="Address, Region, or Lat/Lon" />
+			<mx:TextInput id="addressTI" />
+			<mx:Button id="addressBN" label="Lookup" click="handleAddressBN()" />
+		</mx:VBox>
+	</mx:HBox>
+	
+	<mx:Image id="minimizeImg"
+		top="5" right="32"
+		source="{standardButton}"
+		toolTip="Show/Hide Controls"
+		click="toggleViewState();"
+		mouseOver="minimizeImg.source = minimizeHover;"
+		mouseOut="minimizeImg.source = standardButton;" />
+		
+</mx:Canvas>

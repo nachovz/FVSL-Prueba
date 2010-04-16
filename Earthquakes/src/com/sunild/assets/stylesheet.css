@@ -1,0 +1,60 @@
+/* CSS file */
+
+Application {
+
+}
+
+CheckBox {
+	theme-color: #D1771D;
+	text-roll-over-color: #D1771D;
+	text-selected-color: #44C605;
+	padding-bottom: 0;
+	padding-top: 0;
+}
+
+
+/*
+ComboBox {
+	color: #353535;
+	alternating-item-colors: #000000,#000000;
+	theme-color: #D1771D;
+	selection-color: #000000;
+	text-selected-color: #44C605;
+	text-roll-over-color: #D1771D;
+	roll-over-color: #353535;
+}
+*/
+
+.controlPanel {
+	color: #FFFFFF;	
+	background-color: #000000;
+	background-alpha: .75;
+	padding-bottom: 10;
+	padding-top: 10;
+	padding-left: 10;
+	padding-right: 10;
+	horizontal-gap: 15;
+}
+
+Label {
+	font-weight: bold;
+}
+
+RadioButton {
+	font-size: 10;
+	theme-color: #D1771D;
+	text-roll-over-color: #D1771D;
+	text-selected-color: #44C605;
+	padding-bottom:0;
+	padding-top:0;
+}
+
+TextInput {
+	color: #000000;
+}
+ToolTip {
+	font-size: 12;
+	font-family: "Helvetica";
+	color: #000000;
+	background-color: #FFFFA0;
+}

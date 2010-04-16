@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:control="com.sunild.control.*"
+	xmlns:business="com.sunild.business.*"
+	xmlns:view="com.sunild.view.*"
+	layout="absolute" viewSourceURL="srcview/index.html">
+	
+	<mx:Style source="com/sunild/assets/stylesheet.css" />
+	
+	<mx:Script>
+		<![CDATA[
+			import com.sunild.model.EarthquakesModel;
+			
+			[Bindable]
+			private var _model:EarthquakesModel = EarthquakesModel.getInstance();
+		]]>
+	</mx:Script>
+	
+	<control:EarthquakeController id="controller" />
+	<business:Services id="serviceLocator" />
+	
+	<view:EarthquakeMap markers="{_model.mapMakers}" />
+	
+</mx:Application>
