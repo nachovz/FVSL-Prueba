@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" xmlns:maps="com.google.maps.*"
+	creationComplete="init()">
+<mx:Script>
+	<![CDATA[
+		import com.google.maps.MapMouseEvent;
+		import mx.collections.ArrayCollection;
+		import mx.controls.Alert;
+		import com.google.maps.overlays.MarkerOptions;
+		import com.google.maps.overlays.Marker;
+		import com.google.maps.LatLng;
+		import com.google.maps.controls.NavigationControl;
+
+		public var newMarker : Marker;
+
+        [Bindable]
+        private var noticias:ArrayCollection = new ArrayCollection( [
+            { nombre: "Nuevas aulas en tucupire", proyecto: "Comvicia", organizacion: "Venezuela sin limites" },
+             { nombre: "Remodelacion de estatua de san miguel", proyecto: "RESV", organizacion: "Fe y Alegria" },
+             { nombre: "Un mundo sin drogas", proyecto: "Drogun", organizacion: "Clamor en el Barrio" }]);
+
+	public function init() : void
+	{
+		map0.addEventListener(MapMouseEvent.CLICK, addMarquer);
+	}
+
+	public function mapready_handler(e : Event) : void
+   	{
+   		map.enableScrollWheelZoom();
+   		map.addControl(new NavigationControl());
+   		
+   		map.setCenter(new LatLng(6.5,-66.5));
+   		map.setZoom(6);
+   		
+   		var mark : Marker = new Marker(new LatLng(6.5,-66.5),new MarkerOptions({draggable: true}));
+   		map.addOverlay(mark);
+   	}
+   	
+	public function map0ready_handler(e : Event) : void
+   	{
+   		map0.enableScrollWheelZoom();
+   		map0.addControl(new NavigationControl());
+   		
+   		map0.setCenter(new LatLng(6.5,-66.5));
+   		map0.setZoom(6);
+
+   	}
+   	
+   	public function llenarDatagrid() : void{
+   		dg.dataProvider = noticias;
+   	}
+   	
+   	public function addMarquer(e : MapMouseEvent) : void
+   	{
+   		if(!newMarker)
+   		{
+	        newMarker = new Marker(e.latLng,new MarkerOptions({draggable: true}));
+	        map0.addOverlay(newMarker);
+     	}
+   	}
+   	
+	]]>
+</mx:Script>
+	<mx:TabNavigator x="0" y="0" width="100%" height="100%">
+		<mx:Canvas label="Agregar" width="100%" height="100%">
+			<mx:Label x="23" y="12" text="Titulo"/>
+			<mx:Label x="23" y="179" text="Contenido"/>
+			<mx:Label x="23" y="38" text="Foto"/>
+			<mx:Label x="23" y="64" text="Descripcion Twitter"/>
+			<mx:TextArea x="23" y="90" width="215" height="81"/>
+			<mx:TextArea x="23" y="205" height="115" width="215"/>
+			<mx:TextInput x="78" y="10"/>
+			<mx:TextInput x="78" y="36" width="116"/>
+			<mx:Button x="202" y="36" label="..." width="36"/>
+			<mx:Button x="78" y="328" label="Limpiar" click="{viewstack1.selectedIndex = 0;}"/>
+			<mx:Button x="165" y="328" label="Agregar" click="{Alert.show('Agregardo Correctamente');}"/>
+			<mx:Panel x="262" y="10" width="470" height="340" layout="absolute" title="Seleccionar una ubicacion">
+			  <maps:Map
+			    id="map0"
+			    key="ABQIAAAA7QUChpcnvnmXxsjC7s1fCxQGj0PqsCtxKvarsoS-iqLdqZSKfxTd7Xf-2rEc_PC9o8IsJde80Wnj4g" 
+			    width="100%" height="100%"
+			    mapevent_mapready="map0ready_handler(event)" />
+			</mx:Panel>
+		</mx:Canvas>
+		<mx:Canvas label="Editar" width="100%" height="100%">
+		<mx:ViewStack id="viewstack1" width="720" height="429" x="0" y="0">
+			<mx:Canvas label="Consultar" width="100%" height="100%">
+				<mx:DataGrid id="dg" x="10" y="78" height="248" width="653">
+					<mx:columns>
+						<mx:DataGridColumn headerText="Nombre" dataField="nombre"/>
+						<mx:DataGridColumn headerText="Proyecto" dataField="proyecto"/>
+						<mx:DataGridColumn headerText="Organizacion" dataField="organizacion"/>
+					</mx:columns>
+				</mx:DataGrid>
+				<mx:Label x="10" y="12" text="Titulo:"/>
+				<mx:Label x="283" y="12" text="Fecha:"/>
+				<mx:TextInput x="100" y="10"/>
+				<mx:Label x="10" y="38" text="Organizacion:"/>
+				<mx:TextInput x="100" y="36"/>
+				<mx:DateField x="333" y="10"/>
+				<mx:Button x="442" y="10" label="Buscar" click="llenarDatagrid()"/>
+				<mx:Button x="572" y="334" label="Seleccionar" click="{viewstack1.selectedIndex = 1;}"/>
+				<mx:Button x="515" y="10" label="Limpiar"/>
+			</mx:Canvas>
+			<mx:Canvas label="View 1" width="100%" height="100%">
+				<mx:Panel x="10" y="10" width="470" height="340" layout="absolute" title="Modificar ubicación de la noticia">
+				  <maps:Map
+				    id="map"
+				    key="ABQIAAAA7QUChpcnvnmXxsjC7s1fCxQGj0PqsCtxKvarsoS-iqLdqZSKfxTd7Xf-2rEc_PC9o8IsJde80Wnj4g" 
+				    mapevent_mapready="mapready_handler(event)"
+				    width="100%" height="100%" />
+				</mx:Panel>
+				<mx:Label x="488" y="12" text="Titulo"/>
+				<mx:Label x="488" y="171" text="Contenido"/>
+				<mx:Label x="488" y="38" text="Foto"/>
+				<mx:Label x="488" y="64" text="Descripcion Twitter"/>
+				<mx:TextArea x="488" y="90" width="215" height="73"/>
+				<mx:TextArea x="488" y="197" height="123" width="215"/>
+				<mx:TextInput x="543" y="10" text="Nuevas aulas en tucupire"/>
+				<mx:TextInput x="543" y="36" width="116"/>
+				<mx:Button x="667" y="36" label="..." width="36"/>
+				<mx:Button x="488" y="328" label="Eliminar" click="{viewstack1.selectedIndex = 0;}"/>
+				<mx:Button x="625" y="328" label="Modificar" click="{Alert.show('Modificado Correctamente');}"/>
+			</mx:Canvas>
+		</mx:ViewStack>
+		</mx:Canvas>
+	</mx:TabNavigator>
+	
+</mx:Application>
