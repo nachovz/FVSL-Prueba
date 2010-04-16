@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="100%" height="100%"
+	xmlns:maps="com.google.maps.*" xmlns:business="com.stc.maps.business.*" xmlns:view="com.stc.maps.view.*" 
+	xmlns:components="com.stc.maps.view.components.*"
+	resize="map_resize(event)">
+	<mx:Script>
+		<![CDATA[
+			import com.stc.maps.view.components.event.EntityRendererEvent;
+			import com.stc.maps.vo.NetworkVO;
+			import com.stc.maps.view.components.InputBox;
+			import mx.managers.PopUpManager;
+			import com.google.maps.MapMouseEvent;
+			import mx.events.ResizeEvent;
+			import com.stc.maps.event.FiltersEvent;
+			import com.google.maps.InfoWindowOptions;
+			import com.stc.maps.view.components.event.EntityRendererListEvent;
+			import mx.events.ItemClickEvent;
+			import mx.controls.Alert;
+			import com.google.maps.overlays.Marker;
+			import com.google.maps.overlays.MarkerOptions;
+			import mx.collections.ArrayCollection;
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.events.ResultEvent;
+			import mx.rpc.Responder;
+			import com.stc.maps.vo.EntityVO;
+			import com.stc.maps.event.EntitiesEvent;
+			import com.google.maps.LatLng;
+			import com.google.maps.controls.NavigationControl;
+			import com.google.maps.controls.MapTypeControl;
+			import com.stc.maps.control.MapsController;
+			import com.stc.maps.model.ModelLocator;
+			import flash.utils.Dictionary;
+/* 			import flash.utils.Dictionary; */
+    	
+			[Embed(source="com/assets/markers/home.png")]
+		   	private var cooperant:Class;
+			[Embed(source="com/assets/markers/university.png")]
+		   	private var ods:Class;
+			[Embed(source="com/assets/markers/communitycentre.png")]
+		   	private var company:Class;
+			[Embed(source="com/assets/markers/museum-science.png")]
+		   	private var network:Class;
+    	
+			[Bindable]
+			private var model : ModelLocator = ModelLocator.getInstance();
+			
+			private var controller : MapsController = new MapsController();	
+			
+			private var getEntitiesHandlers : mx.rpc.Responder = new mx.rpc.Responder(getEntitiesResult, getEntitiesFault);
+			private var getFiltersHandlers : mx.rpc.Responder = new mx.rpc.Responder(getFiltersResult, getFiltersFault);
+    	
+		   	private var selectedentityList : Array = [EntityVO.COOPERANT,EntityVO.ODS];
+		   	
+		   	private var markerEntity : Dictionary = new Dictionary(true);
+		   	
+		   	[Bindable]
+		   	private var searchVisibility : Boolean = false;
+		   	
+		   	public function mapready_handler(e : Event) : void
+		   	{
+	 	   		mainMap.enableScrollWheelZoom();
+		   		//mainMap.addControl(new MapTypeControl());
+		   		mainMap.addControl(new NavigationControl());
+		   		
+		   		mainMap.setCenter(new LatLng(6.5,-66.5));
+		   		mainMap.setZoom(6);
+		   		
+		   		getEntityies();
+		   		addEventListeners();
+		   	}
+		   	
+		   	private function addEventListeners() : void
+		   	{
+		   		this.addEventListener(EntityRendererListEvent.FOCUS_MAP_ITEM,focusMap);
+		   		this.addEventListener(EntityRendererEvent.HIDE_ITEM,hideMarker);
+		   		this.addEventListener(EntityRendererEvent.SHOW_ITEM,showMarker);
+		   	}
+		   	
+		   	private function focusMap(ev : EntityRendererListEvent)
+		   	{
+		   		var entity : EntityVO = ev.item as EntityVO;
+		   		mainMap.setCenter(new LatLng(entity.lat,entity.long));
+		   		mainMap.openInfoWindow(mainMap.getCenter(), new InfoWindowOptions({title: entity.title}));
+		   	}
+		   	
+		   	private function getEntityies() : void
+		   	{
+		   		var getCooperantes : EntitiesEvent = new EntitiesEvent(EntitiesEvent.GET_ENTITY_LIST,getEntitiesHandlers);
+		   		getCooperantes.entityType = EntityVO.COOPERANT;
+		   		getCooperantes.dispatch();
+		   		var getCooperantes : EntitiesEvent = new EntitiesEvent(EntitiesEvent.GET_ENTITY_LIST,getEntitiesHandlers);
+		   		getCooperantes.entityType = EntityVO.ODS;
+		   		getCooperantes.dispatch();
+		   		var getCooperantes : EntitiesEvent = new EntitiesEvent(EntitiesEvent.GET_ENTITY_LIST,getEntitiesHandlers);
+		   		getCooperantes.entityType = EntityVO.NETWORK;
+		   		getCooperantes.dispatch();
+		   	}
+		   	
+		   	
+		   	private function getEntitiesResult(event : ResultEvent) : void
+		   	{
+		   		var entities : ArrayCollection = event.result as ArrayCollection;
+		   		if(entities && entities.length>0)
+		   		{
+			   		model.entities[EntityVO(entities.getItemAt(0)).type] = entities;
+			   		addEntityToMenu(EntityVO(entities.getItemAt(0)).type);
+			   		addMapLayer(entities);
+		   		}
+		   	}
+		   	
+		   	private function getFiltersResult(event : ResultEvent) : void
+		   	{
+		   		var searchFilters : ArrayCollection = event.result as ArrayCollection;
+		   		if(searchFilters && searchFilters.length>0)
+		   		{
+		   			model.filterOptions[selectedentityList[0]] = searchFilters;
+		   			searchVisibility = true;
+			   		advancedSearch.searchFilters = searchFilters;
+		   		}
+		   		else
+		   			searchVisibility = false;
+		   	}
+		   	
+		   	private function addEntityToMenu(entity : String) : void
+		   	{
+		   		var auxArray : ArrayCollection = (menu.entities) ? menu.entities : new ArrayCollection();
+		   		
+	   			if(model.entities[entity] && model.entities[entity].length>0)
+	   				auxArray.source = auxArray.source.concat(model.entities[entity].source);
+
+				menu.entities = auxArray;
+		   	}
+		   	
+		   	private function getEntitiesFault(event : FaultEvent) : void
+		   	{
+		   		Alert.show("A ocurrido un error buscando las entidades.");
+		   	}
+		   	private function getFiltersFault(event : FaultEvent) : void
+		   	{
+		   		Alert.show("A ocurrido un error buscando los filtros de busqueda.");
+		   	}
+		   	
+		   	private function hideMarker(ev : EntityRendererEvent) : void
+		   	{
+		   		var entity : EntityVO = ev.item as EntityVO;
+		   		Marker(entity.marker).visible = false;
+		   		if(entity.type==EntityVO.NETWORK)
+		   		{
+		   			var network : NetworkVO = entity as NetworkVO;
+					for each(var entt : EntityVO in network.nodes)
+		   				Marker(entt.marker).visible = false;
+		   		}
+		   	}
+
+		   	private function showMarker(ev : EntityRendererEvent) : void
+		   	{
+		   		var entity : EntityVO = ev.item as EntityVO;
+		   		Marker(entity.marker).visible = true;
+		   		if(entity.type==EntityVO.NETWORK)
+		   		{
+		   			var network : NetworkVO = entity as NetworkVO;
+					for each(var entt : EntityVO in network.nodes)
+		   				Marker(entt.marker).visible = true;
+		   		}
+		   	}
+		   	
+		   	private function addMapLayer(entitiesList : ArrayCollection) : void
+		   	{
+				for each(var entity : EntityVO in entitiesList)
+				{
+					createMarker( entity, getEntityIcon(entity.type) );
+					if(entity.type==EntityVO.NETWORK) renderNetwork(entity as NetworkVO);
+				}
+		   	}
+		   	
+		   	private function renderNetwork(network:NetworkVO)
+		   	{
+				for each(var entity : EntityVO in network.nodes)
+				{
+					createMarker( entity, getEntityIcon(entity.type) );
+				}   		
+		   	}
+		   	
+		   	private function getEntityIcon( type : String ) : Object
+		   	{
+				switch(type)
+				{
+					case EntityVO.COOPERANT:
+						return new cooperant();
+					break; 
+					case EntityVO.COMPANY:
+						return new company(); 
+					break; 
+					case EntityVO.ODS:
+						return new ods();
+					break; 
+					case EntityVO.NETWORK:
+						return new network();
+					break; 
+					default:
+						return new cooperant();
+					break;
+				} 
+		   	}
+		   	
+			private function createMarker( entity:EntityVO , auxIcon : Object) : void 
+			{
+				if(!entity.marker)
+				{
+				 	var latlang : LatLng = new LatLng( entity.lat, entity.long );
+				 	var markerOption : MarkerOptions = new MarkerOptions( 
+				 	{  
+				   		label:entity.title,  
+				   		tooltip:entity.title,  
+				   		name: entity.title,
+				   		icon: auxIcon,  
+				     	hasShadow:true 
+				     });
+				     
+				 	var pMarker:Marker = new Marker(latlang,markerOption);
+				     entity.marker = pMarker;
+					entity.marker.addEventListener(MapMouseEvent.CLICK,marker_click,false,0,true);
+				}
+				
+				markerEntity[entity.marker] = entity;
+			 	mainMap.addOverlay( entity.marker as Marker);  
+			}
+			
+			private function marker_click(event : MapMouseEvent) : void
+			{
+				var entity : EntityVO = markerEntity[event.target] as EntityVO;
+				var input : InputBox = new InputBox();
+				input.addEventListener(EntityRendererEvent.SHOW_NETWORK,showNetwork,false,0,true);
+				input.data = entity;
+				
+				PopUpManager.addPopUp(input,this);
+				PopUpManager.centerPopUp(input);
+			}
+			
+			private function clearMap() : void
+			{
+				mainMap.clearOverlays();
+				markerEntity = new Dictionary(true);
+			}
+			
+			private function showNetwork(ev : EntityRendererEvent) : void
+			{
+				clearMap();
+				
+				createMarker(ev.network as EntityVO,getEntityIcon(ev.network.type));
+				renderNetwork(ev.network as NetworkVO);
+				menu.entities = ev.network.nodes;
+			}
+			
+			private function changeLayer(entityesList : Array) : void
+			{
+				clearMap();
+				
+				for each(var entity : String in entityesList)
+					addMapLayer(model.entities[entity]);
+			}
+			
+			private function changeMenuDatasourceTypes(entityesList : Array) : void
+			{
+				var menuData : ArrayCollection = new ArrayCollection();
+				
+				for each(var entity : String in entityesList)
+					if(model.entities[entity])
+						menuData.source = menuData.source.concat(model.entities[entity].source);
+						
+				menu.entities = menuData;
+			}
+			
+			private function showAdvancedSearch(keyName : String) : void
+			{
+				if(!model.filterOptions[keyName])
+				{
+					var ev : FiltersEvent = new FiltersEvent(FiltersEvent.GET_FILTERS_LIST,getFiltersHandlers);
+					ev.entityType = keyName;
+					ev.dispatch();
+				}
+				else
+				{
+					var event : mx.rpc.events.ResultEvent = new mx.rpc.events.ResultEvent(ResultEvent.RESULT,false,true,model.filterOptions[keyName]);
+					getFiltersResult(event);
+				}
+			}
+			
+            private function toggleOptons_clickHandler(event:ItemClickEvent):void 
+            {
+            	var entityList : Array = [];
+         		
+         		if(event.item.keyName!="all" && event.item.keyName!="network")
+         		{
+	                entityList.push(event.item.keyName);
+	                showAdvancedSearch(event.item.keyName);
+         		}
+         		else if(event.item.keyName=="all")
+         		{
+	                entityList.push(EntityVO.COMPANY);
+	                entityList.push(EntityVO.ODS);
+	                entityList.push(EntityVO.COOPERANT);
+	                entityList.push(EntityVO.NETWORK);
+	                
+	                searchVisibility = false;
+         		}
+         		else if(event.item.keyName=="network")
+         		{
+	                entityList.push(EntityVO.NETWORK);
+	                showAdvancedSearch(event.item.keyName);
+         		}
+
+                changeLayer(entityList);
+                changeMenuDatasourceTypes(entityList);
+            }
+            
+            private function map_resize(event : ResizeEvent) : void
+            {
+            	menu.height = this.height;
+            }
+		]]>
+	</mx:Script>
+	  <maps:Map
+	    id="mainMap"
+	    key="ABQIAAAAEuJqUl4X79npk_A40fNvIBQVD3iyzJCw47-1inzm1qoP1Fr96RTlyvRGF8uAeCVH2K6LlldMTrfdmg" 
+	    mapevent_mapready="mapready_handler(event)"
+	    width="100%" height="100%" />
+      <mx:ToggleButtonBar id="toggleOptons" itemClick="toggleOptons_clickHandler(event);"
+      	top="10" right="10" toggleOnClick="false">
+          <mx:dataProvider>
+              <mx:Array>
+                  <mx:Object label="Todos" keyName="all" />
+                  <mx:Object label="Cooperantes" keyName="{EntityVO.COOPERANT}" />
+                  <mx:Object label="Empresas" keyName="{EntityVO.COMPANY}" />
+                  <mx:Object label="ODS" keyName="{EntityVO.ODS}" />
+                  <mx:Object label="Redes" keyName="network" />
+              </mx:Array>
+          </mx:dataProvider>
+      </mx:ToggleButtonBar>
+	  <components:AdvancedSearch 
+	  	visible="{searchVisibility}"
+	  	title="Puedes realizar una busqueda avanzada:"
+	  	right="10" top="40"
+	  	width="350"
+	  	id="advancedSearch" 
+	  	backgroundColor="#FFFFFF"
+	  	  />
+	  <view:CollapsableMenu x="0" y="0" id="menu" width="0" expandedWidth="300" />
+    <business:Services id="services" />
+</mx:Module>
