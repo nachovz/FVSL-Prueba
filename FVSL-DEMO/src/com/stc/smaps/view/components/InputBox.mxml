@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="598" height="190"
+	title="Empresas Polar" close="closeWindow(event)" showCloseButton="true">
+	<mx:Script>
+		<![CDATA[
+			import com.google.maps.wrappers.EventDispatcherWrapper;
+			import mx.managers.PopUpManager;
+			
+			private function closeWindow(event : Event) : void
+			{
+				PopUpManager.removePopUp(this);
+			}
+					
+		]]>
+	</mx:Script>
+	
+	<mx:Image x="10" y="10" source="assets/logos/polar.jpg" width="100" height="100"/>
+	<mx:Image x="10" y="118" source="assets/img/twitter.png" width="32" height="32"/>
+	<mx:Image x="50" y="118" source="assets/img/facebook.png" width="32" height="32"/>
+	<mx:TextArea x="118" borderThickness="0" y="10" width="470" height="52">
+		<mx:text>El objetivo de Empresas Polar es lograr la eliminacion de la pobreza en todos los estractos de la sociedad. Para lo grar eso se ha puesto como meta la elaboracion de un plan de nutricion nacional.</mx:text>
+	</mx:TextArea>
+	<mx:Label x="118" y="65" text="Direccion:" fontWeight="bold"/>
+	<mx:Label x="194" y="65" text="Calle Amazonas, Colinas de la California, Miranda." width="402"/>
+	<mx:Label x="194" y="87" text="www.empresaspolar.com" width="394"/>
+	<mx:Label x="194" y="109" text="(58) 212 2357892" width="394"/>
+	<mx:Label x="118" y="87" text="Página web:" width="86" fontWeight="bold"/>
+	<mx:Label x="118" y="109" text="Teléfono:" width="86" fontWeight="bold"/>
+	<mx:Label x="194" y="132" text="contacto@empresas-polar.com" width="254"/>
+	<mx:Label x="118" y="131" text="Correo:" width="50" fontWeight="bold"/>
+	<mx:Button x="456" y="132" label="Ver Ficha" width="132"/>
+	
+</mx:TitleWindow>

@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ Copyright 2008 Google Inc. 
+ Licensed under the Apache License, Version 2.0:
+    http://www.apache.org/licenses/LICENSE-2.0
+-->
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:maps="com.google.maps.*" layout="absolute" width="100%" height="100%" viewSourceURL="srcview/index.html" xmlns:components="com.stc.smaps.view.components.*"
+	creationComplete="creationComplete_handler(event)">
+	  <maps:Map
+	    id="map"
+	    key="ABQIAAAAEuJqUl4X79npk_A40fNvIBQVD3iyzJCw47-1inzm1qoP1Fr96RTlyvRGF8uAeCVH2K6LlldMTrfdmg" 
+	    mapevent_mapready="mapready_handler(event)"
+	    width="100%" height="100%" click="mapClick_handler()" />
+		<components:ToolsPanel click="toolbarClick_handler()" id="toolsBar" width="15" height="100%" verticalScrollPolicy="off" y="0" x="0" />
+		<components:MiniBar id="toolsIcon" bottom="20" right="20"/>
+
+  <mx:Style source="assets/css/styles.css"/>
+  <mx:Script>
+    <![CDATA[
+    	import mx.events.CollectionEvent;
+    	import com.stc.smaps.view.components.RenderLayersEvent;
+    	import mx.collections.ArrayCollection;
+    	import mx.managers.PopUpManager;
+    	import com.stc.smaps.view.components.InputBox;
+    	import com.google.maps.overlays.PolygonOptions;
+    	import com.google.maps.overlays.Polygon;
+    	import mx.events.EffectEvent;
+    	import mx.effects.Resize;
+    	import mx.effects.Move;
+    	import com.google.maps.InfoWindowOptions;
+    	import com.google.maps.MapMouseEvent;
+    	import com.google.maps.overlays.MarkerOptions;
+    	import com.google.maps.overlays.Marker;
+    	import mx.rpc.events.ResultEvent;
+    	import com.google.maps.LatLng;
+    	import com.google.maps.controls.NavigationControl;
+    	import com.google.maps.controls.ScaleControl;
+    	import com.google.maps.controls.MapTypeControl;
+    	import com.google.maps.controls.ZoomControl;
+    	import mx.controls.Alert;
+    	
+        private var cooperantesXML:XML = 
+            <root>
+                <location>
+                    <name>Venezuela Sin Limites</name>
+                    <lat>7.588063</lat>
+                    <long>-66.637659</long>
+                    <type>coop</type>
+                    <description>Descripcion de la fundacion Venezuela Sin Limites</description>
+                </location>    
+                <location>
+                    <name>Clamor en el Barrio</name>
+                    <lat>8.899932</lat>
+                    <long>-68.964249</long>
+                    <type>coop</type>
+                    <description>Descripcion de la fundacion Clamor en el Barrio</description>
+                </location>
+                <location>
+                    <name>Fe y Alegria</name>
+                    <lat>4.899932</lat>
+                    <long>-60.964249</long>
+                    <type>coop</type>
+                    <description>Descripcion de la fundacion Fe y Alegria</description>
+                </location>
+                <location>
+                    <name>Fundacion Polar</name>
+                    <lat>2.899932</lat>
+                    <long>-70.964249</long>
+                    <type>coop</type>
+                    <description>Descripcion de la fundacion Polar</description>
+                </location>
+            </root>; 
+            
+        private var redesXML:XML = 
+            <root>
+                <location>
+                    <name>Juntos con alegria</name>
+                    <lat>2.8</lat>
+                    <long>-70.6</long>
+                    <type>proyect</type>
+                    <description>Descripcion de la fundacion Polar</description>
+                </location>
+                <location>
+                    <name>Volar</name>
+                    <lat>3.899932</lat>
+                    <long>-70.0</long>
+                    <type>proyect</type>
+                    <description>Descripcion de la fundacion Polar</description>
+                </location>
+                <location>
+                    <name>Vivienda Plena</name>
+                    <lat>4.899932</lat>
+                    <long>-70.6</long>
+                    <type>proyect</type>
+                    <description>Descripcion de la fundacion Polar</description>
+                </location>
+            </root>;
+            
+        private var homeXML:XML = 
+            <root>
+                <location>
+                    <name>Juntos con alegria</name>
+                    <lat>2.8</lat>
+                    <long>-63.6</long>
+                    <type>proyect</type>
+                    <description>Descripcion de la fundacion Polar</description>
+                </location>
+                <location>
+                    <name>Volar</name>
+                    <lat>3.899932</lat>
+                    <long>-70.0</long>
+                    <type>proyect</type>
+                    <description>Descripcion de la fundacion Polar</description>
+                </location>
+                <location>
+                    <name>Vivienda Plena</name>
+                    <lat>4</lat>
+                    <long>-76.6</long>
+                    <type>proyect</type>
+                    <description>Descripcion de la fundacion Polar</description>
+                </location>
+            </root>;
+            
+       private var stateBorders:Object = {
+'WA' : [new LatLng(48.400032, -124.628906), new LatLng(45.828800, -123.925781), new LatLng(46.134171, -117.158203), new LatLng(48.980217, -117.158203), new LatLng(48.922501, -123.046875), new LatLng(48.224674, -123.134766), new LatLng(48.400032, -124.628906)],
+'OR' : [new LatLng(42.032974, -124.277344), new LatLng(42.098221, -116.982422), new LatLng(46.073231, -116.982422), new LatLng(45.706181, -123.837891), new LatLng(42.032974, -124.277344)],
+'CA' : [new LatLng(32.620869, -117.246094), new LatLng(32.768799, -114.873047), new LatLng(34.452217, -114.433594), new LatLng(39.027718, -119.794922), new LatLng(41.967659, -119.970703), new LatLng(42.032974, -124.365234), new LatLng(39.639538, -123.837891), new LatLng(35.029995, -120.673828), new LatLng(33.651207, -117.773438), new LatLng(32.620869, -117.246094)],
+'ID' : [new LatLng(42.163403, -116.982422), new LatLng(42.098221, -111.005859), new LatLng(44.653023, -111.269531), new LatLng(44.402393, -112.939453), new LatLng(45.521744, -114.082031), new LatLng(45.460133, -114.697266), new LatLng(46.619263, -114.433594), new LatLng(47.989922, -116.191406), new LatLng(49.037868, -116.103516), new LatLng(48.922501, -117.158203), new LatLng(42.163403, -116.982422)],
+'NV' : [new LatLng(34.307144, -114.433594), new LatLng(35.960224, -114.697266), new LatLng(36.315125, -111.972656), new LatLng(37.020100, -111.093750), new LatLng(37.090240, -113.994141), new LatLng(41.902279, -114.169922), new LatLng(41.967659, -119.794922), new LatLng(39.027718, -119.794922), new LatLng(34.307144, -114.433594)],
+'MT' : [new LatLng(48.980217, -104.062500), new LatLng(45.089035, -104.062500), new LatLng(45.151054, -111.181641), new LatLng(44.527843, -111.093750), new LatLng(44.402393, -113.027344), new LatLng(45.583290, -114.082031), new LatLng(45.336700, -114.873047), new LatLng(46.739861, -114.433594), new LatLng(47.219566, -116.103516), new LatLng(49.037868, -116.015625), new LatLng(48.980217, -104.062500)],
+'TX' : [new LatLng(36.315125, -103.007812), new LatLng(36.456635, -100.107422), new LatLng(34.524662, -100.019531), new LatLng(33.724339, -96.855469), new LatLng(33.797409, -95.537109), new LatLng(33.504761, -93.955078), new LatLng(30.751278, -93.691406), new LatLng(30.600094, -92.988281), new LatLng(28.459032, -96.943359), new LatLng(26.902477, -97.734375), new LatLng(25.641525, -97.119141), new LatLng(26.588528, -99.404297), new LatLng(27.994402, -99.755859), new LatLng(29.764378, -101.425781), new LatLng(29.764378, -102.744141), new LatLng(28.767658, -103.095703), new LatLng(29.611670, -104.501953), new LatLng(30.524412, -105.117188), new LatLng(32.026707, -106.611328), new LatLng(32.175613, -102.919922), new LatLng(36.315125, -103.007812)],
+'ND' : [new LatLng(48.922501, -97.207031), new LatLng(45.828800, -96.591797), new LatLng(46.012222, -104.150391), new LatLng(49.095451, -104.062500), new LatLng(48.922501, -97.207031)],
+'MN' : [new LatLng(43.452919, -96.416016), new LatLng(43.516689, -91.318359), new LatLng(43.961189, -91.230469), new LatLng(44.902576, -92.900391), new LatLng(45.644768, -92.900391), new LatLng(46.437859, -92.109375), new LatLng(47.931065, -92.373047), new LatLng(49.037868, -95.185547), new LatLng(49.037868, -97.294922), new LatLng(47.040180, -96.328125), new LatLng(43.452919, -96.416016)],
+'SD' : [new LatLng(43.068890, -103.974609), new LatLng(42.940338, -98.437500), new LatLng(42.553082, -96.328125), new LatLng(45.951149, -96.503906), new LatLng(46.073231, -104.062500), new LatLng(43.068890, -103.974609)],
+'LA' : [new LatLng(33.137550, -93.867188), new LatLng(33.284618, -91.230469), new LatLng(32.101189, -90.878906), new LatLng(30.751278, -91.757812), new LatLng(31.128199, -89.648438), new LatLng(29.152161, -89.033203), new LatLng(29.382175, -91.757812), new LatLng(29.993002, -93.779297), new LatLng(33.137550, -93.867188)],
+'AZ' : [new LatLng(32.546814, -115.092773), new LatLng(31.278551, -110.961914), new LatLng(31.316101, -109.072266), new LatLng(37.055176, -109.379883), new LatLng(37.020100, -111.181641), new LatLng(36.244274, -112.060547), new LatLng(35.995785, -114.609375), new LatLng(34.379711, -114.389648), new LatLng(32.546814, -115.092773)],
+'NM' : [new LatLng(31.353638, -108.940430), new LatLng(31.353638, -108.105469), new LatLng(31.840233, -108.149414), new LatLng(31.989443, -106.567383), new LatLng(32.212803, -102.919922), new LatLng(36.985004, -103.007812), new LatLng(37.020100, -109.116211), new LatLng(31.353638, -108.940430)],
+'CO' : [new LatLng(40.913513, -102.172852), new LatLng(36.985004, -102.084961), new LatLng(37.055176, -109.116211), new LatLng(41.046219, -109.116211), new LatLng(40.913513, -102.172852)],
+'KS' : [new LatLng(40.010788, -102.041016), new LatLng(40.010788, -94.921875), new LatLng(39.402245, -95.009766), new LatLng(38.822590, -94.526367), new LatLng(36.985004, -94.746094), new LatLng(37.090240, -102.084961), new LatLng(40.010788, -102.041016)],
+'NE' : [new LatLng(43.068890, -104.106445), new LatLng(43.036777, -98.437500), new LatLng(42.553082, -96.416016), new LatLng(39.943436, -95.273438), new LatLng(40.178871, -102.172852), new LatLng(40.979897, -102.084961), new LatLng(41.013065, -104.150391), new LatLng(43.068890, -104.106445)],
+'FL' : [new LatLng(30.259068, -87.539062), new LatLng(30.977610, -87.583008), new LatLng(31.052935, -85.034180), new LatLng(30.600094, -81.474609), new LatLng(29.535231, -81.298828), new LatLng(26.824072, -80.024414), new LatLng(25.125393, -80.507812), new LatLng(26.115986, -81.782227), new LatLng(27.605671, -82.749023), new LatLng(28.806173, -82.617188), new LatLng(30.145126, -83.891602), new LatLng(30.031055, -84.550781), new LatLng(29.688053, -85.209961), new LatLng(30.334953, -86.264648), new LatLng(30.259068, -87.539062)],
+'MS' : [new LatLng(34.921970, -88.110352), new LatLng(30.334953, -88.461914), new LatLng(30.221102, -89.516602), new LatLng(31.203405, -89.736328), new LatLng(31.015280, -91.538086), new LatLng(31.690783, -91.538086), new LatLng(32.212803, -91.010742), new LatLng(33.760883, -91.186523), new LatLng(34.957996, -90.175781), new LatLng(34.921970, -88.110352)],
+'GA' : [new LatLng(34.957996, -85.693359), new LatLng(32.287132, -84.946289), new LatLng(31.690783, -85.166016), new LatLng(31.015280, -85.034180), new LatLng(30.713505, -81.606445), new LatLng(32.175613, -80.859375), new LatLng(33.284618, -81.826172), new LatLng(34.597042, -83.144531), new LatLng(35.101933, -83.276367), new LatLng(34.957996, -85.693359)],
+'SC' : [new LatLng(33.870415, -78.574219), new LatLng(34.813805, -79.672852), new LatLng(35.029995, -81.035156), new LatLng(35.281502, -82.529297), new LatLng(34.885929, -83.276367), new LatLng(32.249973, -80.815430), new LatLng(33.027088, -79.409180), new LatLng(33.468109, -79.057617), new LatLng(33.870415, -78.574219)],
+'NC' : [new LatLng(36.633163, -75.893555), new LatLng(36.562599, -81.606445), new LatLng(36.102375, -82.265625), new LatLng(35.532227, -83.496094), new LatLng(35.101933, -84.375000), new LatLng(34.994003, -83.100586), new LatLng(35.317368, -82.397461), new LatLng(34.849876, -79.497070), new LatLng(33.760883, -78.530273), new LatLng(34.849876, -76.948242), new LatLng(35.532227, -75.805664), new LatLng(36.633163, -75.893555)],
+'VA' : [new LatLng(36.562599, -83.891602), new LatLng(37.474850, -82.045891), new LatLng(37.361427, -81.760254), new LatLng(37.300270, -81.430656), new LatLng(37.474850, -80.288078), new LatLng(38.591114, -79.639893), new LatLng(38.419167, -79.420166), new LatLng(38.634037, -79.189453), new LatLng(38.822590, -79.024658), new LatLng(38.779781, -78.815918), new LatLng(39.436192, -78.299561), new LatLng(39.121536, -77.871094), new LatLng(39.308800, -77.684326), new LatLng(38.754082, -76.948242), new LatLng(38.341648, -77.387688), new LatLng(37.892189, -76.113281), new LatLng(37.622932, -76.376953), new LatLng(37.361427, -76.289062), new LatLng(37.265308, -76.508781), new LatLng(36.976227, -76.223145), new LatLng(37.011326, -75.827637), new LatLng(36.650791, -75.959473), new LatLng(36.562599, -83.891602)],
+'AL' : [new LatLng(34.957996, -88.154297), new LatLng(34.994003, -85.649414), new LatLng(32.324276, -84.946289), new LatLng(31.653381, -85.078125), new LatLng(31.015280, -84.946289), new LatLng(30.939924, -87.583008), new LatLng(30.448673, -87.495117), new LatLng(30.448673, -88.505859), new LatLng(34.957996, -88.154297)],
+'OK' : [new LatLng(33.651207, -94.526367), new LatLng(35.532227, -94.482422), new LatLng(36.914764, -94.790039), new LatLng(37.055176, -102.919922), new LatLng(36.244274, -102.963867), new LatLng(36.491974, -100.063477), new LatLng(34.488449, -100.107422), new LatLng(33.687782, -96.635742), new LatLng(33.651207, -94.526367)],
+'AR' : [new LatLng(36.597889, -94.570312), new LatLng(36.562599, -90.175781), new LatLng(35.853439, -90.395508), new LatLng(36.031330, -89.648438), new LatLng(33.797409, -91.142578), new LatLng(33.284618, -91.230469), new LatLng(33.100746, -93.911133), new LatLng(33.614620, -94.042969), new LatLng(33.724339, -94.526367), new LatLng(35.924644, -94.526367), new LatLng(36.597889, -94.570312)],
+'MO' : [new LatLng(40.613953, -91.450195), new LatLng(39.808537, -91.494141), new LatLng(38.719807, -90.219727), new LatLng(36.633163, -89.033203), new LatLng(36.031330, -89.736328), new LatLng(35.924644, -90.483398), new LatLng(36.703659, -90.131836), new LatLng(36.597889, -94.790039), new LatLng(39.027718, -94.482422), new LatLng(39.436192, -94.921875), new LatLng(39.977119, -94.833984), new LatLng(40.111691, -95.405273), new LatLng(40.647305, -95.493164), new LatLng(40.613953, -91.450195)],
+'TN' : [new LatLng(36.527294, -89.121094), new LatLng(36.527294, -81.738281), new LatLng(34.957996, -84.550781), new LatLng(35.101933, -90.439453), new LatLng(36.527294, -89.121094)],
+'UT' : [new LatLng(41.967659, -114.038086), new LatLng(37.125286, -114.082031), new LatLng(37.090240, -109.072266), new LatLng(41.013065, -109.116211), new LatLng(41.046219, -111.225586), new LatLng(42.032974, -111.093750), new LatLng(41.967659, -114.038086)],
+'WY' : [new LatLng(41.145569, -111.181641), new LatLng(40.979897, -103.974609), new LatLng(45.058002, -104.194336), new LatLng(45.151054, -111.093750), new LatLng(41.145569, -111.181641)],
+'IL' : [new LatLng(37.020100, -89.208984), new LatLng(38.925228, -90.175781), new LatLng(39.842285, -91.538086), new LatLng(40.580585, -91.406250), new LatLng(41.112469, -90.966797), new LatLng(41.508575, -91.142578), new LatLng(41.771313, -90.219727), new LatLng(42.130821, -90.131836), new LatLng(42.455887, -90.615234), new LatLng(42.553082, -87.890625), new LatLng(41.705730, -87.451172), new LatLng(39.130058, -87.670898), new LatLng(38.719807, -87.495117), new LatLng(38.065392, -88.022461), new LatLng(37.090240, -88.505859), new LatLng(37.020100, -89.208984)],
+'KY' : [new LatLng(37.544579, -82.045898), new LatLng(38.134556, -82.661133), new LatLng(38.616871, -82.661133), new LatLng(38.719807, -83.452148), new LatLng(38.822590, -84.418945), new LatLng(39.164143, -84.902344), new LatLng(38.134556, -85.869141), new LatLng(37.857506, -87.187500), new LatLng(37.857506, -88.198242), new LatLng(37.055176, -88.505859), new LatLng(37.090240, -89.165039), new LatLng(36.527294, -89.033203), new LatLng(36.527294, -83.803711), new LatLng(37.544579, -82.045898)],
+'IN' : [new LatLng(39.164143, -84.814453), new LatLng(41.738529, -84.858398), new LatLng(41.804077, -86.572266), new LatLng(41.541477, -87.583008), new LatLng(39.232254, -87.714844), new LatLng(38.719807, -87.495117), new LatLng(37.961521, -88.198242), new LatLng(37.857506, -87.011719), new LatLng(38.238178, -85.957031), new LatLng(39.164143, -84.814453)],
+'IA' : [new LatLng(43.484814, -96.416016), new LatLng(42.455887, -96.416016), new LatLng(40.613953, -95.537109), new LatLng(40.613953, -91.406250), new LatLng(41.211723, -90.966797), new LatLng(41.574360, -91.098633), new LatLng(41.804077, -90.175781), new LatLng(42.195969, -90.219727), new LatLng(42.747013, -91.010742), new LatLng(43.516689, -91.318359), new LatLng(43.484814, -96.416016)],
+'WI' : [new LatLng(46.830135, -92.065430), new LatLng(46.649437, -90.351562), new LatLng(45.859413, -87.934570), new LatLng(45.182037, -87.583008), new LatLng(45.429298, -86.923828), new LatLng(44.245197, -87.670898), new LatLng(42.585445, -87.978516), new LatLng(42.423458, -90.659180), new LatLng(42.811523, -91.098633), new LatLng(43.961189, -91.318359), new LatLng(44.809120, -92.812500), new LatLng(45.675484, -92.900391), new LatLng(46.377254, -92.153320), new LatLng(46.830135, -92.065430)],
+'MI' : [new LatLng(41.804077, -86.660156), new LatLng(42.455887, -86.176758), new LatLng(43.675819, -86.484375), new LatLng(44.840290, -86.132812), new LatLng(45.828800, -85.034180), new LatLng(45.182037, -83.320312), new LatLng(44.370987, -83.452148), new LatLng(43.929550, -83.891602), new LatLng(44.150681, -82.968750), new LatLng(42.908161, -82.265625), new LatLng(42.326061, -83.276367), new LatLng(41.934978, -83.276367), new LatLng(41.738529, -83.979492), new LatLng(41.804077, -86.660156)],
+'OH' : [new LatLng(38.376114, -82.661133), new LatLng(38.582527, -82.221680), new LatLng(39.002110, -82.056885), new LatLng(39.740986, -80.859375), new LatLng(40.363289, -80.595703), new LatLng(42.098221, -80.507812), new LatLng(41.475658, -82.309570), new LatLng(41.804077, -83.891602), new LatLng(41.705730, -85.034180), new LatLng(39.027718, -84.726562), new LatLng(38.376114, -82.661133)],
+'WV' : [new LatLng(39.842285, -80.771484), new LatLng(39.732536, -80.507812), new LatLng(39.707188, -79.508057), new LatLng(39.698734, -78.244629), new LatLng(38.814030, -78.804932), new LatLng(38.822590, -79.024658), new LatLng(38.444984, -79.398193), new LatLng(38.599701, -79.683838), new LatLng(37.474857, -80.244141), new LatLng(37.309013, -81.474609), new LatLng(37.483578, -82.045898), new LatLng(38.125916, -82.650146), new LatLng(38.350273, -82.628174), new LatLng(38.444984, -82.287598), new LatLng(38.993572, -82.056885), new LatLng(39.842285, -80.771484)],
+'MD' : [new LatLng(38.479397, -75.146484), new LatLng(38.548164, -75.761719), new LatLng(39.673370, -75.849609), new LatLng(39.774769, -77.958984), new LatLng(39.478607, -78.299561), new LatLng(39.172661, -77.882080), new LatLng(39.334297, -77.673340), new LatLng(38.822590, -76.948242), new LatLng(38.341656, -77.387695), new LatLng(37.892197, -76.113281), new LatLng(36.809284, -76.113281), new LatLng(38.479397, -75.146484)],
+'PA' : [new LatLng(42.326061, -79.936523), new LatLng(41.967659, -79.628906), new LatLng(42.130821, -75.366211), new LatLng(41.409775, -74.750977), new LatLng(40.580585, -75.234375), new LatLng(40.111691, -74.750977), new LatLng(39.673370, -75.893555), new LatLng(39.757881, -80.562744), new LatLng(42.000324, -80.507812), new LatLng(42.326061, -79.936523)],
+'NY' : [new LatLng(44.980343, -73.322754), new LatLng(45.058002, -74.772949), new LatLng(44.182205, -76.333008), new LatLng(43.500751, -76.223145), new LatLng(43.229195, -77.453613), new LatLng(43.389084, -78.046875), new LatLng(43.261208, -79.189453), new LatLng(42.811523, -78.815918), new LatLng(42.163403, -79.760742), new LatLng(41.951321, -79.541016), new LatLng(42.081917, -75.344238), new LatLng(41.376808, -74.816895), new LatLng(41.062786, -73.937988), new LatLng(40.497093, -74.289551), new LatLng(40.563896, -73.575439), new LatLng(40.996483, -71.784668), new LatLng(41.178654, -72.290039), new LatLng(41.004776, -72.674561), new LatLng(40.855370, -73.718262), new LatLng(40.996483, -73.652344), new LatLng(42.666283, -73.322754), new LatLng(43.644028, -73.300781), new LatLng(44.087585, -73.454590), new LatLng(44.980343, -73.322754)],
+'DE' : [new LatLng(38.822590, -75.135498), new LatLng(39.436192, -75.476074), new LatLng(39.876019, -75.498047), new LatLng(39.673370, -75.937500), new LatLng(38.513786, -75.717773), new LatLng(38.462193, -75.025635), new LatLng(38.822590, -75.135498)],
+'NJ' : [new LatLng(40.513798, -74.311523), new LatLng(41.062786, -73.959961), new LatLng(41.376808, -74.772949), new LatLng(40.613953, -75.234375), new LatLng(40.195660, -74.816895), new LatLng(39.825413, -75.498047), new LatLng(39.487083, -75.541992), new LatLng(38.993572, -74.860840), new LatLng(39.520992, -74.311523), new LatLng(40.245991, -73.959961), new LatLng(40.513798, -74.311523)],
+'VT' : [new LatLng(42.763145, -72.641602), new LatLng(42.795403, -73.366699), new LatLng(43.659924, -73.344727), new LatLng(44.182205, -73.520508), new LatLng(45.026951, -73.366699), new LatLng(45.026951, -71.433105), new LatLng(44.699898, -71.652832), new LatLng(44.433781, -71.652832), new LatLng(44.276672, -71.960449), new LatLng(43.628124, -72.399902), new LatLng(42.763145, -72.641602)],
+'NH' : [new LatLng(42.940338, -70.817871), new LatLng(43.357140, -70.905762), new LatLng(45.274887, -71.191406), new LatLng(45.274887, -71.411133), new LatLng(44.731125, -71.674805), new LatLng(44.418087, -71.652832), new LatLng(44.245197, -72.092285), new LatLng(43.508720, -72.421875), new LatLng(42.755081, -72.608643), new LatLng(42.650124, -71.323242), new LatLng(42.940338, -70.817871)],
+'MA' : [new LatLng(42.795403, -73.344727), new LatLng(42.730873, -72.575684), new LatLng(42.674358, -71.257324), new LatLng(42.827641, -71.059570), new LatLng(43.020714, -70.883789), new LatLng(42.642040, -70.675049), new LatLng(42.358543, -71.015625), new LatLng(42.261047, -70.784912), new LatLng(41.934978, -70.543213), new LatLng(41.828644, -69.938965), new LatLng(41.672913, -69.960938), new LatLng(41.401535, -70.268555), new LatLng(41.335575, -70.751953), new LatLng(41.590797, -71.015625), new LatLng(42.049294, -71.499023), new LatLng(42.057449, -73.432617), new LatLng(42.795403, -73.344727)],
+'CT' : [new LatLng(42.016651, -71.806641), new LatLng(41.335575, -71.828613), new LatLng(41.269550, -72.971191), new LatLng(40.996483, -73.652344), new LatLng(42.065605, -73.454590), new LatLng(42.016651, -71.806641)],
+'RI' : [new LatLng(41.327328, -71.817627), new LatLng(41.450962, -71.059570), new LatLng(41.705730, -71.147461), new LatLng(42.041134, -71.466064), new LatLng(42.016651, -71.806641), new LatLng(41.664703, -71.784668), new LatLng(41.327328, -71.817627)],
+'ME' : [new LatLng(44.855869, -66.862793), new LatLng(45.213005, -67.214355), new LatLng(45.166546, -67.456055), new LatLng(45.598667, -67.500000), new LatLng(45.752193, -67.851562), new LatLng(47.129951, -67.807617), new LatLng(47.457809, -68.334961), new LatLng(47.204643, -68.906250), new LatLng(47.457809, -69.191895), new LatLng(46.739861, -70.026855), new LatLng(46.422714, -70.158691), new LatLng(46.149395, -70.334473), new LatLng(45.583290, -70.686035), new LatLng(45.259422, -71.081543), new LatLng(42.988575, -70.839844), new LatLng(44.119141, -69.016113), new LatLng(44.386692, -68.115234), new LatLng(44.855869, -66.862793)]
+}; 
+
+  private var stateCodes:Array = [
+{ code: 'AL', name: 'Alabama'},
+{ code: 'AZ', name: 'Arizona'},
+{ code: 'AR', name: 'Arkansas'},
+{ code: 'CA', name: 'California'},
+{ code: 'CO', name: 'Colorado'},
+{ code: 'CT', name: 'Connecticut'},
+{ code: 'DE', name: 'Delaware'},
+{ code: 'FL', name: 'Florida'},
+{ code: 'GA', name: 'Georgia'},
+{ code: 'ID', name: 'Idaho'},
+{ code: 'IL', name: 'Illinois'},
+{ code: 'IN', name: 'Indiana'},
+{ code: 'IA', name: 'Iowa'},
+{ code: 'KS', name: 'Kansas'},
+{ code: 'KY', name: 'Kentucky'},
+{ code: 'LA', name: 'Louisiana'},
+{ code: 'ME', name: 'Maine'},
+{ code: 'MD', name: 'Maryland'},
+{ code: 'MA', name: 'Massachusetts'},
+{ code: 'MI', name: 'Michigan'},
+{ code: 'MN', name: 'Minnesota'},
+{ code: 'MS', name: 'Mississippi'},
+{ code: 'MO', name: 'Missouri'},
+{ code: 'MT', name: 'Montana'},
+{ code: 'NE', name: 'Nebraska'},
+{ code: 'NV', name: 'Nevada'},
+{ code: 'NH', name: 'New Hampshire'},
+{ code: 'NJ', name: 'New Jersey'},
+{ code: 'NM', name: 'New Mexico'},
+{ code: 'NY', name: 'New York'},
+{ code: 'NC', name: 'North Carolina'},
+{ code: 'ND', name: 'North Dakota'},
+{ code: 'OH', name: 'Ohio'},
+{ code: 'OK', name: 'Oklahoma'},
+{ code: 'OR', name: 'Oregon'},
+{ code: 'PA', name: 'Pennsylvania'},
+{ code: 'RI', name: 'Rhode Island'},
+{ code: 'SC', name: 'South Carolina'},
+{ code: 'SD', name: 'South Dakota'},
+{ code: 'TN', name: 'Tennessee'},
+{ code: 'TX', name: 'Texas'},
+{ code: 'UT', name: 'Utah'},
+{ code: 'VT', name: 'Vermont'},
+{ code: 'VA', name: 'Virginia'},
+{ code: 'WA', name: 'Washington'},
+{ code: 'WV', name: 'West Virginia'},
+{ code: 'WI', name: 'Wisconsin'},
+{ code: 'WY', name: 'Wyoming'}
+];
+            
+	[Embed(source="assets/markers/communitycentre.png")]
+   	private var ImageMarker:Class;
+
+	[Embed(source="assets/markers/university.png")]
+   	private var OngMarker:Class;
+
+	[Embed(source="assets/markers/home.png")]
+   	private var HomeMarker:Class;
+
+	private var arrayLayers : ArrayCollection = new ArrayCollection();
+	private var layersData : Dictionary = new Dictionary();
+    private const FLICKR_KEY:String = '113e027179c62ab3fc3f8d4dbccc8c81'; 
+   	
+   	public function mapready_handler(e : Event) : void
+   	{
+   		map.enableScrollWheelZoom();
+   		map.addControl(new MapTypeControl());
+   		map.addControl(new NavigationControl());
+   		
+   		map.setCenter(new LatLng(6.5,-66.5));
+   		map.setZoom(6);
+   		
+   		renderLayers();
+   		toolsBar.addEventListener(RenderLayersEvent.ADD_LAYER,addLayer);
+   		toolsBar.addEventListener(RenderLayersEvent.REMOVE_LAYER,removeLayer);
+   	}
+   	
+   	private function addLayer(ev : RenderLayersEvent) : void
+   	{
+		var index : int  = getLayerIndex(ev.red); 		
+   		if(index==-1) arrayLayers.addItem(ev.red);
+   		
+   		renderLayers();
+   	}
+
+   	private function removeLayer(ev : RenderLayersEvent) : void
+   	{
+		var index : int  = getLayerIndex(ev.red); 		
+   		if(index>-1) arrayLayers.removeItemAt(index);
+   		
+   		renderLayers();
+   	}
+   	
+   	private function getLayerIndex(layer : String) : int
+   	{
+   		for(var i : int = 0;i<arrayLayers.length; i++)
+   		{
+   			if(arrayLayers[i]==layer)
+   				return i;
+   		}
+   		
+   		return -1;
+   	}
+
+	private function renderLayers(ev : Event=null) : void 
+	{  
+	
+		 map.clearOverlays();  
+		
+		for each(var layer : String in arrayLayers)
+		{
+			if(layersData.hasOwnProperty(layer))
+				for each (var data:XML in layersData[layer].location)
+					if(layer=="familia")
+				   		createMarker( data, new ImageMarker() ); 
+					else if(layer=="educacion")
+				   		createMarker( data, new OngMarker() ); 
+					else if(layer=="vivienda")
+				   		createMarker( data, new HomeMarker() ); 
+		}
+		
+/* 		if(toolsBar.showAlianza.selected) 
+		for each (var resort:XML in cooperantesXML.location)  
+		   createMarker( resort, new OngMarker() ); 
+		for each (var resort:XML in cooperantesXML.location)  
+		   createMarker( resort, new OngMarker() ); 
+		for each (var resort:XML in cooperantesXML.location)  
+		   createMarker( resort, new OngMarker() ); 
+		for each (var resort:XML in cooperantesXML.location)  
+		   createMarker( resort, new OngMarker() ); 
+		for each (var resort:XML in cooperantesXML.location)  
+		   createMarker( resort, new OngMarker() ); 
+		for each (var resort:XML in cooperantesXML.location)  
+		   createMarker( resort, new OngMarker() ); 
+		    
+		if(toolsBar.showAsociados.selected)
+		for each (var resort:XML in redesXML.location)
+		   createMarker( resort , new ImageMarker() );
+		     
+		if(toolsBar.showProyectos.selected)
+		for each (var resort:XML in homeXML.location)
+		   createMarker( resort , new HomeMarker() );   */
+	}  
+	
+	private function createMarker( photo:XML , auxIcon : Object) : void {
+		var latitud : Number =  photo.lat;  
+	 var pMarker:Marker = new Marker( new LatLng( photo.lat, photo.long ),  
+	   new MarkerOptions( {  
+	   label:photo.name,  
+	   tooltip:photo.description,  
+	   name: photo.name,
+	   icon: auxIcon,  
+	     hasShadow:true } ) );  
+		
+		pMarker.addEventListener(MapMouseEvent.CLICK,markerClicked);
+	 	map.addOverlay( pMarker );  
+	}
+	
+	public function markerClicked(event:MapMouseEvent):void{
+	    var marker:Marker = event.target as Marker;
+	    var inputBox:InputBox = new InputBox();
+	    PopUpManager.addPopUp(inputBox,this);
+	    PopUpManager.centerPopUp(inputBox);
+	}
+	
+
+	public function creationComplete_handler(e : Event) : void
+	{
+		layersData["familia"] = cooperantesXML;
+		layersData["educacion"] = redesXML;
+		layersData["vivienda"] = homeXML;
+		
+		arrayLayers.addItem("familia");
+		arrayLayers.addItem("educacion");
+		arrayLayers.addItem("vivienda");
+	}
+	
+	public function mapClick_handler() : void
+	{
+		toolsBar.alpha = 0.4;
+	}
+	
+	public function toolbarClick_handler() : void
+	{
+		toolsBar.alpha = 1;
+	}
+	
+	private function showIndicadores(e : Event) : void
+	{
+    	for (var stateCode:String in stateBorders) 
+    	{
+      		var polygon:Polygon = this.createPoly(stateCode);
+      		map.addOverlay(polygon);
+    	}
+	}
+	
+	private function createPoly(stateCode:String) : Polygon 
+	{
+		var optionsDefault:PolygonOptions = new PolygonOptions( { fillStyle: { color:0x059AC1, alpha: 0.9 }} ); 
+		
+		var optionsHover:PolygonOptions = new PolygonOptions( { fillStyle: { alpha: 0.2 }} ); 
+		
+		var polygon:Polygon = new Polygon(stateBorders[stateCode], optionsDefault);
+		polygon.addEventListener(MapMouseEvent.CLICK, function(event:MapMouseEvent): void {
+			map.openInfoWindow(event.latLng, new InfoWindowOptions({content: stateCode}));
+		});
+		
+		polygon.addEventListener(MapMouseEvent.ROLL_OVER, function(event:MapMouseEvent): void {
+			polygon.setOptions(optionsHover); 
+		});
+		
+		polygon.addEventListener(MapMouseEvent.ROLL_OUT, function(event:MapMouseEvent): void {
+			polygon.setOptions(optionsDefault); 
+		});
+		
+		return polygon;
+	}
+   	
+    ]]>
+  </mx:Script>
+</mx:Application>

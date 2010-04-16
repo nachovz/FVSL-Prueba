@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns="com.stc.smaps.view.components.*" width="15" height="100%"
+	 xmlns:mx="http://www.adobe.com/2006/mxml" horizontalGap="0" backgroundColor="#FFFFFF"
+	 creationComplete="init()">
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.SortField;
+			import mx.collections.Sort;
+			import mx.effects.easing.Bounce;
+			import mx.collections.ArrayCollection;
+		
+        [Bindable]
+        private var organizaciones:ArrayCollection = new ArrayCollection( [
+            { nombre: "Banco de Chile", area: "Salud", local: "Salud, Educacion" },
+            { nombre: "Banco de Chile", area: "Salud", local: "Salud, Educacion"  },
+            { nombre: "Banco de Chile", area: "Salud", local: "Salud, Educacion"  }]);
+
+            [Bindable]
+            public var organizacion: Array = [ {label:"Organizacion", data:1}, 
+                {label:"Empresa", data:2} ];
+                
+            [Bindable]
+            public var areas: Array = [ {label:"Arte y Cultura", data:1}, 
+                {label:"Capacitacion", data:2} ];
+                
+            private var collapsed : Boolean = true;
+            
+            private function init() : void
+            {
+            	var sort:Sort = new Sort();
+	            sort.fields = [new SortField("label")];
+	            arr.sort=sort;
+	            arr.refresh();
+	               
+	            arr.filterFunction = filterLocation;
+
+            	var sort:Sort = new Sort();
+	            sort.fields = [new SortField("label")];
+	            arr2.sort=sort;
+	            arr2.refresh();
+	               
+	            arr2.filterFunction = filterLocation;
+            }
+            
+            private function resizeTools(e : Event) : void
+            {
+            	if(collapsed)
+            	{
+	            	this.width = 300;
+	            	this.vboxMain.width = 285;
+	            	collapsed = false;
+            	}
+            	else
+            	{
+	            	this.width = 15;
+	            	this.vboxMain.width = 0;
+	            	collapsed = true;
+            		
+            	}
+            }
+   
+
+		     // filter array collection by what user types
+		     private function filterLocation(item:Object):Boolean {
+		        if (item.label.toLowerCase().indexOf(filterInput.text) >= 0) {
+		           return true;   
+		        }
+		        else {
+		           return false;
+		        }
+		     }
+		     // filter array collection by what user types
+		     private function filterLocation2(item:Object):Boolean {
+		        if (item.label.toLowerCase().indexOf(filterRedes.text) >= 0) {
+		           return true;   
+		        }
+		        else {
+		           return false;
+		        }
+		     }
+		     
+		     private function filterChaned() : void
+		     {
+		     	arr.refresh();
+		     }
+		     private function filterChaned2() : void
+		     {
+		     	arr2.refresh();
+		     }
+            
+		]]>
+	</mx:Script>
+    <mx:ArrayCollection id="arr">
+        <mx:Object red="familia" label="Familia Misionera" isSelected="true" />
+        <mx:Object red="educacion" label="Educando a los jovenes" isSelected="true" />
+        <mx:Object red="vivienda" label="Viviendas para todos" isSelected="true" />
+        <mx:Object red="vivienda2" label="Banco de Santander" isSelected="false" />
+        <mx:Object red="vivienda2" label="Evempro" isSelected="false" />
+        <mx:Object red="vivienda2" label="Fundacion Bigot" isSelected="false" />
+        <mx:Object red="vivienda2" label="Clamor en el Barrio" isSelected="false" />
+        <mx:Object red="vivienda2" label="Automercados CADA" isSelected="false" />
+        <mx:Object red="vivienda2" label="Exito" isSelected="false" />
+        <mx:Object red="vivienda2" label="MACRO" isSelected="false" />
+        <mx:Object red="vivienda2" label="Thoshiba de Venezuela" isSelected="false" />
+        <mx:Object red="vivienda2" label="IBM Venezuela" isSelected="false" />
+    </mx:ArrayCollection>
+    <mx:ArrayCollection id="arr2">
+        <mx:Object red="familia" label="Familia Misionera" isSelected="true" />
+        <mx:Object red="educacion" label="Educando a los jovenes" isSelected="true" />
+        <mx:Object red="vivienda" label="Viviendas para todos" isSelected="true" />
+        <mx:Object red="vivienda2" label="Banco de Santander" isSelected="false" />
+        <mx:Object red="vivienda2" label="Evempro" isSelected="false" />
+        <mx:Object red="vivienda2" label="Fundacion Bigot" isSelected="false" />
+        <mx:Object red="vivienda2" label="Clamor en el Barrio" isSelected="false" />
+        <mx:Object red="vivienda2" label="Automercados CADA" isSelected="false" />
+        <mx:Object red="vivienda2" label="Exito" isSelected="false" />
+        <mx:Object red="vivienda2" label="MACRO" isSelected="false" />
+        <mx:Object red="vivienda2" label="Thoshiba de Venezuela" isSelected="false" />
+        <mx:Object red="vivienda2" label="IBM Venezuela" isSelected="false" />
+    </mx:ArrayCollection>
+	<mx:VBox id="vboxMain" width="0" height="100%" verticalGap="0">
+		<mx:TabBar dataProvider="mainOptions">
+		</mx:TabBar>
+		<mx:ViewStack id="mainOptions" height="100%" width="100%" backgroundColor="0x999999" horizontalGap="1">
+			<mx:Canvas id="redesOptions" label="Redes" width="100%" height="100%" backgroundColor="0xffffff">
+				<mx:Label x="10" y="11" text="Seleccione las redes que desea visualizar" fontWeight="bold"/>
+				<mx:TextInput id="filterInput" change="filterChaned()" x="10" y="31" width="265" />
+		        <mx:List id="list"
+		                dataProvider="{arr}"
+		                alternatingItemColors="[white, white]"
+		                width="265"
+		                x="10"
+		                y="60"
+		                height="95%">
+		            <mx:itemRenderer>
+		                <mx:Component>
+		                    <mx:CheckBox selectedField="isSelected"
+		                            change="onChange(event);">
+		                        <mx:Script>
+		                            <![CDATA[
+		                            
+		                            	private var _data : Object = {};
+		                            
+		                            	override public function set data(value:Object):void
+		                            	{
+		                            		_data = value;
+		                            		this.label = value.label;
+		                            		this.selected = value.isSelected;
+		                            	}
+		                            	override public function get data():Object
+		                            	{
+		                            		return _data;
+		                            	}
+		                            
+		                                private function onChange(evt:Event):void {
+		                                    data.isSelected = !data.isSelected;
+		                                    if(data.isSelected) addLayers();
+		                                    else removeLayers();
+		                                }
+		                                
+							            private function addLayers() : void
+							            {
+							            	var ev : RenderLayersEvent = new RenderLayersEvent(RenderLayersEvent.ADD_LAYER,true);
+							            	ev.red = data.red;
+							            	this.dispatchEvent(ev);
+							            }
+
+							            private function removeLayers() : void
+							            {
+							            	var ev : RenderLayersEvent = new RenderLayersEvent(RenderLayersEvent.REMOVE_LAYER,true);
+							            	ev.red = data.red;
+							            	this.dispatchEvent(ev);
+							            }
+		                            ]]>
+		                        </mx:Script>
+		                    </mx:CheckBox>
+		                </mx:Component>
+		            </mx:itemRenderer>
+		        </mx:List>	
+			</mx:Canvas>
+			<mx:Canvas id="cooperantesOptions" label="Cooperantes" width="100%" height="100%" backgroundColor="0xffffff">
+				<mx:Label x="10" y="11" text="Opciones de los coperantes" fontWeight="bold"/>
+				<mx:TextInput id="filterRedes" change="filterChaned2()" x="10" y="31" width="265" />
+		        <mx:List id="listaRedes"
+		                dataProvider="{arr2}"
+		                alternatingItemColors="[#EEEEEE, white]"
+		                width="265"
+		                x="10"
+		                y="60"
+		                height="95%"
+		                itemRenderer="com.stc.smaps.view.components.CooperantesRenderer">
+		        </mx:List>
+			</mx:Canvas>
+		</mx:ViewStack>
+	</mx:VBox>
+	<mx:Button width="15" height="100%" icon="@Embed('assets/img/collapse.gif')" click="resizeTools(event)" />
+</mx:HBox>

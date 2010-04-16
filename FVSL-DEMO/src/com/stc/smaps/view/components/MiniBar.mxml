@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml">
+<mx:Script>
+	<![CDATA[
+	
+		[Embed(source="assets/img/tools.png")]
+    	private const iconClass : Class;
+    	
+    	private function textInput_focusIn() : void
+    	{
+    		if(Busqueda.text=="Buscar")
+    			Busqueda.text = "";
+  
+    	}
+    	
+    	private function textInput_focusOut() : void
+    	{
+    		if(Busqueda.text=="")
+    			Busqueda.text = "Buscar";
+  
+    	}
+    	
+    	private function openTools(e : Event) : void
+    	{
+    		dispatchEvent(new Event('openTools'));
+    	}
+    	
+    	private function keyUp_handler(e : KeyboardEvent) : void
+    	{
+    		if(e.keyCode==Keyboard.ENTER)
+    		{
+    			dispatchEvent(new Event('searchString',true));
+    		}
+    	}
+    	
+	]]>
+</mx:Script>
+	<mx:TextInput id="Busqueda" keyUp="keyUp_handler(event)" styleName="searchTextInput" text="Buscar" focusIn="textInput_focusIn()" focusOut="textInput_focusOut()" />
+	<mx:Button id="toolsIcon" icon="{iconClass}" click="openTools(event)" bottom="0" right="0"/>
+</mx:HBox>

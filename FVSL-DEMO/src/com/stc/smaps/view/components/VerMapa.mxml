@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Button xmlns:mx="http://www.adobe.com/2006/mxml" width="31" icon="{imagen}"  fillAlphas="[1.0, 1.0]" fillColors="[#FFFFFF, #FFFFFF]">
+	<mx:Script>
+		<![CDATA[
+		
+			[Embed(source="assets/img/lupa.gif")]
+		   	private var imagen:Class;
+
+		]]>
+	</mx:Script>
+</mx:Button>

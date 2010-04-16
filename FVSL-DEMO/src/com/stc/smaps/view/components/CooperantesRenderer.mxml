@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="224" height="24">
+<mx:Script>
+	<![CDATA[
+		private var _data : Object = {};
+	
+		override public function set data(value:Object):void
+		{
+			_data = value;
+			titulo.text = value.label;
+		}
+		override public function get data():Object
+		{
+			return _data;
+		}
+	]]>
+</mx:Script>
+	<mx:Image source="assets/img/lupa.gif" x="206" y="3" width="16" height="16"/>
+	<mx:Label id="titulo" x="0" y="3" text="Label" width="201"/>
+</mx:Canvas>
