@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="598" height="190"
+	title="{_title}" close="closeWindow(event)" showCloseButton="true">
+	<mx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import com.stc.maps.view.components.event.EntityRendererEvent;
+			import com.stc.maps.vo.EntityVO;
+			import mx.managers.PopUpManager;
+			
+			private var _data : Object;
+			
+			[Bindable]
+			private var facebookLink : String = "";
+			[Bindable]
+			private var _title : String = "Empresas Polar";
+			[Bindable]
+			private var twitterLink : String = "";
+			[Bindable]
+			private var logoURL : String = "assets/logos/polar.jpg";
+			[Bindable]
+			private var objective : String = "El objetivo de Empresas Polar es lograr la eliminacion de la pobreza en todos los estractos de la sociedad. Para lo grar eso se ha puesto como meta la elaboracion de un plan de nutricion nacional.";
+			[Bindable]
+			private var direction : String = "Calle Amazonas, Colinas de la California, Miranda.";
+			[Bindable]
+			private var webURL : String = "www.empresaspolar.com";
+			[Bindable]
+			private var phone : String = "(58) 212 2357892";
+			[Bindable]
+			private var email : String = "contacto@empresas-polar.com";
+			[Bindable]
+			private var esRed : Boolean;
+			
+			private function closeWindow(event : Event) : void
+			{
+				PopUpManager.removePopUp(this);
+			}
+			
+			override public function set data(value : Object) : void
+			{
+				if(value && value is EntityVO)
+				{
+					var entity : EntityVO = value as EntityVO;
+					_data = value;
+
+					logoURL = entity.logoURL;
+					objective = entity.objective;
+					direction = entity.direction;
+					webURL = entity.webURL;
+					phone = entity.phone;
+					email = entity.email;
+					facebookLink = entity.facebookLink;
+					_title = entity.title;
+					twitterLink = entity.twitterLink;
+					esRed = (entity.type==EntityVO.NETWORK);
+				}
+			}
+
+			override public function get data() : Object
+			{
+				return _data;
+			}
+			
+			private function verRed_clickHander(event : MouseEvent) : void
+			{
+				if(esRed)
+				{
+					var ev : EntityRendererEvent = new EntityRendererEvent(EntityRendererEvent.SHOW_NETWORK);
+					ev.network = _data;
+					dispatchEvent(ev);
+				}
+				else
+				{
+					Alert.show("Este icono no es de una red o esta vacio");
+				}
+			}	
+		]]>
+	</mx:Script>
+	
+	<mx:Image x="10" y="10" source="{logoURL}" width="100" height="100"/>
+	<mx:Image x="10" y="118" source="assets/img/twitter.png" width="32" height="32"/>
+	<mx:Image x="50" y="118" source="assets/img/facebook.png" width="32" height="32"/>
+	<mx:TextArea x="118" borderThickness="0" y="10" width="470" height="52">
+		<mx:text>{objective}</mx:text>
+	</mx:TextArea>
+	<mx:Label x="118" y="65" text="Direccion:" fontWeight="bold"/>
+	<mx:Label x="194" y="65" text="{direction}" width="402"/>
+	<mx:Label x="194" y="87" text="{webURL}" width="394"/>
+	<mx:Label x="194" y="109" text="{phone}" width="394"/>
+	<mx:Label x="118" y="87" text="Página web:" width="86" fontWeight="bold"/>
+	<mx:Label x="118" y="109" text="Teléfono:" width="86" fontWeight="bold"/>
+	<mx:Label x="194" y="132" text="{email}" width="254"/>
+	<mx:Label x="118" y="131" text="Correo:" width="50" fontWeight="bold"/>
+	<mx:Button x="456" y="132" label="Ver Ficha" width="132"/>
+	<mx:Button id="verRed" x="320" y="132" visible="{esRed}" click="verRed_clickHander(event)" label="Ver Red" width="132"/>
+	
+</mx:TitleWindow>
