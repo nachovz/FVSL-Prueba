@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flexLibProperties version="1">
+<includeClasses>
+<classEntry path="com.stc.maps.view.components.LayoutAnimator"/>
+<classEntry path="com.stc.maps.view.components.InputBox"/>
+<classEntry path="com.stc.maps.event.FiltersEvent"/>
+<classEntry path="com.stc.maps.command.FiltersCommand"/>
+<classEntry path="com.stc.maps.view.components.event.AnimationEvent"/>
+<classEntry path="com.stc.maps.business.Services"/>
+<classEntry path="com.stc.maps.business.FiltersDelegate"/>
+<classEntry path="com.stc.maps.event.EntitiesEvent"/>
+<classEntry path="com.stc.maps.control.MapsController"/>
+<classEntry path="com.stc.maps.view.components.LayoutTarget"/>
+<classEntry path="com.stc.maps.view.CollapsableMenu"/>
+<classEntry path="com.stc.maps.view.components.EntityRendererList"/>
+<classEntry path="com.stc.maps.vo.FilterVO"/>
+<classEntry path="com.stc.maps.view.components.SuperPanel"/>
+<classEntry path="com.stc.maps.command.EntitiesCommand"/>
+<classEntry path="com.stc.maps.view.components.AdvancedSearch"/>
+<classEntry path="com.stc.maps.vo.EntityVO"/>
+<classEntry path="com.stc.maps.vo.FilterOptionVO"/>
+<classEntry path="com.stc.maps.view.components.event.EntityRendererListEvent"/>
+<classEntry path="com.stc.maps.model.ModelLocator"/>
+<classEntry path="com.stc.maps.vo.NetworkVO"/>
+<classEntry path="com.stc.maps.business.EntitiesDelegate"/>
+<classEntry path="com.stc.maps.view.components.MultiselectRenderer"/>
+<classEntry path="com.stc.maps.view.components.event.EntityRendererEvent"/>
+<classEntry path="com.stc.maps.view.components.EntityRenderer"/>
+</includeClasses>
+<includeResources>
+<resourceEntry destPath="com/assets/img/home2.png" sourcePath="com/assets/img/home2.png"/>
+<resourceEntry destPath="com/assets/markers/museum-science.png" sourcePath="com/assets/markers/museum-science.png"/>
+<resourceEntry destPath="com/assets/markers/redes.png" sourcePath="com/assets/markers/redes.png"/>
+<resourceEntry destPath="com/assets/img/image.png" sourcePath="com/assets/img/image.png"/>
+<resourceEntry destPath="com/assets/img/twitter.png" sourcePath="com/assets/img/twitter.png"/>
+<resourceEntry destPath="com/assets/markers/communitycentre.png" sourcePath="com/assets/markers/communitycentre.png"/>
+<resourceEntry destPath="com/assets/logos/polar.jpg" sourcePath="com/assets/logos/polar.jpg"/>
+<resourceEntry destPath="com/assets/img/resizeHandler.png" sourcePath="com/assets/img/resizeHandler.png"/>
+<resourceEntry destPath="com/assets/markers/university.png" sourcePath="com/assets/markers/university.png"/>
+<resourceEntry destPath="com/assets/img/closeButton.png" sourcePath="com/assets/img/closeButton.png"/>
+<resourceEntry destPath="com/assets/img/increaseButton.png" sourcePath="com/assets/img/increaseButton.png"/>
+<resourceEntry destPath="com/assets/img/decreaseButton.png" sourcePath="com/assets/img/decreaseButton.png"/>
+<resourceEntry destPath="com/assets/markers/cooperantes.png" sourcePath="com/assets/markers/cooperantes.png"/>
+<resourceEntry destPath="com/assets/markers/home.png" sourcePath="com/assets/markers/home.png"/>
+<resourceEntry destPath="com/assets/img/home.gif" sourcePath="com/assets/img/home.gif"/>
+<resourceEntry destPath="com/assets/img/facebook.png" sourcePath="com/assets/img/facebook.png"/>
+<resourceEntry destPath="com/assets/markers/empresas.png" sourcePath="com/assets/markers/empresas.png"/>
+<resourceEntry destPath="com/assets/markers/otros.png" sourcePath="com/assets/markers/otros.png"/>
+<resourceEntry destPath="com/assets/img/resizeCursor.png" sourcePath="com/assets/img/resizeCursor.png"/>
+<resourceEntry destPath="com/assets/img/lupa.gif" sourcePath="com/assets/img/lupa.gif"/>
+<resourceEntry destPath="com/assets/img/tools.png" sourcePath="com/assets/img/tools.png"/>
+<resourceEntry destPath="com/assets/img/collapse.gif" sourcePath="com/assets/img/collapse.gif"/>
+<resourceEntry destPath="com/assets/img/Thumbs.db" sourcePath="com/assets/img/Thumbs.db"/>
+<resourceEntry destPath="com/assets/markers/orgdesarrollosocial.png" sourcePath="com/assets/markers/orgdesarrollosocial.png"/>
+<resourceEntry destPath="com/assets/css/styles.css" sourcePath="com/assets/css/styles.css"/>
+</includeResources>
+<namespaceManifests/>
+</flexLibProperties>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" width="300" height="40"
+	horizontalScrollPolicy="off" verticalScrollPolicy="off">
+<mx:Script>
+    <![CDATA[
+    	import com.stc.maps.view.components.event.EntityRendererEvent;
+    
+    	private var _data : Object = {};
+    
+    	override public function set data(value:Object):void
+    	{
+    		if(value)
+    		{
+	    		_data = value;
+	    		check.label = value.title;
+	    		check.selected = value.isSelected;
+	    		image.source = value.iconURL;
+    		}
+    	}
+    	override public function get data():Object
+    	{
+    		return _data;
+    	}
+    
+        private function onChange(evt:Event):void {
+            data.isSelected = !data.isSelected;
+            if(data.isSelected) addLayers();
+            else removeLayers();
+        }
+        
+        private function addLayers() : void
+        {
+	     	var ev : EntityRendererEvent = new EntityRendererEvent(EntityRendererEvent.SHOW_ITEM);
+			ev.item = _data;
+	     	this.dispatchEvent(ev);
+        }
+
+        private function removeLayers() : void
+        {
+	     	var ev : EntityRendererEvent = new EntityRendererEvent(EntityRendererEvent.HIDE_ITEM);
+			ev.item = _data;
+	     	this.dispatchEvent(ev);
+        }
+    ]]>
+</mx:Script>
+	<mx:CheckBox id="check" doubleClickEnabled="false" change="onChange(event);" width="250" fontSize="16" />
+	<mx:Image id="image" />
+</mx:HBox>

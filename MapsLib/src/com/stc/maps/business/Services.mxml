@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cairngorm:ServiceLocator 
+	xmlns:adobe="http://www.adobe.com/2006/cairngorm"
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:cairngorm="com.adobe.cairngorm.business.*">
+
+<mx:WebService id="cooperantsWS" wsdl="http://localhost:4918/WebSite1/Cooperants.asmx?WSDL" >
+	<mx:operation 
+	name="GetAllCooperants" 
+	resultFormat="object"
+	/>
+	<mx:operation 
+	name="searchCooperants" 
+	resultFormat="object"
+	/>
+</mx:WebService>
+<mx:WebService id="odsWS" wsdl="http://mapasvsl.com/website/ODS.asmx?WSDL" >
+	<mx:operation 
+	name="GetAllODS" 
+	resultFormat="object"
+	/>
+</mx:WebService>
+<mx:WebService id="networkWS" wsdl="http://mapasvsl.com/website/Network.asmx?WSDL" >
+	<mx:operation 
+	name="GetAllNetworks" 
+	resultFormat="object"
+	/>
+</mx:WebService>
+<mx:WebService id="catalogsWS" wsdl="http://mapasvsl.com/website/Catalogs.asmx?WSDL" >
+	<mx:operation name="getCountries" resultFormat="object"/>
+	<mx:operation name="getOrganizationTypes" resultFormat="object"	/>
+	<mx:operation name="getEnfoqueGeograficoTypes" resultFormat="object"	/>
+	<mx:operation name="getBeneficiaryTypes" resultFormat="object"	/>
+</mx:WebService>
+</cairngorm:ServiceLocator>
