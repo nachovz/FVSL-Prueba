@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="300" height="100%" backgroundColor="#000066"
+	horizontalAlign="center" verticalAlign="top" creationComplete="entityRendererList_creationComplete(event)">
+<mx:Script>
+	<![CDATA[
+		import com.stc.maps.view.components.event.EntityRendererEvent;
+		import com.stc.maps.vo.NetworkVO;
+		import mx.controls.Alert;
+		import com.stc.maps.vo.EntityVO;
+		import com.stc.maps.view.components.event.EntityRendererListEvent;
+		import mx.events.ItemClickEvent;
+		import mx.events.ListEvent;
+		import mx.collections.SortField;
+		import mx.collections.Sort;
+		import mx.events.FlexEvent;
+		import mx.collections.ArrayCollection;
+		
+		import flash.events.MouseEvent;
+		import flash.events.FocusEvent;
+		import flash.events.Event;
+/* 		import flash.events.Event; */
+/* 		import flash.events.FocusEvent; */
+/* 		import flash.events.MouseEvent; */
+	
+		[Bindable]
+		private var _entities : ArrayCollection = new ArrayCollection();
+		
+		private var filterActive : Boolean;
+	
+		public function set entities(value:ArrayCollection):void
+		{
+			if(value)
+			{
+				this._entities = value;
+				filterActive = false;
+				addListeners();
+				showAllMarkers();
+			}
+		}
+		
+		public function get entities() : ArrayCollection
+		{
+			return _entities;
+		}
+		
+		private function entityRendererList_creationComplete(event : FlexEvent)
+		{
+			addListeners();
+		}
+		
+		private function setEntitiesFilter() : void
+		{
+			var sort:Sort = new Sort();
+            sort.fields = [new SortField("title")];
+            _entities.sort=sort;
+
+	    	//if(filterInput.text!="Empresa, ODS, Red, Cooperante...")
+	            _entities.refresh();
+               
+            _entities.filterFunction = filterEntitys;
+		}
+	    // filter array collection by what user types
+	    private function filterEntitys(item:Object):Boolean {
+	        if (item.title.toLowerCase().indexOf(filterInput.text) >= 0) {
+	           return true;   
+	        }
+	        else {
+	           return false;
+	        }
+	    }
+		
+	    private function filterChaned() : void
+	    {
+	    	if(filterInput.text!="Empresa, ODS, Red, Cooperante...")
+	     		_entities.refresh();
+	    }	
+	    
+	    private function list_itemDoubleClicked(event : ListEvent) : void
+	    {
+	     	var ev : EntityRendererListEvent = new EntityRendererListEvent(EntityRendererListEvent.FOCUS_MAP_ITEM);
+	     	ev.item = list.selectedItem;
+	     	this.dispatchEvent(ev);
+	    }
+	    
+	    private function showAllLinkButton_click(event : MouseEvent) : void
+	    {
+	     	showAllMarkers();
+	    }
+	    
+	    private function hideAllLinkButton_click(event : MouseEvent) : void
+	    {
+	     	hideAllMarkers();
+	    }
+	    
+	    private function showAllMarkers() : void
+	    {
+	     	for each(var entity : EntityVO in _entities)
+	     	{
+	     		if(entity.marker)
+	     		{
+			     	var ev : EntityRendererEvent = (entity is NetworkVO) ? new EntityRendererEvent(EntityRendererEvent.SHOW_NETWORK) : new EntityRendererEvent(EntityRendererEvent.SHOW_ITEM);
+					ev.item = entity;
+			     	this.dispatchEvent(ev);
+		     		entity.isSelected = true;
+		     	}
+	     	}
+	    }
+
+	    private function hideAllMarkers() : void
+	    {
+	     	for each(var entity : EntityVO in _entities)
+	     	{
+		     	var ev : EntityRendererEvent = (entity is NetworkVO) ? new EntityRendererEvent(EntityRendererEvent.HIDE_NETWORK) : new EntityRendererEvent(EntityRendererEvent.HIDE_ITEM);
+				ev.item = entity;
+		     	this.dispatchEvent(ev);
+	     		entity.isSelected = false;
+	     	}
+	    }
+	    
+	    private function filterInput_setFocus(event : FocusEvent) : void
+	    {
+	    	if(filterInput.text=="Empresa, ODS, Red, Cooperante...")
+	    	{
+	    		filterInput.text = "";
+	    		if(!filterActive)
+	    		{
+	    			setEntitiesFilter();
+	    			filterActive = true;
+	    		} 
+	    		//filterInput.addEventListener();
+	    	}
+            filterInput.addEventListener(FocusEvent.FOCUS_OUT, filterInput_loseFocus);
+	    }
+	    
+	    private function addListeners() : void
+	    {
+            filterInput.addEventListener(FocusEvent.FOCUS_IN, filterInput_setFocus);
+            filterInput.removeEventListener(FocusEvent.FOCUS_OUT, filterInput_loseFocus);
+	    }
+	    
+	    private function filterInput_loseFocus(event : FocusEvent) : void
+	    {
+	    	if(filterInput.text=="")
+	    	{
+	    		filterInput.text = "Empresa, ODS, Red, Cooperante...";
+	    	}
+            filterInput.removeEventListener(FocusEvent.FOCUS_OUT, filterInput_loseFocus);
+	    }
+	]]>
+</mx:Script>
+	<mx:VBox verticalGap="0" width="100%" height="60" backgroundColor="#000066" verticalScrollPolicy="off"
+		horizontalScrollPolicy="off" verticalAlign="middle" horizontalAlign="center">
+		<mx:TextArea id="instruction" fontSize="12" text="Filtra estos resultados según el nombre:"
+			width="100%" wordWrap="true" height="20" color="#FFFFFF" borderStyle="none" editable="false" horizontalScrollPolicy="off"
+			verticalScrollPolicy="off" backgroundAlpha="0"  />
+		<mx:TextInput width="95%" fontSize="12" id="filterInput" change="filterChaned()" text="Empresa, ODS, Red, Cooperante..." />
+	</mx:VBox>
+	<mx:HBox width="100%">
+		<mx:LinkButton id="showAllLinkButton" label="Mostrar todos" width="50%" click="showAllLinkButton_click(event)" />
+		<mx:LinkButton id="hideAllLinkButton" label="Ocultar todos" width="50%" click="hideAllLinkButton_click(event)" />
+	</mx:HBox>
+    <mx:List id="list"
+            dataProvider="{_entities}"
+            alternatingItemColors="[white, white]"
+            width="100%"
+            x="10"
+            y="60"
+            height="100%" borderColor="#FFFFFF"
+            itemRenderer="com.stc.maps.view.components.EntityRenderer"
+            doubleClickEnabled="true"
+            backgroundColor="#FFFFFF"
+            itemDoubleClick="list_itemDoubleClicked(event)">
+    </mx:List>	
+</mx:VBox>

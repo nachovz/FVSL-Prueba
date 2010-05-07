@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="598" height="190"
+	title="{_title}" close="closeWindow(event)" showCloseButton="true"
+	horizontalScrollPolicy="off" verticalScrollPolicy="off">
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.rpc.Responder;
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.events.ResultEvent;
+			import mx.controls.Alert;
+			import com.stc.maps.view.components.event.EntityRendererEvent;
+			import com.stc.maps.vo.EntityVO;
+			import mx.managers.PopUpManager;
+			import flash.display.Loader;
+			
+			private var _data : Object;
+			private var collapsed : Boolean = true;
+			
+			[Bindable]
+			private var facebookLink : String = "";
+			[Bindable]
+			private var _title : String = "Cargando...";
+			[Bindable]
+			private var twitterLink : String = "";
+			[Bindable]
+			private var logoURL : String = "assets/logos/polar.jpg";
+			[Bindable]
+			private var objective : String = "Cargando...";
+			[Bindable]
+			private var direction : String = "Cargando...";
+			[Bindable]
+			private var webURL : String = "Cargando...";
+			[Bindable]
+			private var phone : String = "Cargando...";
+			[Bindable]
+			private var email : String = "Cargando...";
+			
+			[Bindable]
+			private var areas : ArrayCollection = new ArrayCollection();
+			[Bindable]
+			private var beneficiarios : ArrayCollection = new ArrayCollection();
+			[Bindable]
+			private var awards : ArrayCollection = new ArrayCollection();
+			[Bindable]
+			private var focus : String = "Cargando...";
+			[Bindable]
+			private var orgType : String = "Cargando...";
+			
+			[Bindable]
+			private var esRed : Boolean;
+			
+			public var getEntityDetailsHandlers : mx.rpc.Responder = new mx.rpc.Responder(getEntityDetailsResult, getEntityDetailsFault);
+			
+			private function closeWindow(event : Event) : void
+			{
+				PopUpManager.removePopUp(this);
+			}
+			
+			override public function set data(value : Object) : void
+			{
+				if(value && value is EntityVO)
+				{
+					var entity : EntityVO = value as EntityVO;
+					_data = value;
+					esRed = (entity.type==EntityVO.NETWORK);
+				}
+			}
+
+			override public function get data() : Object
+			{
+				return _data;
+			}
+			
+			private function verRed_clickHander(event : MouseEvent) : void
+			{
+				if(esRed)
+				{
+					var ev : EntityRendererEvent = new EntityRendererEvent(EntityRendererEvent.EXPAND_NETWORK);
+					ev.network = _data;
+					dispatchEvent(ev);
+				}
+				else
+				{
+					Alert.show("Este icono no es de una red o esta vacio");
+				}
+			}
+			
+			private function verficha_clickHander(event : MouseEvent) : void
+			{
+				if(collapsed)
+				{
+					resizeEffect.play();
+					collapsed = false;		
+					collapseButton.label = "Ocultar ficha";			
+				}
+				else
+				{
+					resizeEffect2.play();
+					collapsed = true;					
+					collapseButton.label = "Ver ficha";			
+				}
+			}
+			
+			private function getEntityDetailsResult(event : ResultEvent) : void
+			{
+				var entity : EntityVO = event.result as EntityVO;
+				logoURL = entity.logoURL;
+				objective = entity.objective;
+				direction = entity.direction;
+				webURL = entity.webURL;
+				phone = entity.phone;
+				email = entity.email;
+				facebookLink = entity.facebookLink;
+				_title = entity.title;
+				twitterLink = entity.twitterLink;
+				
+				awards.source = entity.awards.source;
+				awards.refresh();
+
+				areas.source = entity.interventionAreas.source;
+				areas.refresh();
+
+				beneficiarios.source = entity.beneficiaries.source;
+				beneficiarios.refresh();
+				
+				focus = entity.geograficalFocus;
+				
+				if(entity.imageData)
+				{
+					var loader:Loader = new Loader();
+					loader.loadBytes(entity.imageData);
+					loader.contentLoaderInfo.addEventListener(Event.COMPLETE,loaderCompleteHandler);
+				}
+			}
+			
+			private function loaderCompleteHandler(event:Event) : void
+			{
+				var loader:Loader = LoaderInfo(event.target).loader;
+				loader.removeEventListener(Event.COMPLETE,loaderCompleteHandler);
+				
+				
+				var bmp:Bitmap = Bitmap(loader.content);
+				imgCanvas.source = bmp;
+			}
+			
+		   	private function getEntityDetailsFault(event : FaultEvent) : void
+		   	{
+		   		Alert.show("A ocurrido un error trayendo los datos de la entidad.");
+		   	}	
+		]]>
+	</mx:Script>
+	<mx:Resize id="resizeEffect" target="{this}" heightFrom="190" heightTo="400" duration="500" />
+	<mx:Resize id="resizeEffect2" target="{this}" heightFrom="400" heightTo="190" duration="500" />
+	
+	<mx:Image x="10" y="10" id="imgCanvas" width="100" height="100"/>
+	<mx:Image x="10" y="118" source="com/assets/img/twitter.png" width="32" height="32"/>
+	<mx:Image x="50" y="118" source="com/assets/img/facebook.png" width="32" height="32"/>
+	<mx:TextArea x="118" borderThickness="0" y="10" width="470" height="52" editable="false">
+		<mx:text>{objective}</mx:text>
+	</mx:TextArea>
+	<mx:Label x="118" y="65" text="Dirección:" fontWeight="bold"/>
+	<mx:Label x="194" y="65" text="{direction}" width="402"/>
+	<mx:Label x="194" y="87" text="{webURL}" width="394"/>
+	<mx:Label x="194" y="109" text="{phone}" width="394"/>
+	<mx:Label x="118" y="87" text="Página web:" width="86" fontWeight="bold"/>
+	<mx:Label x="118" y="109" text="Teléfono:" width="86" fontWeight="bold"/>
+	<mx:Label x="184" y="132" text="{email}" width="254"/>
+	<mx:Label x="118" y="131" text="Correo:" width="50" fontWeight="bold"/>
+	<mx:Button x="456" y="132" id="collapseButton" label="Ver ficha" width="132" click="verficha_clickHander(event)"/>
+	<mx:Button id="verRed" x="320" y="132" visible="{esRed}" click="verRed_clickHander(event)" label="Ver Red" width="132"/>
+	<mx:VBox verticalAlign="top" x="10" y="162">
+		<mx:HBox horizontalAlign="left">
+			<mx:Label width="150" text="Premios otorgados y recibidos:"/>
+			<mx:DataGrid width="380" height="100" dataProvider="{awards}" />
+		</mx:HBox>
+		<mx:HBox horizontalAlign="left">
+			<mx:Label width="150" text="Areas de intervención:"/>
+			<mx:List width="400" height="50" dataProvider="{areas}" />
+		</mx:HBox>
+		<mx:HBox horizontalAlign="left">
+			<mx:Label width="150" text="Tipo de organizacion:"/>
+			<mx:Label width="400" text="{orgType}"/>
+		</mx:HBox>
+		<mx:HBox horizontalAlign="left">
+			<mx:Label width="150" text="Financia a terceros:"/>
+			<mx:Label width="400" text="No"/>
+		</mx:HBox>
+		<mx:HBox horizontalAlign="left">
+			<mx:Label width="150" text="Poblacion de interés:"/>
+			<mx:Label width="400" text="{focus}"/>
+		</mx:HBox>
+	</mx:VBox>
+</mx:TitleWindow>

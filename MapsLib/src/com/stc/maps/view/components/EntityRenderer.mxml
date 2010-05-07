@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="40"
+	horizontalScrollPolicy="off" verticalScrollPolicy="off">
+<mx:Script>
+    <![CDATA[
+    	import com.stc.maps.vo.NetworkVO;
+    	import com.stc.maps.vo.EntityVO;
+    	import com.stc.maps.view.components.event.EntityRendererEvent;
+    
+    	private var _data : Object = {};
+    
+    	override public function set data(value:Object):void
+    	{
+    		if(value)
+    		{
+	    		_data = value;
+	    		check.label = value.title;
+	    		check.selected = value.isSelected;
+	    		image.source = getImageSource(value.type);
+    		}
+    	}
+    	override public function get data():Object
+    	{
+    		return _data;
+    	}
+    
+        private function onChange(evt:Event):void {
+            data.isSelected = !data.isSelected;
+            if(data.isSelected) addLayers();
+            else removeLayers();
+        }
+        
+        private function addLayers() : void
+        {
+	     	var ev : EntityRendererEvent = (_data is NetworkVO) ? new EntityRendererEvent(EntityRendererEvent.SHOW_NETWORK) : new EntityRendererEvent(EntityRendererEvent.SHOW_ITEM);
+			ev.item = _data;
+	     	this.dispatchEvent(ev);
+        }
+
+        private function removeLayers() : void
+        {
+	     	var ev : EntityRendererEvent = (_data is NetworkVO) ? new EntityRendererEvent(EntityRendererEvent.HIDE_NETWORK) : new EntityRendererEvent(EntityRendererEvent.HIDE_ITEM);
+			ev.item = _data;
+	     	this.dispatchEvent(ev);
+        }
+        
+        private function getImageSource(type : String) : String
+        {
+        	switch(type)
+        	{
+        		case EntityVO.ODS:
+        			return "com/assets/markers/orgdesarrollosocial.png";
+        		break;
+        		case EntityVO.COOPERANT:
+        			return "com/assets/markers/cooperantes.png";
+        		break;
+        		case EntityVO.NETWORK:
+        			return "com/assets/markers/redes.png";
+        		break;
+        		default:
+        			return "com/assets/markers/otros.png";
+        		break;
+        	}
+        	
+        	return "";
+        }
+    ]]>
+</mx:Script>
+	<mx:CheckBox id="check" doubleClickEnabled="false" color="#000000" change="onChange(event);" width="230" fontSize="12" />
+	<mx:Image id="image" />
+</mx:HBox>
