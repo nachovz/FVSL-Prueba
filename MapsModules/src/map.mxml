@@ -249,14 +249,16 @@
 					{
 						if(entity.type==EntityVO.NETWORK && totalLayers==1) renderNetwork(entity as NetworkVO);
 						
-						if(model.makersLatLongDictionary[entity.lat] && model.makersLatLongDictionary[entity.lat][entity.long])
+						if(model.makersLatLongDictionary[entity.lat] && model.makersLatLongDictionary[entity.lat][entity.long] && totalLayers>1)
 						{
 							var ent : EntityVO = model.makersLatLongDictionary[entity.lat][entity.long];
 							if(entity.type==EntityVO.NETWORK)
 							{
 								Marker(ent.marker).visible = false;
-								createMarker( entity, getEntityIcon(entity.type) );
+								createMarker( entity, getEntityIcon(entity.type) )
 							}
+							else if(ent.type!=EntityVO.NETWORK) createMarker( entity, getEntityIcon(entity.type) );
+								
 						}
 						else
 							createMarker( entity, getEntityIcon(entity.type) );
@@ -496,5 +498,6 @@
 	  	backgroundColor="#FFFFFF"
 	  	  />
 	  <view:CollapsableMenu x="0" y="0" id="menu" width="0" expandedWidth="300" />
+	  <mx:Image source="com/assets/img/logo.png" right="2" bottom="2" />
     <business:Services id="services" />
 </mx:Module>
