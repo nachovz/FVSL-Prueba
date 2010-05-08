@@ -46,6 +46,8 @@
 			private var focus : String = "Cargando...";
 			[Bindable]
 			private var orgType : String = "Cargando...";
+			[Bindable]
+			private var financy : String = "Cargando...";
 			
 			[Bindable]
 			private var esRed : Boolean;
@@ -115,16 +117,18 @@
 				_title = entity.title;
 				twitterLink = entity.twitterLink;
 				
-				awards.source = entity.awards.source;
+				if(entity.awards) awards.source = entity.awards.source;
 				awards.refresh();
 
-				areas.source = entity.interventionAreas.source;
+				if(entity.interventionAreas) areas.source = entity.interventionAreas.source;
 				areas.refresh();
 
-				beneficiarios.source = entity.beneficiaries.source;
+				if(entity.beneficiaries) beneficiarios.source = entity.beneficiaries.source;
 				beneficiarios.refresh();
 				
 				focus = entity.geograficalFocus;
+				orgType = entity.organizationType;
+				financy = entity.financy;
 				
 				if(entity.imageData)
 				{
@@ -150,8 +154,8 @@
 		   	}	
 		]]>
 	</mx:Script>
-	<mx:Resize id="resizeEffect" target="{this}" heightFrom="190" heightTo="400" duration="500" />
-	<mx:Resize id="resizeEffect2" target="{this}" heightFrom="400" heightTo="190" duration="500" />
+	<mx:Resize id="resizeEffect" target="{this}" heightFrom="190" heightTo="450" duration="500" />
+	<mx:Resize id="resizeEffect2" target="{this}" heightFrom="450" heightTo="190" duration="500" />
 	
 	<mx:Image x="10" y="10" id="imgCanvas" width="100" height="100"/>
 	<mx:Image x="10" y="118" source="com/assets/img/twitter.png" width="32" height="32"/>

@@ -35,6 +35,8 @@ package com.stc.maps.vo
 		public var beneficiaries : ArrayCollection;
 		public var interventionAreas : ArrayCollection;
 		public var geograficalFocus : String = "";
+		public var organizationType : String = "";
+		public var financy : String = "";
 
 		[Transient]
 		public var marker : Object;
@@ -52,8 +54,11 @@ package com.stc.maps.vo
 			this.webURL = obj.website;
 			this.objective = obj.objective;
 			this.email = obj.email;
+			this.phone = obj.phone;
 			this.imageData = obj.imgdata;
 			this.geograficalFocus = obj.enfoque;
+			this.organizationType = obj.tipoOrganizacion;
+			this.financy = (Number(obj.financia)==0) ? "No" : "Si";
 
 
 			this.awards = obj.awards;

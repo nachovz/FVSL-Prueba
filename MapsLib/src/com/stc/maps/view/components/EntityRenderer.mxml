@@ -49,16 +49,19 @@
         	switch(type)
         	{
         		case EntityVO.ODS:
-        			return "com/assets/markers/orgdesarrollosocial.png";
+        			return "com/assets/markers/3/ods.png";
         		break;
         		case EntityVO.COOPERANT:
-        			return "com/assets/markers/cooperantes.png";
+        			return "com/assets/markers/3/cooperantes.png";
         		break;
         		case EntityVO.NETWORK:
-        			return "com/assets/markers/redes.png";
+        			return "com/assets/markers/3/redes.png";
+        		break;
+        		case EntityVO.COMPANY:
+        			return "com/assets/markers/3/empresas.png";
         		break;
         		default:
-        			return "com/assets/markers/otros.png";
+        			return "com/assets/markers/3/otros.png";
         		break;
         	}
         	
