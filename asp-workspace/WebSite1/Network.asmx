@@ -119,6 +119,24 @@ public class Network  : System.Web.Services.WebService {
                 
                 
             break;
+            case 2://dependiendo de el tipo de nodo que sea el padre
+
+                VSLMapsTableAdapters.BigCompanyTableAdapter companyAdapter = new VSLMapsTableAdapters.BigCompanyTableAdapter();
+                VSLMaps.BigCompanyDataTable companyTable = companyAdapter.GetSingleCompany(parentId);
+
+                if (companyTable.Count == 1)
+                {
+                    VSLMaps.BigCompanyRow cooperantRow = (VSLMaps.BigCompanyRow)companyTable.Rows[0];
+                    auxCoop.name = cooperantRow.nombre;
+                    auxCoop.id = cooperantRow.id_sociosociales.ToString();
+                    auxCoop.latitude = cooperantRow.Latitud;
+                    auxCoop.longitude = cooperantRow.Longitud;
+                    auxCoop.type = "company";
+
+                }
+
+
+            break;
             case 1://dependiendo de el tipo de nodo que sea el padre
 
             VSLMapsTableAdapters.ODSTableAdapter odsAdapter = new VSLMapsTableAdapters.ODSTableAdapter();
@@ -159,6 +177,11 @@ public class Network  : System.Web.Services.WebService {
             else if (row.Tipo == 1)//El id del tipo de invitada
             {
                 EntityVO aux = GetOdsNode(row.Id_Invitada);
+                results.Add(aux);
+            }
+            else if (row.Tipo == 2)//El id del tipo de invitada
+            {
+                EntityVO aux = GetCompanyNode(row.Id_Invitada);
                 results.Add(aux);
             }
         }
@@ -209,6 +232,30 @@ public class Network  : System.Web.Services.WebService {
         }
     }
 
+
+    private EntityVO GetCompanyNode(int id)
+    {
+
+        VSLMapsTableAdapters.BigCompanyTableAdapter adapter = new VSLMapsTableAdapters.BigCompanyTableAdapter();
+        VSLMaps.BigCompanyDataTable ods = adapter.GetSingleCompany(id);
+
+        if (ods.Count == 1)
+        {
+            VSLMaps.BigCompanyRow row = (VSLMaps.BigCompanyRow)ods.Rows[0];
+            EntityVO aux = new EntityVO();
+            aux.latitude = row.Latitud;
+            aux.longitude = row.Longitud;
+            aux.id = row.id_sociosociales.ToString();
+            aux.name = row.nombre;
+            aux.type = "company";
+            return aux;
+        }
+        else
+        {
+            return null;
+        }
+    }
+    
     private EntityVO GetOdsNode(int id)
     {
 
