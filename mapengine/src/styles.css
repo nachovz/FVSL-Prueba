@@ -1,0 +1,65 @@
+Panel {
+   borderColor: #ffffff;
+   borderAlpha: 1;
+   borderThicknessLeft: 5;
+   borderThicknessTop: 5;
+   borderThicknessBottom: 5;
+   borderThicknessRight: 5;
+   roundedBottomCorners: false;
+   cornerRadius: 0;
+   headerHeight: 20;
+   backgroundAlpha: 1;
+   highlightAlphas: 0, 0;
+   headerColors: #003366, #003399;
+   backgroundColor: #ffffff;
+   titleStyleName: "mypanelTitle";
+}
+
+.mypanelTitle {
+   color: #ffffff;
+}
+ComboBox {
+   cornerRadius: 12;
+   themeColor: #000066;
+}
+ButtonBar {
+   buttonHeight: 23;
+   buttonWidth: 129;
+   buttonStyleName: "mybuttonBarButtonStyle";
+   firstButtonStyleName: "mybuttonBarFirstButtonStyle";
+   lastButtonStyleName: "mybuttonBarLastButtonStyle";
+}
+
+.mybuttonBarButtonStyle {
+   themeColor: #000066;
+}
+
+.mybuttonBarFirstButtonStyle {
+   cornerRadius: 13;
+}
+
+.mybuttonBarLastButtonStyle {
+   cornerRadius: 12;
+}
+LinkButton {
+   cornerRadius: 2;
+   rollOverColor: #0033ff;
+   selectionColor: #003399;
+   color: #0033cc;
+   textRollOverColor: #ffffff;
+   textSelectedColor: #cccccc;
+   fontWeight: normal;
+   textDecoration: underline;
+}
+Button {
+   cornerRadius: 0;
+   paddingLeft: 5;
+   paddingRight: 5;
+   paddingBottom: 0;
+   highlightAlphas: 0, 0;
+   fillColors: #333333, #000000, #333333, #000000;
+   color: #ffffff;
+   textRollOverColor: #ffffff;
+   textSelectedColor: #ffffff;
+   themeColor: #000000;
+}
