@@ -154,6 +154,8 @@ package com.stc.maps.view
 			expandButton.height = expandButtonHeight;
 			expandButton.addEventListener(MouseEvent.CLICK,resizeToolbar);
 			expandButton.source = "com/assets/img/tools.png";
+			expandButton.useHandCursor=true; 
+			expandButton.buttonMode=true;
 			
 			addChild(expandButton);
 			addChild(content);

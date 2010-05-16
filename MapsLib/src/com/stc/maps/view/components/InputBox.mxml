@@ -4,6 +4,7 @@
 	horizontalScrollPolicy="off" verticalScrollPolicy="off">
 	<mx:Script>
 		<![CDATA[
+			import mx.binding.utils.BindingUtils;
 			import mx.collections.ArrayCollection;
 			import mx.rpc.Responder;
 			import mx.rpc.events.FaultEvent;
@@ -18,11 +19,11 @@
 			private var collapsed : Boolean = true;
 			
 			[Bindable]
-			private var facebookLink : String = "";
+			private var facebookLink : String = "No tiene cuenta Facebook";
 			[Bindable]
 			private var _title : String = "Cargando...";
 			[Bindable]
-			private var twitterLink : String = "";
+			private var twitterLink : String = "No tiene cuenta Twitter";
 			[Bindable]
 			private var logoURL : String = "assets/logos/polar.jpg";
 			[Bindable]
@@ -51,6 +52,9 @@
 			
 			[Bindable]
 			private var esRed : Boolean;
+			
+			[Bindable]
+			private var selectedIndex : int = 0;
 			
 			public var getEntityDetailsHandlers : mx.rpc.Responder = new mx.rpc.Responder(getEntityDetailsResult, getEntityDetailsFault);
 			
@@ -113,9 +117,9 @@
 				webURL = entity.webURL;
 				phone = entity.phone;
 				email = entity.email;
-				facebookLink = entity.facebookLink;
+				if(entity.facebookLink!="") facebookLink = entity.facebookLink;
 				_title = entity.title;
-				twitterLink = entity.twitterLink;
+				if(entity.twitterLink!="") twitterLink = entity.twitterLink;
 				
 				if(entity.awards) awards.source = entity.awards.source;
 				awards.refresh();
@@ -129,6 +133,11 @@
 				focus = entity.geograficalFocus;
 				orgType = entity.organizationType;
 				financy = entity.financy;
+				if(financy=="No") 
+				{
+					poblacionCooperate.visible = false;
+					poblacionCooperate.includeInLayout = false;
+				}
 				
 				if(entity.imageData)
 				{
@@ -136,6 +145,8 @@
 					loader.loadBytes(entity.imageData);
 					loader.contentLoaderInfo.addEventListener(Event.COMPLETE,loaderCompleteHandler);
 				}
+				
+				if(entity.type==EntityVO.ODS) selectedIndex = 1;
 			}
 			
 			private function loaderCompleteHandler(event:Event) : void
@@ -148,51 +159,98 @@
 				imgCanvas.source = bmp;
 			}
 			
+			private function getAwardStatus(item:Object, column:DataGridColumn):String
+			{
+				if(item.recibido==1) return "Recibido";
+				else return "Otorgado";
+			}
+			
+			private function twitter_click(event : MouseEvent) : void
+			{
+				if(twitterLink!="No tiene cuenta Twitter") navigateToURL(new URLRequest(twitterLink),'_parent');
+			}
+			
+			private function facebook_click(event : MouseEvent) : void
+			{
+				if(facebookLink!="No tiene cuenta Facebook") navigateToURL(new URLRequest(facebookLink),'_parent');
+			}
+			
 		   	private function getEntityDetailsFault(event : FaultEvent) : void
 		   	{
 		   		Alert.show("A ocurrido un error trayendo los datos de la entidad.");
 		   	}	
 		]]>
 	</mx:Script>
-	<mx:Resize id="resizeEffect" target="{this}" heightFrom="190" heightTo="450" duration="500" />
-	<mx:Resize id="resizeEffect2" target="{this}" heightFrom="450" heightTo="190" duration="500" />
+	<mx:Resize id="resizeEffect" target="{this}" heightFrom="190" heightTo="470" duration="500" />
+	<mx:Resize id="resizeEffect2" target="{this}" heightFrom="470" heightTo="190" duration="500" />
 	
 	<mx:Image x="10" y="10" id="imgCanvas" width="100" height="100"/>
-	<mx:Image x="10" y="118" source="com/assets/img/twitter.png" width="32" height="32"/>
-	<mx:Image x="50" y="118" source="com/assets/img/facebook.png" width="32" height="32"/>
+	<mx:Image x="10" y="118" source="com/assets/img/twitter.png" useHandCursor="true" buttonMode="true" width="32" click="twitter_click(event)" toolTip="{twitterLink}" height="32"/>
+	<mx:Image x="50" y="118" source="com/assets/img/facebook.png" useHandCursor="true" buttonMode="true" width="32" click="facebook_click(event)" toolTip="{facebookLink}" height="32"/>
 	<mx:TextArea x="118" borderThickness="0" y="10" width="470" height="52" editable="false">
 		<mx:text>{objective}</mx:text>
 	</mx:TextArea>
 	<mx:Label x="118" y="65" text="Dirección:" fontWeight="bold"/>
 	<mx:Label x="194" y="65" text="{direction}" width="402"/>
 	<mx:Label x="194" y="87" text="{webURL}" width="394"/>
-	<mx:Label x="194" y="109" text="{phone}" width="394"/>
+	<mx:Label x="194" y="109" text="{email}" width="394"/>
 	<mx:Label x="118" y="87" text="Página web:" width="86" fontWeight="bold"/>
-	<mx:Label x="118" y="109" text="Teléfono:" width="86" fontWeight="bold"/>
-	<mx:Label x="184" y="132" text="{email}" width="254"/>
-	<mx:Label x="118" y="131" text="Correo:" width="50" fontWeight="bold"/>
+	<mx:Label x="118" y="109" text="Correo:" width="50" fontWeight="bold"/>
+	<mx:Label x="194" y="132" text="{phone}" width="254"/>
+	<mx:Label x="118" y="131" text="Teléfono:" width="86" fontWeight="bold"/>
 	<mx:Button x="456" y="132" id="collapseButton" label="Ver ficha" width="132" click="verficha_clickHander(event)"/>
 	<mx:Button id="verRed" x="320" y="132" visible="{esRed}" click="verRed_clickHander(event)" label="Ver Red" width="132"/>
-	<mx:VBox verticalAlign="top" x="10" y="162">
-		<mx:HBox horizontalAlign="left">
-			<mx:Label width="150" text="Premios otorgados y recibidos:"/>
-			<mx:DataGrid width="380" height="100" dataProvider="{awards}" />
-		</mx:HBox>
-		<mx:HBox horizontalAlign="left">
-			<mx:Label width="150" text="Areas de intervención:"/>
-			<mx:List width="400" height="50" dataProvider="{areas}" />
-		</mx:HBox>
-		<mx:HBox horizontalAlign="left">
-			<mx:Label width="150" text="Tipo de organizacion:"/>
-			<mx:Label width="400" text="{orgType}"/>
-		</mx:HBox>
-		<mx:HBox horizontalAlign="left">
-			<mx:Label width="150" text="Financia a terceros:"/>
-			<mx:Label width="400" text="No"/>
-		</mx:HBox>
-		<mx:HBox horizontalAlign="left">
-			<mx:Label width="150" text="Poblacion de interés:"/>
-			<mx:Label width="400" text="{focus}"/>
-		</mx:HBox>
-	</mx:VBox>
+	<mx:ViewStack selectedIndex="{selectedIndex}" x="10" y="162">
+		<mx:VBox verticalAlign="top">
+			<mx:HBox horizontalAlign="left">
+				<mx:TextArea width="150" text="Premios otorgados y recibidos:" height="80" wordWrap="true" editable="false" borderThickness="0"/>
+				<mx:DataGrid width="420" height="100" dataProvider="{awards}">
+		            <mx:columns>
+		                <mx:DataGridColumn dataField="awardName" headerText="Premio"/>
+		                <mx:DataGridColumn dataField="awardType" headerText="Estatus" labelFunction="getAwardStatus" width="120"/>
+		            </mx:columns>
+				</mx:DataGrid>
+			</mx:HBox>
+			<mx:HBox horizontalAlign="left">
+				<mx:Label width="150" text="Areas de intervención:"/>
+				<mx:List width="420" height="50" dataProvider="{areas}" />
+			</mx:HBox>
+			<mx:HBox horizontalAlign="left">
+				<mx:Label width="150" text="Tipo de organizacion:"/>
+				<mx:Label width="420" text="{orgType}"/>
+			</mx:HBox>
+			<mx:HBox horizontalAlign="left">
+				<mx:Label width="150" text="Financia a terceros:"/>
+				<mx:Label width="420" text="No"/>
+			</mx:HBox>
+			<mx:HBox id="poblacionCooperate" horizontalAlign="left">
+				<mx:Label width="150" text="Poblacion de interés:"/>
+				<mx:List width="420" height="50" dataProvider="{beneficiarios}" />
+			</mx:HBox>		
+			<mx:HBox horizontalAlign="left">
+				<mx:Label width="150" text="Enfoque geografico:"/>
+				<mx:Label width="420" text="{focus}"/>
+			</mx:HBox>
+		</mx:VBox>
+		<mx:VBox verticalAlign="top" x="10" y="162">
+			<mx:HBox horizontalAlign="left">
+				<mx:TextArea width="150" text="Premios otorgados y recibidos:" height="80" wordWrap="true" editable="false" borderThickness="0"/>
+				<mx:DataGrid width="420" height="100" dataProvider="{awards}">
+		            <mx:columns>
+		                <mx:DataGridColumn dataField="awardName" headerText="Premio"/>
+		                <mx:DataGridColumn dataField="awardType" headerText="Estatus" labelFunction="getAwardStatus" width="120"/>
+		            </mx:columns>		
+				</mx:DataGrid>
+			</mx:HBox>
+			<mx:HBox horizontalAlign="left">
+				<mx:Label width="150" text="Areas de intervención:"/>
+				<mx:List width="420" height="50" dataProvider="{areas}" />
+			</mx:HBox>
+			<mx:HBox horizontalAlign="left">
+				<mx:Label width="150" text="Poblacion de interés:"/>
+				<mx:List width="420" height="50" dataProvider="{beneficiarios}" />
+			</mx:HBox>
+		</mx:VBox>
+		
+	</mx:ViewStack>
 </mx:TitleWindow>

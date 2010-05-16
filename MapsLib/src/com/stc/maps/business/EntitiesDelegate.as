@@ -56,7 +56,7 @@ package com.stc.maps.business
 					getCooperantDetails(event);
 				break;
 				case EntityVO.COMPANY:
-					//getCooperantDetails();
+					getCompanyDetails(event);
 				break;
 				case EntityVO.ODS:
 					getODSDetails(event);
@@ -80,6 +80,13 @@ package com.stc.maps.business
 		{
             _service = ServiceLocator.getInstance().getWebService("cooperantsWS");
 			var token:AsyncToken = this._service.getCooperantDetails(event.entityId);
+			token.addResponder(this.responder);
+		}
+		
+		private function getCompanyDetails(event : EntitiesEvent) : void
+		{
+            _service = ServiceLocator.getInstance().getWebService("companyWS");
+			var token:AsyncToken = this._service.GetCompanyDetails(event.entityId);
 			token.addResponder(this.responder);
 		}
 		

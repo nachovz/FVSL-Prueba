@@ -37,20 +37,26 @@
 <classEntry path="com.stc.maps.vo.NetworkVO"/>
 </includeClasses>
 <includeResources>
+<resourceEntry destPath="com/assets/markers/3/empresas_small.png" sourcePath="com/assets/markers/3/empresas_small.png"/>
 <resourceEntry destPath="com/assets/img/logo.png" sourcePath="com/assets/img/logo.png"/>
 <resourceEntry destPath="com/assets/markers/3/otros.png" sourcePath="com/assets/markers/3/otros.png"/>
 <resourceEntry destPath="com/assets/img/facebook.png" sourcePath="com/assets/img/facebook.png"/>
 <resourceEntry destPath="com/assets/markers/2/ods.png" sourcePath="com/assets/markers/2/ods.png"/>
 <resourceEntry destPath="com/assets/img/twitter.png" sourcePath="com/assets/img/twitter.png"/>
 <resourceEntry destPath="com/assets/markers/2/cooperantes.png" sourcePath="com/assets/markers/2/cooperantes.png"/>
+<resourceEntry destPath="com/assets/markers/3/ods_small.png" sourcePath="com/assets/markers/3/ods_small.png"/>
 <resourceEntry destPath="com/assets/markers/3/ods.png" sourcePath="com/assets/markers/3/ods.png"/>
 <resourceEntry destPath="com/assets/logos/polar.jpg" sourcePath="com/assets/logos/polar.jpg"/>
 <resourceEntry destPath="com/assets/img/tools.png" sourcePath="com/assets/img/tools.png"/>
+<resourceEntry destPath="com/assets/markers/3/otros_small.png" sourcePath="com/assets/markers/3/otros_small.png"/>
 <resourceEntry destPath="com/assets/markers/2/empresas.png" sourcePath="com/assets/markers/2/empresas.png"/>
 <resourceEntry destPath="com/assets/markers/3/cooperantes.png" sourcePath="com/assets/markers/3/cooperantes.png"/>
+<resourceEntry destPath="com/assets/markers/3/redes_small.png" sourcePath="com/assets/markers/3/redes_small.png"/>
 <resourceEntry destPath="com/assets/img/Thumbs.db" sourcePath="com/assets/img/Thumbs.db"/>
 <resourceEntry destPath="com/assets/markers/2/otros.png" sourcePath="com/assets/markers/2/otros.png"/>
+<resourceEntry destPath="com/assets/markers/3/cooperantes_small.png" sourcePath="com/assets/markers/3/cooperantes_small.png"/>
 <resourceEntry destPath="com/assets/markers/3/empresas.png" sourcePath="com/assets/markers/3/empresas.png"/>
+<resourceEntry destPath="com/assets/img/ur_logo.gif" sourcePath="com/assets/img/ur_logo.gif"/>
 <resourceEntry destPath="com/assets/markers/3/redes.png" sourcePath="com/assets/markers/3/redes.png"/>
 <resourceEntry destPath="com/assets/markers/2/redes.png" sourcePath="com/assets/markers/2/redes.png"/>
 </includeResources>
