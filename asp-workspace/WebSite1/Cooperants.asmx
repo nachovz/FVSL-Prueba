@@ -42,7 +42,7 @@ public class Cooperants  : System.Web.Services.WebService {
             AwardVO aux = new AwardVO();
             aux.awardId = cooperantAwardRow.id_premios;
             aux.awardName = cooperantAwardRow.nombre;
-
+            aux.recibido = cooperantAwardRow.id_Otorgado_Recibido;
             results.Add(aux);
         }
 
@@ -57,7 +57,7 @@ public class Cooperants  : System.Web.Services.WebService {
         List<String> results = new List<String>();
         foreach (VSLMaps.CooperanteAreasIntervencionRow cooperantAwardRow in awards)
         {
-            results.Add(cooperantAwardRow.nombre);
+            results.Add(cooperantAwardRow.area + ", " + cooperantAwardRow.nombre);
         }
 
         return results;
@@ -71,11 +71,12 @@ public class Cooperants  : System.Web.Services.WebService {
         List<String> results = new List<String>();
         foreach (VSLMaps.CooperanteBeneficiarioRow cooperantAwardRow in awards)
         {
-            results.Add(cooperantAwardRow.nombre);
+            results.Add(cooperantAwardRow.nombre+", "+cooperantAwardRow.cantidad);
         }
 
         return results;
-    }    
+    } 
+       
     [WebMethod]
     public List<CooperantVO> searchCooperants(int idPais, String nombreCoop, int idOrg, int financia, int idEnfoque)
     {

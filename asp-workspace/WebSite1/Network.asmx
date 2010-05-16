@@ -139,12 +139,12 @@ public class Network  : System.Web.Services.WebService {
             break;
             case 1://dependiendo de el tipo de nodo que sea el padre
 
-            VSLMapsTableAdapters.ODSTableAdapter odsAdapter = new VSLMapsTableAdapters.ODSTableAdapter();
-            VSLMaps.ODSDataTable odsTable = odsAdapter.GetSingleODS(parentId);
+            VSLMapsTableAdapters.BigOdsTableAdapter odsAdapter = new VSLMapsTableAdapters.BigOdsTableAdapter();
+            VSLMaps.BigOdsDataTable odsTable = odsAdapter.GetSingleODS(parentId);
 
             if (odsTable.Count == 1)
             {
-                VSLMaps.ODSRow cooperantRow = (VSLMaps.ODSRow)odsTable.Rows[0];
+                VSLMaps.BigOdsRow cooperantRow = (VSLMaps.BigOdsRow)odsTable.Rows[0];
                 auxCoop.name = cooperantRow.nombre;
                 auxCoop.id = cooperantRow.id_ods.ToString();
                 auxCoop.latitude = cooperantRow.Latitud;
@@ -259,12 +259,12 @@ public class Network  : System.Web.Services.WebService {
     private EntityVO GetOdsNode(int id)
     {
 
-        VSLMapsTableAdapters.ODSTableAdapter adapter = new VSLMapsTableAdapters.ODSTableAdapter();
-        VSLMaps.ODSDataTable ods = adapter.GetSingleODS(id);
+        VSLMapsTableAdapters.BigOdsTableAdapter adapter = new VSLMapsTableAdapters.BigOdsTableAdapter();
+        VSLMaps.BigOdsDataTable ods = adapter.GetSingleODS(id);
 
         if (ods.Count == 1)
         {
-            VSLMaps.ODSRow row = (VSLMaps.ODSRow)ods.Rows[0];
+            VSLMaps.BigOdsRow row = (VSLMaps.BigOdsRow)ods.Rows[0];
             EntityVO aux = new EntityVO();
             aux.latitude = row.Latitud;
             aux.longitude = row.Longitud;

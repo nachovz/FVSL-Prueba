@@ -12,6 +12,7 @@ using System.Collections.Generic;
 // [System.Web.Script.Services.ScriptService]
 public class ODS  : System.Web.Services.WebService {
 
+
     [WebMethod]
     public List<EntityVO> GetAllODS()
     {
@@ -30,13 +31,13 @@ public class ODS  : System.Web.Services.WebService {
 
 
     [WebMethod]
-    public EntityVO getODSDetails(int id)
+    public ODSVO getODSDetails(int id)
     {
-        VSLMapsTableAdapters.ODSTableAdapter cooperantAdapter = new VSLMapsTableAdapters.ODSTableAdapter();
-        VSLMaps.ODSDataTable cooperants = cooperantAdapter.GetSingleODS(id);
+        VSLMapsTableAdapters.BigOdsTableAdapter cooperantAdapter = new VSLMapsTableAdapters.BigOdsTableAdapter();
+        VSLMaps.BigOdsDataTable cooperants = cooperantAdapter.GetSingleODS(id);
 
         if (cooperants.Count == 1)
-            return getOdsFromBig((VSLMaps.ODSRow)cooperants.Rows[0]);
+            return getOdsFromBig((VSLMaps.BigOdsRow)cooperants.Rows[0]);
         else return null;
     }
 
@@ -52,9 +53,9 @@ public class ODS  : System.Web.Services.WebService {
         return auxCoop;
     }
 
-    private EntityVO getOdsFromBig(VSLMaps.ODSRow row)
+    private ODSVO getOdsFromBig(VSLMaps.BigOdsRow row)
     {
-        EntityVO auxCoop = new EntityVO();
+        ODSVO auxCoop = new ODSVO();
         auxCoop.id = row.id_ods.ToString();
         auxCoop.name = row.nombre;
         auxCoop.latitude = row.Latitud;
@@ -66,9 +67,60 @@ public class ODS  : System.Web.Services.WebService {
         auxCoop.objective = row.objetivos;
         auxCoop.email = row.email;
         auxCoop.type = "ods";
+        auxCoop.beneficiarios = getODSBeneficiarios(row.id_ods);
+        auxCoop.awards = getODSAwards(row.id_ods);
+        auxCoop.areas = getODSAreas(row.id_ods);
         if (!row.IsNull("Logo")) auxCoop.imgdata = row.Logo;
 
         return auxCoop;
+    }
+
+    private List<String> getODSBeneficiarios(int id)
+    {
+        List<String> list = new List<string>();
+
+        VSLMapsTableAdapters.BeneficiariosODSTableAdapter cooperantAdapter = new VSLMapsTableAdapters.BeneficiariosODSTableAdapter();
+        VSLMaps.BeneficiariosODSDataTable ods = cooperantAdapter.GetBeneficiarios(id);
+
+        foreach (VSLMaps.BeneficiariosODSRow row in ods)
+        {
+            list.Add(row.nombre+", "+row.cantidad);
+        }
+
+        return list;
+    }
+
+    private List<AwardVO> getODSAwards(int id)
+    {
+        VSLMapsTableAdapters.ODSAwardsTableAdapter cooperantAdapter = new VSLMapsTableAdapters.ODSAwardsTableAdapter();
+        VSLMaps.ODSAwardsDataTable ods = cooperantAdapter.GetAwardsBy(id);
+
+        List<AwardVO> awards = new List<AwardVO>();
+        foreach (VSLMaps.ODSAwardsRow row in ods)
+        {
+
+            AwardVO award = new AwardVO();
+            award.awardName = row.nombre;
+            award.awardId = row.id_premios;
+            award.recibido = row.id_Ortogado_Recibido;
+            awards.Add(award);
+        }
+
+        return awards;
+    }
+
+    private List<String> getODSAreas(int id)
+    {
+        VSLMapsTableAdapters.ODSAreasIntervencionTableAdapter cooperantAdapter = new VSLMapsTableAdapters.ODSAreasIntervencionTableAdapter();
+        VSLMaps.ODSAreasIntervencionDataTable ods = cooperantAdapter.GetAreasIntervencion(id);
+
+        List<String> list = new List<String>();
+        foreach(VSLMaps.ODSAreasIntervencionRow row in ods)
+        {
+            list.Add(row.area+", "+row.subcategoria);
+        }
+
+        return list;
     }
     
 }
