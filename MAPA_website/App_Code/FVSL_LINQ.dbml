@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Database Name="PortalVSL" Class="FVSL_LINQDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=localhost;Initial Catalog=PortalVSL;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="PortalVSLConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.ODS_ODS" Member="ODS_ODS">
+    <Type Name="ODS_ODS" Id="ID1">
+      <Column Name="id_ods" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="VarChar(1024) NOT NULL" CanBeNull="false" />
+      <Column Name="siglas" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="rif" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="gubernamental" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="figura_juridica" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="tipo_red" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="red_especificacion" Type="System.String" DbType="VarChar(1024) NOT NULL" CanBeNull="false" />
+      <Column Name="especificacion2" Type="System.String" DbType="VarChar(1024)" CanBeNull="true" />
+      <Column Name="id_OrganiSegundoPiso" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="objetivos" Type="System.String" DbType="VarChar(1024) NOT NULL" CanBeNull="false" />
+      <Column Name="actividades" Type="System.String" DbType="VarChar(1024) NOT NULL" CanBeNull="false" />
+      <Column Name="fecha_constitucion" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="experiencia" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="pagina_web" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="email" Type="System.String" DbType="VarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="FacebookODS" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="TwitterODS" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="LinkedInODS" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="MySpaceODS" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="sede_principal" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sedes" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TipoSede" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="representante_nombre" Type="System.String" DbType="VarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="representante_apellido" Type="System.String" DbType="VarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="representante_cargo" Type="System.String" DbType="VarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="representante_telefono" Type="System.String" DbType="VarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="representante_correo" Type="System.String" DbType="VarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="representante_celular" Type="System.String" DbType="VarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="representante_fax" Type="System.String" DbType="VarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="id_pais" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="id_estado" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="id_municipio" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="id_parroquia" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ciudad" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="urbanizacion" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="calle" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="casa" Type="System.String" DbType="VarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="piso" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="codigo_postal" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Latitud" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Longitud" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="capacitacion" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="especifica" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="inespecifica" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="adec_insc_consj_est" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="adec_insc_consj_mun" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="adec_insc_consj_nac" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="adec_recib_apoyo_concj" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="adec_recib_apoyo_fondo" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="OrganizaEstrategia" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="OrganizacionCuenta" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="centro_abrigo" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="centro_abrigo_no_definido" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="centro_abrigo_escolarizado" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="centro_abrigo_adoptados" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="centro_abrigo_adotables" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="status" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="fecha_inicio_registro" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="fecha_fin_registro" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Logo" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Telefono" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Usuario" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.beneficiario" Member="beneficiarios">
+    <Type Name="beneficiario" Id="ID2">
+      <Column Name="id_beneficiario" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ods_beneficiario" Member="ods_beneficiarios">
+    <Type Name="ods_beneficiario">
+      <Column Name="id_ods_beneficiario" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="id_ods" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="id_beneficiario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="cantidad" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Function Name="dbo.MAPA_ODS_DETAILS" Method="MAPA_ODS_DETAILS">
+    <Parameter Name="id_in" Type="System.Int32" DbType="Int" />
+    <ElementType IdRef="ID1" />
+  </Function>
+  <Function Name="dbo.MAPA_GET_BENF_ODS" Method="MAPA_GET_BENF_ODS">
+    <Parameter Name="id_ods" Type="System.Int32" DbType="Int" />
+    <ElementType IdRef="ID2" />
+  </Function>
+</Database>
