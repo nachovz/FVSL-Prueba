@@ -14,31 +14,38 @@ public class Company  : System.Web.Services.WebService {
     [WebMethod]
     public EntityVO GetCompanyDetails(int id) 
     {
-
-        VSLMapsTableAdapters.BigCompanyTableAdapter adapter = new VSLMapsTableAdapters.BigCompanyTableAdapter();
-        VSLMaps.BigCompanyDataTable ods = adapter.GetSingleCompany(id);
-
-        if (ods.Count == 1)
+        try
         {
-            VSLMaps.BigCompanyRow row = (VSLMaps.BigCompanyRow)ods.Rows[0];
-            EntityVO aux = new EntityVO();
-            aux.latitude = row.Latitud;
-            aux.longitude = row.Longitud;
-            aux.id = row.id_sociosociales.ToString();
-            aux.name = row.nombre;
-            aux.direction = row.ciudad + ", " + row.calle + ", " + row.casa;
-            if (!row.IsNull("Logo")) aux.imgdata = row.Logo;
-            if (!row.IsNull("Telefono")) aux.phone = row.Telefono;
-            if (!row.IsNull("email")) aux.email = row.email;
-            if (!row.IsNull("FacebookODS")) aux.facebook = row.FacebookODS;
-            if (!row.IsNull("TwitterODS")) aux.twitter = row.TwitterODS;
-            if (!row.IsNull("pagina_web")) aux.website = row.pagina_web;
+            VSLMapsTableAdapters.BigCompanyTableAdapter adapter = new VSLMapsTableAdapters.BigCompanyTableAdapter();
+            VSLMaps.BigCompanyDataTable ods = adapter.GetSingleCompany(id);
 
-            aux.type = "company";
-            return aux;
+            if (ods.Count == 1)
+            {
+                VSLMaps.BigCompanyRow row = (VSLMaps.BigCompanyRow)ods.Rows[0];
+                EntityVO aux = new EntityVO();
+                aux.latitude = row.Latitud;
+                aux.longitude = row.Longitud;
+                aux.id = row.id_sociosociales.ToString();
+                aux.name = row.nombre;
+                aux.direction = row.ciudad + ", " + row.calle + ", " + row.casa;
+                if (!row.IsNull("Logo")) aux.imgdata = row.Logo;
+                if (!row.IsNull("Telefono")) aux.phone = row.Telefono;
+                if (!row.IsNull("email")) aux.email = row.email;
+                if (!row.IsNull("FacebookODS")) aux.facebook = row.FacebookODS;
+                if (!row.IsNull("TwitterODS")) aux.twitter = row.TwitterODS;
+                if (!row.IsNull("pagina_web")) aux.website = row.pagina_web;
+
+                aux.type = "company";
+                return aux;
+            }
+            else
+            {
+                return null;
+            }
         }
-        else
+        catch (Exception e)
         {
+            Logging.WriteError(e.StackTrace.ToString());
             return null;
         }
 

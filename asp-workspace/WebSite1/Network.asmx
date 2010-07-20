@@ -15,84 +15,103 @@ public class Network  : System.Web.Services.WebService {
     [WebMethod]
     public List<NetworkVO> GetAllNetworks()
     {
+        try
+        {
+            VSLMapsTableAdapters.InvitacionTableAdapter adapter = new VSLMapsTableAdapters.InvitacionTableAdapter();
+            VSLMaps.InvitacionDataTable table = adapter.GetUserNetworks();
 
-        VSLMapsTableAdapters.InvitacionTableAdapter adapter = new VSLMapsTableAdapters.InvitacionTableAdapter();
-        VSLMaps.InvitacionDataTable table = adapter.GetUserNetworks();
+            VSLMapsTableAdapters.InvitacionSinUsuarioTableAdapter adapterSinUsuario = new VSLMapsTableAdapters.InvitacionSinUsuarioTableAdapter();
+            VSLMaps.InvitacionSinUsuarioDataTable tableSinUsuario = adapterSinUsuario.GetNoUserNetworks();
+            
+            List<NetworkVO> results = new List<NetworkVO>();
+            foreach (VSLMaps.InvitacionRow row in table)
+            {
+                NetworkVO ntwrk = new NetworkVO();
+                
+                if (Int32.Parse(row["total"].ToString()) > 0)
+                {
+                    ntwrk.nodes = GetNetworkNodes(row.Id_Anfitriona, row.Tipo_Anfitriona);
+                    ntwrk.parent = GetParentNode(row.Id_Anfitriona, row.Tipo_Anfitriona);
+                }
+                
+                results.Add(ntwrk);
+            }
+            foreach (VSLMaps.InvitacionSinUsuarioRow row in tableSinUsuario)
+            {
+                NetworkVO ntwrk = new NetworkVO();
 
-        VSLMapsTableAdapters.InvitacionSinUsuarioTableAdapter adapterSinUsuario = new VSLMapsTableAdapters.InvitacionSinUsuarioTableAdapter();
-        VSLMaps.InvitacionSinUsuarioDataTable tableSinUsuario = adapterSinUsuario.GetNoUserNetworks();
+                if (Int32.Parse(row["total"].ToString()) > 0)
+                {
+                    ntwrk.nodes = GetUserlessNetworkNodes(row.Id_Anfitriona, row.Tipo_Anfitriona);
+                    ntwrk.parent = GetParentNode(row.Id_Anfitriona, row.Tipo_Anfitriona);
+                }
+
+                results.Add(ntwrk);
+            }
+
+            return results;
         
-        List<NetworkVO> results = new List<NetworkVO>();
-        foreach (VSLMaps.InvitacionRow row in table)
-        {
-            NetworkVO ntwrk = new NetworkVO();
-            
-            if (Int32.Parse(row["total"].ToString()) > 0)
-            {
-                ntwrk.nodes = GetNetworkNodes(row.Id_Anfitriona, row.Tipo_Anfitriona);
-                ntwrk.parent = GetParentNode(row.Id_Anfitriona, row.Tipo_Anfitriona);
-            }
-            
-            results.Add(ntwrk);
         }
-        foreach (VSLMaps.InvitacionSinUsuarioRow row in tableSinUsuario)
+        catch (Exception e)
         {
-            NetworkVO ntwrk = new NetworkVO();
-
-            if (Int32.Parse(row["total"].ToString()) > 0)
-            {
-                ntwrk.nodes = GetUserlessNetworkNodes(row.Id_Anfitriona, row.Tipo_Anfitriona);
-                ntwrk.parent = GetParentNode(row.Id_Anfitriona, row.Tipo_Anfitriona);
-            }
-
-            results.Add(ntwrk);
+            Logging.WriteError(e.StackTrace.ToString());
+            return null;
         }
-
-        return results;
+        
     }
 
     [WebMethod]
     public List<NetworkVO> searchNetworks(String name, int country)
     {
-
-        VSLMapsTableAdapters.InvitacionTableAdapter adapter = new VSLMapsTableAdapters.InvitacionTableAdapter();
-        VSLMaps.InvitacionDataTable tableCooperant = adapter.GetCooperantNetworksBy(name, country);
-        VSLMaps.InvitacionDataTable tableCompany = adapter.GetCompanyNetworksBy(name, country);
-        VSLMaps.InvitacionDataTable tableODS = adapter.GetODSNetworksBy(country,name);
-
-        List<NetworkVO> results = new List<NetworkVO>();
-        foreach (VSLMaps.InvitacionRow row in tableCooperant)
+        try
         {
-            NetworkVO ntwrk = new NetworkVO();
-            if (Int32.Parse(row["total"].ToString()) > 0)
-            {
-                ntwrk.nodes = GetNetworkNodes(row.Id_Anfitriona, row.Tipo_Anfitriona);
-                ntwrk.parent = GetParentNode(row.Id_Anfitriona, row.Tipo_Anfitriona);
-            }
-            results.Add(ntwrk);
-        }
-        foreach (VSLMaps.InvitacionRow row in tableCompany)
-        {
-            NetworkVO ntwrk = new NetworkVO();
-            if (Int32.Parse(row["total"].ToString()) > 0)
-            {
-                ntwrk.nodes = GetNetworkNodes(row.Id_Anfitriona, row.Tipo_Anfitriona);
-                ntwrk.parent = GetParentNode(row.Id_Anfitriona, row.Tipo_Anfitriona);
-            }
-            results.Add(ntwrk);
-        }
-        foreach (VSLMaps.InvitacionRow row in tableODS)
-        {
-            NetworkVO ntwrk = new NetworkVO();
-            if (Int32.Parse(row["total"].ToString()) > 0)
-            {
-                ntwrk.nodes = GetNetworkNodes(row.Id_Anfitriona, row.Tipo_Anfitriona);
-                ntwrk.parent = GetParentNode(row.Id_Anfitriona, row.Tipo_Anfitriona);
-            }
-            results.Add(ntwrk);
-        }
 
-        return results;
+            VSLMapsTableAdapters.InvitacionTableAdapter adapter = new VSLMapsTableAdapters.InvitacionTableAdapter();
+            VSLMaps.InvitacionDataTable tableCooperant = adapter.GetCooperantNetworksBy(name, country);
+            VSLMaps.InvitacionDataTable tableCompany = adapter.GetCompanyNetworksBy(name, country);
+            VSLMaps.InvitacionDataTable tableODS = adapter.GetODSNetworksBy(country,name);
+
+            List<NetworkVO> results = new List<NetworkVO>();
+            foreach (VSLMaps.InvitacionRow row in tableCooperant)
+            {
+                NetworkVO ntwrk = new NetworkVO();
+                if (Int32.Parse(row["total"].ToString()) > 0)
+                {
+                    ntwrk.nodes = GetNetworkNodes(row.Id_Anfitriona, row.Tipo_Anfitriona);
+                    ntwrk.parent = GetParentNode(row.Id_Anfitriona, row.Tipo_Anfitriona);
+                }
+                results.Add(ntwrk);
+            }
+            foreach (VSLMaps.InvitacionRow row in tableCompany)
+            {
+                NetworkVO ntwrk = new NetworkVO();
+                if (Int32.Parse(row["total"].ToString()) > 0)
+                {
+                    ntwrk.nodes = GetNetworkNodes(row.Id_Anfitriona, row.Tipo_Anfitriona);
+                    ntwrk.parent = GetParentNode(row.Id_Anfitriona, row.Tipo_Anfitriona);
+                }
+                results.Add(ntwrk);
+            }
+            foreach (VSLMaps.InvitacionRow row in tableODS)
+            {
+                NetworkVO ntwrk = new NetworkVO();
+                if (Int32.Parse(row["total"].ToString()) > 0)
+                {
+                    ntwrk.nodes = GetNetworkNodes(row.Id_Anfitriona, row.Tipo_Anfitriona);
+                    ntwrk.parent = GetParentNode(row.Id_Anfitriona, row.Tipo_Anfitriona);
+                }
+                results.Add(ntwrk);
+            }
+
+            return results;
+        
+        }
+        catch (Exception e)
+        {
+            Logging.WriteError(e.StackTrace.ToString());
+            return null;
+        }
+        
     }
 
     private EntityVO GetParentNode(int parentId, int parentType)

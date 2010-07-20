@@ -16,16 +16,20 @@ public class Cooperants  : System.Web.Services.WebService {
     [WebMethod]
     public List<CooperantVO> GetAllCooperants()
     {
-
-        VSLMapsTableAdapters.CooperantTableAdapter cooperantAdapter = new VSLMapsTableAdapters.CooperantTableAdapter();
-        VSLMaps.CooperantDataTable cooperants;
-
-        cooperants = cooperantAdapter.GetCooperants();
-
         List<CooperantVO> results = new List<CooperantVO>();
-        foreach (VSLMaps.CooperantRow cooperantRow in cooperants)
+        
+        try
         {
-            results.Add(geCooperantFromRow(cooperantRow));
+            VSLMapsTableAdapters.CooperantTableAdapter cooperantAdapter = new VSLMapsTableAdapters.CooperantTableAdapter();
+            VSLMaps.CooperantDataTable cooperants = cooperantAdapter.GetCooperants();
+            foreach (VSLMaps.CooperantRow cooperantRow in cooperants)
+            {
+                results.Add(geCooperantFromRow(cooperantRow));
+            }
+        }
+        catch (Exception e)
+        {
+            Logging.WriteError(e.StackTrace.ToString());
         }
 
         return results;
@@ -95,12 +99,21 @@ public class Cooperants  : System.Web.Services.WebService {
     [WebMethod]
     public CooperantVO getCooperantDetails(int id)
     {
-        VSLMapsTableAdapters.BigCooperantTableAdapter cooperantAdapter = new VSLMapsTableAdapters.BigCooperantTableAdapter();
-        VSLMaps.BigCooperantDataTable cooperants = cooperantAdapter.GetSingleCooperant(id);
+        try
+        {
+            VSLMapsTableAdapters.BigCooperantTableAdapter cooperantAdapter = new VSLMapsTableAdapters.BigCooperantTableAdapter();
+            VSLMaps.BigCooperantDataTable cooperants = cooperantAdapter.GetSingleCooperant(id);
 
-        if (cooperants.Count == 1)
-            return getCooperantBig((VSLMaps.BigCooperantRow)cooperants.Rows[0]);
-        else return null;
+            if (cooperants.Count == 1)
+                return getCooperantBig((VSLMaps.BigCooperantRow)cooperants.Rows[0]);
+            else return null;
+        
+        }
+        catch (Exception e)
+        {
+            Logging.WriteError(e.StackTrace.ToString());
+            return null;
+        }
     }
         
 

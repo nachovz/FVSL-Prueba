@@ -15,63 +15,101 @@ public class Catalogs  : System.Web.Services.WebService {
     [WebMethod]
     public List<CataloValueVO> getCountries() 
     {
-        VSLMapsTableAdapters.CountryTableAdapter adapter = new VSLMapsTableAdapters.CountryTableAdapter();
-        VSLMaps.CountryDataTable table = adapter.GetData();
-
-        List<CataloValueVO> results = new List<CataloValueVO>();
-        foreach (VSLMaps.CountryRow row in table)
+        try
         {
-            results.Add(getCatalogValueFromRow(row));
-        }
+            
+            VSLMapsTableAdapters.CountryTableAdapter adapter = new VSLMapsTableAdapters.CountryTableAdapter();
+            VSLMaps.CountryDataTable table = adapter.GetData();
 
-        return results;
+            List<CataloValueVO> results = new List<CataloValueVO>();
+            foreach (VSLMaps.CountryRow row in table)
+            {
+                results.Add(getCatalogValueFromRow(row));
+            }
+
+            return results;
+        
+        }
+        catch (Exception e)
+        {
+            Logging.WriteError(e.StackTrace.ToString());
+            return null;
+        }
     }
 
     [WebMethod]
     public List<CataloValueVO> getOrganizationTypes()
     {
-        VSLMapsTableAdapters.OrganizationTypeTableAdapter adapter = new VSLMapsTableAdapters.OrganizationTypeTableAdapter();
-        VSLMaps.OrganizationTypeDataTable table = adapter.GetData();
-
-        List<CataloValueVO> results = new List<CataloValueVO>();
-        foreach (VSLMaps.OrganizationTypeRow row in table)
+        try
         {
-            results.Add(getCatalogValueFromRow(row));
-        }
+            VSLMapsTableAdapters.OrganizationTypeTableAdapter adapter = new VSLMapsTableAdapters.OrganizationTypeTableAdapter();
+            VSLMaps.OrganizationTypeDataTable table = adapter.GetData();
 
-        return results;
+            List<CataloValueVO> results = new List<CataloValueVO>();
+            foreach (VSLMaps.OrganizationTypeRow row in table)
+            {
+                results.Add(getCatalogValueFromRow(row));
+            }
+
+            return results;
+        
+        }
+        catch (Exception e)
+        {
+            Logging.WriteError(e.StackTrace.ToString());
+            return null;
+        }
     }
 
 
     [WebMethod]
     public List<CataloValueVO> getEnfoqueGeograficoTypes()
     {
-        VSLMapsTableAdapters.AlcanceTableAdapter adapter = new VSLMapsTableAdapters.AlcanceTableAdapter();
-        VSLMaps.AlcanceDataTable table = adapter.GetData();
-
-        List<CataloValueVO> results = new List<CataloValueVO>();
-        foreach (VSLMaps.AlcanceRow row in table)
+        try
         {
-            results.Add(getCatalogValueFromRow(row));
-        }
+            VSLMapsTableAdapters.AlcanceTableAdapter adapter = new VSLMapsTableAdapters.AlcanceTableAdapter();
+            VSLMaps.AlcanceDataTable table = adapter.GetData();
 
-        return results;
+            List<CataloValueVO> results = new List<CataloValueVO>();
+            foreach (VSLMaps.AlcanceRow row in table)
+            {
+                results.Add(getCatalogValueFromRow(row));
+            }
+
+            return results;
+        
+        }
+        catch (Exception e)
+        {
+            Logging.WriteError(e.StackTrace.ToString());
+            return null;
+        }
+        
     }
 
 
     [WebMethod]
     public List<CataloValueVO> getBeneficiaryTypes()
     {
-        VSLMapsTableAdapters.BeneficiarioTableAdapter adapter = new VSLMapsTableAdapters.BeneficiarioTableAdapter();
-        VSLMaps.BeneficiarioDataTable table = adapter.GetData();
-
-        List<CataloValueVO> results = new List<CataloValueVO>();
-        foreach (VSLMaps.BeneficiarioRow row in table)
+        try
         {
-            results.Add(getCatalogValueFromRow(row));
-        }
+            VSLMapsTableAdapters.BeneficiarioTableAdapter adapter = new VSLMapsTableAdapters.BeneficiarioTableAdapter();
+            VSLMaps.BeneficiarioDataTable table = adapter.GetData();
 
-        return results;
+            List<CataloValueVO> results = new List<CataloValueVO>();
+            foreach (VSLMaps.BeneficiarioRow row in table)
+            {
+                results.Add(getCatalogValueFromRow(row));
+            }
+
+            return results;
+        
+        }
+        catch (Exception e)
+        {
+            Logging.WriteError(e.StackTrace.ToString());
+            return null;
+        }
     }
 
     private CataloValueVO getCatalogValueFromRow(VSLMaps.CountryRow row)

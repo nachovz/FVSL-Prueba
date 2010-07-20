@@ -16,29 +16,48 @@ public class ODS  : System.Web.Services.WebService {
     [WebMethod]
     public List<EntityVO> GetAllODS()
     {
-
-        VSLMapsTableAdapters.ODSTableAdapter entityAdapter = new VSLMapsTableAdapters.ODSTableAdapter();
-        VSLMaps.ODSDataTable ods = entityAdapter.GetAllODS();
-
-        List<EntityVO> results = new List<EntityVO>();
-        foreach (VSLMaps.ODSRow cooperantRow in ods)
+        try
         {
-            results.Add(getOdsFromRow(cooperantRow));
-        }
 
-        return results;
+            VSLMapsTableAdapters.ODSTableAdapter entityAdapter = new VSLMapsTableAdapters.ODSTableAdapter();
+            VSLMaps.ODSDataTable ods = entityAdapter.GetAllODS();
+
+            List<EntityVO> results = new List<EntityVO>();
+            foreach (VSLMaps.ODSRow cooperantRow in ods)
+            {
+                results.Add(getOdsFromRow(cooperantRow));
+            }
+
+            return results;
+        
+        }
+        catch (Exception e)
+        {
+            Logging.WriteError(e.StackTrace.ToString());
+            return null;
+        }
     }
 
 
     [WebMethod]
     public ODSVO getODSDetails(int id)
     {
-        VSLMapsTableAdapters.BigOdsTableAdapter cooperantAdapter = new VSLMapsTableAdapters.BigOdsTableAdapter();
-        VSLMaps.BigOdsDataTable cooperants = cooperantAdapter.GetSingleODS(id);
+        try
+        {
+            VSLMapsTableAdapters.BigOdsTableAdapter cooperantAdapter = new VSLMapsTableAdapters.BigOdsTableAdapter();
+            VSLMaps.BigOdsDataTable cooperants = cooperantAdapter.GetSingleODS(id);
 
-        if (cooperants.Count == 1)
-            return getOdsFromBig((VSLMaps.BigOdsRow)cooperants.Rows[0]);
-        else return null;
+            if (cooperants.Count == 1)
+                return getOdsFromBig((VSLMaps.BigOdsRow)cooperants.Rows[0]);
+            else return null;
+        
+        }
+        catch (Exception e)
+        {
+            Logging.WriteError(e.StackTrace.ToString());
+            return null;
+        }
+        
     }
 
     private EntityVO getOdsFromRow(VSLMaps.ODSRow row)
