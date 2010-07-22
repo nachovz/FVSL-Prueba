@@ -82,6 +82,72 @@
       <Column Name="cantidad" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
+  <Table Name="dbo.tb_Coperante" Member="tb_Coperantes">
+    <Type Name="tb_Coperante">
+      <Column Name="id_coperante" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="NVarChar(1024)" CanBeNull="true" />
+      <Column Name="siglas" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="rif" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="gubernamental" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="figura_juridica" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="tipo_organizacion" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="red_especificacion" Type="System.String" DbType="NVarChar(1024)" CanBeNull="true" />
+      <Column Name="objetivos" Type="System.String" DbType="NVarChar(1024)" CanBeNull="true" />
+      <Column Name="actividades" Type="System.String" DbType="NVarChar(1024)" CanBeNull="true" />
+      <Column Name="fecha_constitucion" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="experiencia" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="pagina_web" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="email" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="Facebook" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="Twitter" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="LinkedIn" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="MySpace" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="sede_principal" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="sedes" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SedeNombre" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="representante_nombre" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="representante_apellido" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="representante_cargo" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="representante_telefono" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="representante_correo" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="representante_celular" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="representante_fax" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="id_estado" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ciudad" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="urbanizacion" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="calle" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="casa" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="piso" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="codigo_postal" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Latitud" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Longitud" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="fecha_inicio_registro" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Logo" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="UsuarioID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Telefono" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Financia" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="EnfoqueGeografico" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tb_Premios_ODS" Member="tb_Premios_ODS">
+    <Type Name="tb_Premios_ODS" Id="ID3">
+      <Column Name="id_premios" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="id_ods" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="id_Ortogado_Recibido" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="nombre" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="fecha" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="tipo_premio" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Otorga_premio" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="pais" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="descripcion" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.area_intervencion" Member="area_intervencions">
+    <Type Name="area_intervencion">
+      <Column Name="id_area_intervencion" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+    </Type>
+  </Table>
   <Function Name="dbo.MAPA_ODS_DETAILS" Method="MAPA_ODS_DETAILS">
     <Parameter Name="id_in" Type="System.Int32" DbType="Int" />
     <ElementType IdRef="ID1" />
@@ -89,5 +155,52 @@
   <Function Name="dbo.MAPA_GET_BENF_ODS" Method="MAPA_GET_BENF_ODS">
     <Parameter Name="id_ods" Type="System.Int32" DbType="Int" />
     <ElementType IdRef="ID2" />
+  </Function>
+  <Function Name="dbo.MAPA_GET_AWA_ODS" Method="MAPA_GET_AWA_ODS">
+    <Parameter Name="id_ods" Type="System.Int32" DbType="Int" />
+    <ElementType IdRef="ID3" />
+  </Function>
+  <Function Name="dbo.p_Select_ODS_Perfil" Method="p_Select_ODS_Perfil">
+    <Parameter Name="id_ods" Type="System.Int32" DbType="Int" />
+    <ElementType Name="p_Select_ODS_PerfilResult">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="AreaIntervencion" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Id_AreaIntervencion" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="PersonalVoluntarionFem" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PersonalVoluntarionMas" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PersonalRemuneradoFem" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PersonalRemuneradoMas" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.pa_GetSubCategoriaArea" Method="pa_GetSubCategoriaArea">
+    <Parameter Name="ID_AREA_INTERVENCION" Parameter="iD_AREA_INTERVENCION" Type="System.Int32" DbType="Int" />
+    <ElementType Name="pa_GetSubCategoriaAreaResult">
+      <Column Name="ID_SubCategoriaArea" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOMBRE" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.MAPA_SEARCH_ODS_BY" Method="MAPA_SEARCH_ODS_BY">
+    <Parameter Name="idPais" Type="System.Int32" DbType="Int" />
+    <Parameter Name="idEstado" Type="System.Int32" DbType="Int" />
+    <Parameter Name="nombre" Type="System.String" DbType="VarChar(8000)" />
+    <Parameter Name="area_intervencion" Type="System.String" DbType="VarChar(8000)" />
+    <Parameter Name="premios" Type="System.String" DbType="VarChar(8000)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.MAPA_ODS_ALL" Method="MAPA_ODS_ALL">
+    <ElementType Name="MAPA_ODS_ALLResult">
+      <Column Name="nombre" Type="System.String" DbType="VarChar(1024) NOT NULL" CanBeNull="false" />
+      <Column Name="id_ods" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Latitud" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Longitud" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.MAPA_COOP_ALL" Method="MAPA_COOP_ALL">
+    <ElementType Name="MAPA_COOP_ALLResult">
+      <Column Name="id_coperante" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="NVarChar(1024)" CanBeNull="true" />
+      <Column Name="Latitud" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Longitud" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+    </ElementType>
   </Function>
 </Database>

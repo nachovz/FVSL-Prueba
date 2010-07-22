@@ -38,6 +38,15 @@ public partial class FVSL_LINQDataContext : System.Data.Linq.DataContext
   partial void Insertods_beneficiario(ods_beneficiario instance);
   partial void Updateods_beneficiario(ods_beneficiario instance);
   partial void Deleteods_beneficiario(ods_beneficiario instance);
+  partial void Inserttb_Coperante(tb_Coperante instance);
+  partial void Updatetb_Coperante(tb_Coperante instance);
+  partial void Deletetb_Coperante(tb_Coperante instance);
+  partial void Inserttb_Premios_ODS(tb_Premios_ODS instance);
+  partial void Updatetb_Premios_ODS(tb_Premios_ODS instance);
+  partial void Deletetb_Premios_ODS(tb_Premios_ODS instance);
+  partial void Insertarea_intervencion(area_intervencion instance);
+  partial void Updatearea_intervencion(area_intervencion instance);
+  partial void Deletearea_intervencion(area_intervencion instance);
   #endregion
 	
 	public FVSL_LINQDataContext() : 
@@ -94,6 +103,30 @@ public partial class FVSL_LINQDataContext : System.Data.Linq.DataContext
 		}
 	}
 	
+	public System.Data.Linq.Table<tb_Coperante> tb_Coperantes
+	{
+		get
+		{
+			return this.GetTable<tb_Coperante>();
+		}
+	}
+	
+	public System.Data.Linq.Table<tb_Premios_ODS> tb_Premios_ODS
+	{
+		get
+		{
+			return this.GetTable<tb_Premios_ODS>();
+		}
+	}
+	
+	public System.Data.Linq.Table<area_intervencion> area_intervencions
+	{
+		get
+		{
+			return this.GetTable<area_intervencion>();
+		}
+	}
+	
 	[Function(Name="dbo.MAPA_ODS_DETAILS")]
 	public ISingleResult<ODS_ODS> MAPA_ODS_DETAILS([Parameter(DbType="Int")] System.Nullable<int> id_in)
 	{
@@ -106,6 +139,48 @@ public partial class FVSL_LINQDataContext : System.Data.Linq.DataContext
 	{
 		IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id_ods);
 		return ((ISingleResult<beneficiario>)(result.ReturnValue));
+	}
+	
+	[Function(Name="dbo.MAPA_GET_AWA_ODS")]
+	public ISingleResult<tb_Premios_ODS> MAPA_GET_AWA_ODS([Parameter(DbType="Int")] System.Nullable<int> id_ods)
+	{
+		IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id_ods);
+		return ((ISingleResult<tb_Premios_ODS>)(result.ReturnValue));
+	}
+	
+	[Function(Name="dbo.p_Select_ODS_Perfil")]
+	public ISingleResult<p_Select_ODS_PerfilResult> p_Select_ODS_Perfil([Parameter(DbType="Int")] System.Nullable<int> id_ods)
+	{
+		IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id_ods);
+		return ((ISingleResult<p_Select_ODS_PerfilResult>)(result.ReturnValue));
+	}
+	
+	[Function(Name="dbo.pa_GetSubCategoriaArea")]
+	public ISingleResult<pa_GetSubCategoriaAreaResult> pa_GetSubCategoriaArea([Parameter(Name="ID_AREA_INTERVENCION", DbType="Int")] System.Nullable<int> iD_AREA_INTERVENCION)
+	{
+		IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD_AREA_INTERVENCION);
+		return ((ISingleResult<pa_GetSubCategoriaAreaResult>)(result.ReturnValue));
+	}
+
+    [Function(Name = "dbo.MAPA_SEARCH_ODS_BY")]
+    public ISingleResult<dynamicLINQ> MAPA_SEARCH_ODS_BY([Parameter(DbType = "Int")] System.Nullable<int> idPais, [Parameter(DbType = "Int")] System.Nullable<int> idEstado, [Parameter(DbType = "VarChar(8000)")] string nombre, [Parameter(DbType = "VarChar(8000)")] string area_intervencion, [Parameter(DbType = "VarChar(8000)")] string premios)
+    {
+        IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), idPais, idEstado, nombre, area_intervencion, premios);
+        return ((ISingleResult<dynamicLINQ>)(result.ReturnValue));
+    }
+	
+	[Function(Name="dbo.MAPA_ODS_ALL")]
+	public ISingleResult<MAPA_ODS_ALLResult> MAPA_ODS_ALL()
+	{
+		IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
+		return ((ISingleResult<MAPA_ODS_ALLResult>)(result.ReturnValue));
+	}
+	
+	[Function(Name="dbo.MAPA_COOP_ALL")]
+	public ISingleResult<MAPA_COOP_ALLResult> MAPA_COOP_ALL()
+	{
+		IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
+		return ((ISingleResult<MAPA_COOP_ALLResult>)(result.ReturnValue));
 	}
 }
 
@@ -1875,6 +1950,1754 @@ public partial class ods_beneficiario : INotifyPropertyChanging, INotifyProperty
 		if ((this.PropertyChanged != null))
 		{
 			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+		}
+	}
+}
+
+[Table(Name="dbo.tb_Coperante")]
+public partial class tb_Coperante : INotifyPropertyChanging, INotifyPropertyChanged
+{
+	
+	private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+	
+	private int _id_coperante;
+	
+	private string _nombre;
+	
+	private string _siglas;
+	
+	private string _rif;
+	
+	private System.Nullable<int> _gubernamental;
+	
+	private System.Nullable<int> _figura_juridica;
+	
+	private System.Nullable<int> _tipo_organizacion;
+	
+	private string _red_especificacion;
+	
+	private string _objetivos;
+	
+	private string _actividades;
+	
+	private System.Nullable<System.DateTime> _fecha_constitucion;
+	
+	private System.Nullable<int> _experiencia;
+	
+	private string _pagina_web;
+	
+	private string _email;
+	
+	private string _Facebook;
+	
+	private string _Twitter;
+	
+	private string _LinkedIn;
+	
+	private string _MySpace;
+	
+	private System.Nullable<int> _sede_principal;
+	
+	private System.Nullable<int> _sedes;
+	
+	private string _SedeNombre;
+	
+	private string _representante_nombre;
+	
+	private string _representante_apellido;
+	
+	private string _representante_cargo;
+	
+	private string _representante_telefono;
+	
+	private string _representante_correo;
+	
+	private string _representante_celular;
+	
+	private string _representante_fax;
+	
+	private System.Nullable<int> _id_estado;
+	
+	private string _ciudad;
+	
+	private string _urbanizacion;
+	
+	private string _calle;
+	
+	private string _casa;
+	
+	private string _piso;
+	
+	private string _codigo_postal;
+	
+	private string _Latitud;
+	
+	private string _Longitud;
+	
+	private System.Nullable<System.DateTime> _fecha_inicio_registro;
+	
+	private System.Data.Linq.Binary _Logo;
+	
+	private System.Nullable<int> _UsuarioID;
+	
+	private string _Telefono;
+	
+	private System.Nullable<int> _Financia;
+	
+	private System.Nullable<int> _EnfoqueGeografico;
+	
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void Onid_coperanteChanging(int value);
+    partial void Onid_coperanteChanged();
+    partial void OnnombreChanging(string value);
+    partial void OnnombreChanged();
+    partial void OnsiglasChanging(string value);
+    partial void OnsiglasChanged();
+    partial void OnrifChanging(string value);
+    partial void OnrifChanged();
+    partial void OngubernamentalChanging(System.Nullable<int> value);
+    partial void OngubernamentalChanged();
+    partial void Onfigura_juridicaChanging(System.Nullable<int> value);
+    partial void Onfigura_juridicaChanged();
+    partial void Ontipo_organizacionChanging(System.Nullable<int> value);
+    partial void Ontipo_organizacionChanged();
+    partial void Onred_especificacionChanging(string value);
+    partial void Onred_especificacionChanged();
+    partial void OnobjetivosChanging(string value);
+    partial void OnobjetivosChanged();
+    partial void OnactividadesChanging(string value);
+    partial void OnactividadesChanged();
+    partial void Onfecha_constitucionChanging(System.Nullable<System.DateTime> value);
+    partial void Onfecha_constitucionChanged();
+    partial void OnexperienciaChanging(System.Nullable<int> value);
+    partial void OnexperienciaChanged();
+    partial void Onpagina_webChanging(string value);
+    partial void Onpagina_webChanged();
+    partial void OnemailChanging(string value);
+    partial void OnemailChanged();
+    partial void OnFacebookChanging(string value);
+    partial void OnFacebookChanged();
+    partial void OnTwitterChanging(string value);
+    partial void OnTwitterChanged();
+    partial void OnLinkedInChanging(string value);
+    partial void OnLinkedInChanged();
+    partial void OnMySpaceChanging(string value);
+    partial void OnMySpaceChanged();
+    partial void Onsede_principalChanging(System.Nullable<int> value);
+    partial void Onsede_principalChanged();
+    partial void OnsedesChanging(System.Nullable<int> value);
+    partial void OnsedesChanged();
+    partial void OnSedeNombreChanging(string value);
+    partial void OnSedeNombreChanged();
+    partial void Onrepresentante_nombreChanging(string value);
+    partial void Onrepresentante_nombreChanged();
+    partial void Onrepresentante_apellidoChanging(string value);
+    partial void Onrepresentante_apellidoChanged();
+    partial void Onrepresentante_cargoChanging(string value);
+    partial void Onrepresentante_cargoChanged();
+    partial void Onrepresentante_telefonoChanging(string value);
+    partial void Onrepresentante_telefonoChanged();
+    partial void Onrepresentante_correoChanging(string value);
+    partial void Onrepresentante_correoChanged();
+    partial void Onrepresentante_celularChanging(string value);
+    partial void Onrepresentante_celularChanged();
+    partial void Onrepresentante_faxChanging(string value);
+    partial void Onrepresentante_faxChanged();
+    partial void Onid_estadoChanging(System.Nullable<int> value);
+    partial void Onid_estadoChanged();
+    partial void OnciudadChanging(string value);
+    partial void OnciudadChanged();
+    partial void OnurbanizacionChanging(string value);
+    partial void OnurbanizacionChanged();
+    partial void OncalleChanging(string value);
+    partial void OncalleChanged();
+    partial void OncasaChanging(string value);
+    partial void OncasaChanged();
+    partial void OnpisoChanging(string value);
+    partial void OnpisoChanged();
+    partial void Oncodigo_postalChanging(string value);
+    partial void Oncodigo_postalChanged();
+    partial void OnLatitudChanging(string value);
+    partial void OnLatitudChanged();
+    partial void OnLongitudChanging(string value);
+    partial void OnLongitudChanged();
+    partial void Onfecha_inicio_registroChanging(System.Nullable<System.DateTime> value);
+    partial void Onfecha_inicio_registroChanged();
+    partial void OnLogoChanging(System.Data.Linq.Binary value);
+    partial void OnLogoChanged();
+    partial void OnUsuarioIDChanging(System.Nullable<int> value);
+    partial void OnUsuarioIDChanged();
+    partial void OnTelefonoChanging(string value);
+    partial void OnTelefonoChanged();
+    partial void OnFinanciaChanging(System.Nullable<int> value);
+    partial void OnFinanciaChanged();
+    partial void OnEnfoqueGeograficoChanging(System.Nullable<int> value);
+    partial void OnEnfoqueGeograficoChanged();
+    #endregion
+	
+	public tb_Coperante()
+	{
+		OnCreated();
+	}
+	
+	[Column(Storage="_id_coperante", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+	public int id_coperante
+	{
+		get
+		{
+			return this._id_coperante;
+		}
+		set
+		{
+			if ((this._id_coperante != value))
+			{
+				this.Onid_coperanteChanging(value);
+				this.SendPropertyChanging();
+				this._id_coperante = value;
+				this.SendPropertyChanged("id_coperante");
+				this.Onid_coperanteChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_nombre", DbType="NVarChar(1024)")]
+	public string nombre
+	{
+		get
+		{
+			return this._nombre;
+		}
+		set
+		{
+			if ((this._nombre != value))
+			{
+				this.OnnombreChanging(value);
+				this.SendPropertyChanging();
+				this._nombre = value;
+				this.SendPropertyChanged("nombre");
+				this.OnnombreChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_siglas", DbType="NVarChar(100)")]
+	public string siglas
+	{
+		get
+		{
+			return this._siglas;
+		}
+		set
+		{
+			if ((this._siglas != value))
+			{
+				this.OnsiglasChanging(value);
+				this.SendPropertyChanging();
+				this._siglas = value;
+				this.SendPropertyChanged("siglas");
+				this.OnsiglasChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_rif", DbType="NVarChar(20)")]
+	public string rif
+	{
+		get
+		{
+			return this._rif;
+		}
+		set
+		{
+			if ((this._rif != value))
+			{
+				this.OnrifChanging(value);
+				this.SendPropertyChanging();
+				this._rif = value;
+				this.SendPropertyChanged("rif");
+				this.OnrifChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_gubernamental", DbType="Int")]
+	public System.Nullable<int> gubernamental
+	{
+		get
+		{
+			return this._gubernamental;
+		}
+		set
+		{
+			if ((this._gubernamental != value))
+			{
+				this.OngubernamentalChanging(value);
+				this.SendPropertyChanging();
+				this._gubernamental = value;
+				this.SendPropertyChanged("gubernamental");
+				this.OngubernamentalChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_figura_juridica", DbType="Int")]
+	public System.Nullable<int> figura_juridica
+	{
+		get
+		{
+			return this._figura_juridica;
+		}
+		set
+		{
+			if ((this._figura_juridica != value))
+			{
+				this.Onfigura_juridicaChanging(value);
+				this.SendPropertyChanging();
+				this._figura_juridica = value;
+				this.SendPropertyChanged("figura_juridica");
+				this.Onfigura_juridicaChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_tipo_organizacion", DbType="Int")]
+	public System.Nullable<int> tipo_organizacion
+	{
+		get
+		{
+			return this._tipo_organizacion;
+		}
+		set
+		{
+			if ((this._tipo_organizacion != value))
+			{
+				this.Ontipo_organizacionChanging(value);
+				this.SendPropertyChanging();
+				this._tipo_organizacion = value;
+				this.SendPropertyChanged("tipo_organizacion");
+				this.Ontipo_organizacionChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_red_especificacion", DbType="NVarChar(1024)")]
+	public string red_especificacion
+	{
+		get
+		{
+			return this._red_especificacion;
+		}
+		set
+		{
+			if ((this._red_especificacion != value))
+			{
+				this.Onred_especificacionChanging(value);
+				this.SendPropertyChanging();
+				this._red_especificacion = value;
+				this.SendPropertyChanged("red_especificacion");
+				this.Onred_especificacionChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_objetivos", DbType="NVarChar(1024)")]
+	public string objetivos
+	{
+		get
+		{
+			return this._objetivos;
+		}
+		set
+		{
+			if ((this._objetivos != value))
+			{
+				this.OnobjetivosChanging(value);
+				this.SendPropertyChanging();
+				this._objetivos = value;
+				this.SendPropertyChanged("objetivos");
+				this.OnobjetivosChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_actividades", DbType="NVarChar(1024)")]
+	public string actividades
+	{
+		get
+		{
+			return this._actividades;
+		}
+		set
+		{
+			if ((this._actividades != value))
+			{
+				this.OnactividadesChanging(value);
+				this.SendPropertyChanging();
+				this._actividades = value;
+				this.SendPropertyChanged("actividades");
+				this.OnactividadesChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_fecha_constitucion", DbType="DateTime")]
+	public System.Nullable<System.DateTime> fecha_constitucion
+	{
+		get
+		{
+			return this._fecha_constitucion;
+		}
+		set
+		{
+			if ((this._fecha_constitucion != value))
+			{
+				this.Onfecha_constitucionChanging(value);
+				this.SendPropertyChanging();
+				this._fecha_constitucion = value;
+				this.SendPropertyChanged("fecha_constitucion");
+				this.Onfecha_constitucionChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_experiencia", DbType="Int")]
+	public System.Nullable<int> experiencia
+	{
+		get
+		{
+			return this._experiencia;
+		}
+		set
+		{
+			if ((this._experiencia != value))
+			{
+				this.OnexperienciaChanging(value);
+				this.SendPropertyChanging();
+				this._experiencia = value;
+				this.SendPropertyChanged("experiencia");
+				this.OnexperienciaChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_pagina_web", DbType="NVarChar(256)")]
+	public string pagina_web
+	{
+		get
+		{
+			return this._pagina_web;
+		}
+		set
+		{
+			if ((this._pagina_web != value))
+			{
+				this.Onpagina_webChanging(value);
+				this.SendPropertyChanging();
+				this._pagina_web = value;
+				this.SendPropertyChanged("pagina_web");
+				this.Onpagina_webChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_email", DbType="NVarChar(256)")]
+	public string email
+	{
+		get
+		{
+			return this._email;
+		}
+		set
+		{
+			if ((this._email != value))
+			{
+				this.OnemailChanging(value);
+				this.SendPropertyChanging();
+				this._email = value;
+				this.SendPropertyChanged("email");
+				this.OnemailChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_Facebook", DbType="NVarChar(256)")]
+	public string Facebook
+	{
+		get
+		{
+			return this._Facebook;
+		}
+		set
+		{
+			if ((this._Facebook != value))
+			{
+				this.OnFacebookChanging(value);
+				this.SendPropertyChanging();
+				this._Facebook = value;
+				this.SendPropertyChanged("Facebook");
+				this.OnFacebookChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_Twitter", DbType="NVarChar(256)")]
+	public string Twitter
+	{
+		get
+		{
+			return this._Twitter;
+		}
+		set
+		{
+			if ((this._Twitter != value))
+			{
+				this.OnTwitterChanging(value);
+				this.SendPropertyChanging();
+				this._Twitter = value;
+				this.SendPropertyChanged("Twitter");
+				this.OnTwitterChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_LinkedIn", DbType="NVarChar(256)")]
+	public string LinkedIn
+	{
+		get
+		{
+			return this._LinkedIn;
+		}
+		set
+		{
+			if ((this._LinkedIn != value))
+			{
+				this.OnLinkedInChanging(value);
+				this.SendPropertyChanging();
+				this._LinkedIn = value;
+				this.SendPropertyChanged("LinkedIn");
+				this.OnLinkedInChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_MySpace", DbType="NVarChar(256)")]
+	public string MySpace
+	{
+		get
+		{
+			return this._MySpace;
+		}
+		set
+		{
+			if ((this._MySpace != value))
+			{
+				this.OnMySpaceChanging(value);
+				this.SendPropertyChanging();
+				this._MySpace = value;
+				this.SendPropertyChanged("MySpace");
+				this.OnMySpaceChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_sede_principal", DbType="Int")]
+	public System.Nullable<int> sede_principal
+	{
+		get
+		{
+			return this._sede_principal;
+		}
+		set
+		{
+			if ((this._sede_principal != value))
+			{
+				this.Onsede_principalChanging(value);
+				this.SendPropertyChanging();
+				this._sede_principal = value;
+				this.SendPropertyChanged("sede_principal");
+				this.Onsede_principalChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_sedes", DbType="Int")]
+	public System.Nullable<int> sedes
+	{
+		get
+		{
+			return this._sedes;
+		}
+		set
+		{
+			if ((this._sedes != value))
+			{
+				this.OnsedesChanging(value);
+				this.SendPropertyChanging();
+				this._sedes = value;
+				this.SendPropertyChanged("sedes");
+				this.OnsedesChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_SedeNombre", DbType="NVarChar(256)")]
+	public string SedeNombre
+	{
+		get
+		{
+			return this._SedeNombre;
+		}
+		set
+		{
+			if ((this._SedeNombre != value))
+			{
+				this.OnSedeNombreChanging(value);
+				this.SendPropertyChanging();
+				this._SedeNombre = value;
+				this.SendPropertyChanged("SedeNombre");
+				this.OnSedeNombreChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_representante_nombre", DbType="NVarChar(256)")]
+	public string representante_nombre
+	{
+		get
+		{
+			return this._representante_nombre;
+		}
+		set
+		{
+			if ((this._representante_nombre != value))
+			{
+				this.Onrepresentante_nombreChanging(value);
+				this.SendPropertyChanging();
+				this._representante_nombre = value;
+				this.SendPropertyChanged("representante_nombre");
+				this.Onrepresentante_nombreChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_representante_apellido", DbType="NVarChar(256)")]
+	public string representante_apellido
+	{
+		get
+		{
+			return this._representante_apellido;
+		}
+		set
+		{
+			if ((this._representante_apellido != value))
+			{
+				this.Onrepresentante_apellidoChanging(value);
+				this.SendPropertyChanging();
+				this._representante_apellido = value;
+				this.SendPropertyChanged("representante_apellido");
+				this.Onrepresentante_apellidoChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_representante_cargo", DbType="NVarChar(256)")]
+	public string representante_cargo
+	{
+		get
+		{
+			return this._representante_cargo;
+		}
+		set
+		{
+			if ((this._representante_cargo != value))
+			{
+				this.Onrepresentante_cargoChanging(value);
+				this.SendPropertyChanging();
+				this._representante_cargo = value;
+				this.SendPropertyChanged("representante_cargo");
+				this.Onrepresentante_cargoChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_representante_telefono", DbType="NVarChar(256)")]
+	public string representante_telefono
+	{
+		get
+		{
+			return this._representante_telefono;
+		}
+		set
+		{
+			if ((this._representante_telefono != value))
+			{
+				this.Onrepresentante_telefonoChanging(value);
+				this.SendPropertyChanging();
+				this._representante_telefono = value;
+				this.SendPropertyChanged("representante_telefono");
+				this.Onrepresentante_telefonoChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_representante_correo", DbType="NVarChar(256)")]
+	public string representante_correo
+	{
+		get
+		{
+			return this._representante_correo;
+		}
+		set
+		{
+			if ((this._representante_correo != value))
+			{
+				this.Onrepresentante_correoChanging(value);
+				this.SendPropertyChanging();
+				this._representante_correo = value;
+				this.SendPropertyChanged("representante_correo");
+				this.Onrepresentante_correoChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_representante_celular", DbType="NVarChar(256)")]
+	public string representante_celular
+	{
+		get
+		{
+			return this._representante_celular;
+		}
+		set
+		{
+			if ((this._representante_celular != value))
+			{
+				this.Onrepresentante_celularChanging(value);
+				this.SendPropertyChanging();
+				this._representante_celular = value;
+				this.SendPropertyChanged("representante_celular");
+				this.Onrepresentante_celularChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_representante_fax", DbType="NVarChar(256)")]
+	public string representante_fax
+	{
+		get
+		{
+			return this._representante_fax;
+		}
+		set
+		{
+			if ((this._representante_fax != value))
+			{
+				this.Onrepresentante_faxChanging(value);
+				this.SendPropertyChanging();
+				this._representante_fax = value;
+				this.SendPropertyChanged("representante_fax");
+				this.Onrepresentante_faxChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_id_estado", DbType="Int")]
+	public System.Nullable<int> id_estado
+	{
+		get
+		{
+			return this._id_estado;
+		}
+		set
+		{
+			if ((this._id_estado != value))
+			{
+				this.Onid_estadoChanging(value);
+				this.SendPropertyChanging();
+				this._id_estado = value;
+				this.SendPropertyChanged("id_estado");
+				this.Onid_estadoChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_ciudad", DbType="NVarChar(256)")]
+	public string ciudad
+	{
+		get
+		{
+			return this._ciudad;
+		}
+		set
+		{
+			if ((this._ciudad != value))
+			{
+				this.OnciudadChanging(value);
+				this.SendPropertyChanging();
+				this._ciudad = value;
+				this.SendPropertyChanged("ciudad");
+				this.OnciudadChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_urbanizacion", DbType="NVarChar(256)")]
+	public string urbanizacion
+	{
+		get
+		{
+			return this._urbanizacion;
+		}
+		set
+		{
+			if ((this._urbanizacion != value))
+			{
+				this.OnurbanizacionChanging(value);
+				this.SendPropertyChanging();
+				this._urbanizacion = value;
+				this.SendPropertyChanged("urbanizacion");
+				this.OnurbanizacionChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_calle", DbType="NVarChar(256)")]
+	public string calle
+	{
+		get
+		{
+			return this._calle;
+		}
+		set
+		{
+			if ((this._calle != value))
+			{
+				this.OncalleChanging(value);
+				this.SendPropertyChanging();
+				this._calle = value;
+				this.SendPropertyChanged("calle");
+				this.OncalleChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_casa", DbType="NVarChar(256)")]
+	public string casa
+	{
+		get
+		{
+			return this._casa;
+		}
+		set
+		{
+			if ((this._casa != value))
+			{
+				this.OncasaChanging(value);
+				this.SendPropertyChanging();
+				this._casa = value;
+				this.SendPropertyChanged("casa");
+				this.OncasaChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_piso", DbType="NVarChar(100)")]
+	public string piso
+	{
+		get
+		{
+			return this._piso;
+		}
+		set
+		{
+			if ((this._piso != value))
+			{
+				this.OnpisoChanging(value);
+				this.SendPropertyChanging();
+				this._piso = value;
+				this.SendPropertyChanged("piso");
+				this.OnpisoChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_codigo_postal", DbType="NVarChar(20)")]
+	public string codigo_postal
+	{
+		get
+		{
+			return this._codigo_postal;
+		}
+		set
+		{
+			if ((this._codigo_postal != value))
+			{
+				this.Oncodigo_postalChanging(value);
+				this.SendPropertyChanging();
+				this._codigo_postal = value;
+				this.SendPropertyChanged("codigo_postal");
+				this.Oncodigo_postalChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_Latitud", DbType="NVarChar(100)")]
+	public string Latitud
+	{
+		get
+		{
+			return this._Latitud;
+		}
+		set
+		{
+			if ((this._Latitud != value))
+			{
+				this.OnLatitudChanging(value);
+				this.SendPropertyChanging();
+				this._Latitud = value;
+				this.SendPropertyChanged("Latitud");
+				this.OnLatitudChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_Longitud", DbType="NVarChar(100)")]
+	public string Longitud
+	{
+		get
+		{
+			return this._Longitud;
+		}
+		set
+		{
+			if ((this._Longitud != value))
+			{
+				this.OnLongitudChanging(value);
+				this.SendPropertyChanging();
+				this._Longitud = value;
+				this.SendPropertyChanged("Longitud");
+				this.OnLongitudChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_fecha_inicio_registro", DbType="DateTime")]
+	public System.Nullable<System.DateTime> fecha_inicio_registro
+	{
+		get
+		{
+			return this._fecha_inicio_registro;
+		}
+		set
+		{
+			if ((this._fecha_inicio_registro != value))
+			{
+				this.Onfecha_inicio_registroChanging(value);
+				this.SendPropertyChanging();
+				this._fecha_inicio_registro = value;
+				this.SendPropertyChanged("fecha_inicio_registro");
+				this.Onfecha_inicio_registroChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_Logo", DbType="Image", UpdateCheck=UpdateCheck.Never)]
+	public System.Data.Linq.Binary Logo
+	{
+		get
+		{
+			return this._Logo;
+		}
+		set
+		{
+			if ((this._Logo != value))
+			{
+				this.OnLogoChanging(value);
+				this.SendPropertyChanging();
+				this._Logo = value;
+				this.SendPropertyChanged("Logo");
+				this.OnLogoChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_UsuarioID", DbType="Int")]
+	public System.Nullable<int> UsuarioID
+	{
+		get
+		{
+			return this._UsuarioID;
+		}
+		set
+		{
+			if ((this._UsuarioID != value))
+			{
+				this.OnUsuarioIDChanging(value);
+				this.SendPropertyChanging();
+				this._UsuarioID = value;
+				this.SendPropertyChanged("UsuarioID");
+				this.OnUsuarioIDChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_Telefono", DbType="NVarChar(50)")]
+	public string Telefono
+	{
+		get
+		{
+			return this._Telefono;
+		}
+		set
+		{
+			if ((this._Telefono != value))
+			{
+				this.OnTelefonoChanging(value);
+				this.SendPropertyChanging();
+				this._Telefono = value;
+				this.SendPropertyChanged("Telefono");
+				this.OnTelefonoChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_Financia", DbType="Int")]
+	public System.Nullable<int> Financia
+	{
+		get
+		{
+			return this._Financia;
+		}
+		set
+		{
+			if ((this._Financia != value))
+			{
+				this.OnFinanciaChanging(value);
+				this.SendPropertyChanging();
+				this._Financia = value;
+				this.SendPropertyChanged("Financia");
+				this.OnFinanciaChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_EnfoqueGeografico", DbType="Int")]
+	public System.Nullable<int> EnfoqueGeografico
+	{
+		get
+		{
+			return this._EnfoqueGeografico;
+		}
+		set
+		{
+			if ((this._EnfoqueGeografico != value))
+			{
+				this.OnEnfoqueGeograficoChanging(value);
+				this.SendPropertyChanging();
+				this._EnfoqueGeografico = value;
+				this.SendPropertyChanged("EnfoqueGeografico");
+				this.OnEnfoqueGeograficoChanged();
+			}
+		}
+	}
+	
+	public event PropertyChangingEventHandler PropertyChanging;
+	
+	public event PropertyChangedEventHandler PropertyChanged;
+	
+	protected virtual void SendPropertyChanging()
+	{
+		if ((this.PropertyChanging != null))
+		{
+			this.PropertyChanging(this, emptyChangingEventArgs);
+		}
+	}
+	
+	protected virtual void SendPropertyChanged(String propertyName)
+	{
+		if ((this.PropertyChanged != null))
+		{
+			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+		}
+	}
+}
+
+[Table(Name="dbo.tb_Premios_ODS")]
+public partial class tb_Premios_ODS : INotifyPropertyChanging, INotifyPropertyChanged
+{
+	
+	private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+	
+	private int _id_premios;
+	
+	private System.Nullable<int> _id_ods;
+	
+	private System.Nullable<int> _id_Ortogado_Recibido;
+	
+	private string _nombre;
+	
+	private string _fecha;
+	
+	private string _tipo_premio;
+	
+	private string _Otorga_premio;
+	
+	private string _pais;
+	
+	private string _descripcion;
+	
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void Onid_premiosChanging(int value);
+    partial void Onid_premiosChanged();
+    partial void Onid_odsChanging(System.Nullable<int> value);
+    partial void Onid_odsChanged();
+    partial void Onid_Ortogado_RecibidoChanging(System.Nullable<int> value);
+    partial void Onid_Ortogado_RecibidoChanged();
+    partial void OnnombreChanging(string value);
+    partial void OnnombreChanged();
+    partial void OnfechaChanging(string value);
+    partial void OnfechaChanged();
+    partial void Ontipo_premioChanging(string value);
+    partial void Ontipo_premioChanged();
+    partial void OnOtorga_premioChanging(string value);
+    partial void OnOtorga_premioChanged();
+    partial void OnpaisChanging(string value);
+    partial void OnpaisChanged();
+    partial void OndescripcionChanging(string value);
+    partial void OndescripcionChanged();
+    #endregion
+	
+	public tb_Premios_ODS()
+	{
+		OnCreated();
+	}
+	
+	[Column(Storage="_id_premios", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+	public int id_premios
+	{
+		get
+		{
+			return this._id_premios;
+		}
+		set
+		{
+			if ((this._id_premios != value))
+			{
+				this.Onid_premiosChanging(value);
+				this.SendPropertyChanging();
+				this._id_premios = value;
+				this.SendPropertyChanged("id_premios");
+				this.Onid_premiosChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_id_ods", DbType="Int")]
+	public System.Nullable<int> id_ods
+	{
+		get
+		{
+			return this._id_ods;
+		}
+		set
+		{
+			if ((this._id_ods != value))
+			{
+				this.Onid_odsChanging(value);
+				this.SendPropertyChanging();
+				this._id_ods = value;
+				this.SendPropertyChanged("id_ods");
+				this.Onid_odsChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_id_Ortogado_Recibido", DbType="Int")]
+	public System.Nullable<int> id_Ortogado_Recibido
+	{
+		get
+		{
+			return this._id_Ortogado_Recibido;
+		}
+		set
+		{
+			if ((this._id_Ortogado_Recibido != value))
+			{
+				this.Onid_Ortogado_RecibidoChanging(value);
+				this.SendPropertyChanging();
+				this._id_Ortogado_Recibido = value;
+				this.SendPropertyChanged("id_Ortogado_Recibido");
+				this.Onid_Ortogado_RecibidoChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_nombre", DbType="NVarChar(250)")]
+	public string nombre
+	{
+		get
+		{
+			return this._nombre;
+		}
+		set
+		{
+			if ((this._nombre != value))
+			{
+				this.OnnombreChanging(value);
+				this.SendPropertyChanging();
+				this._nombre = value;
+				this.SendPropertyChanged("nombre");
+				this.OnnombreChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_fecha", DbType="NVarChar(20)")]
+	public string fecha
+	{
+		get
+		{
+			return this._fecha;
+		}
+		set
+		{
+			if ((this._fecha != value))
+			{
+				this.OnfechaChanging(value);
+				this.SendPropertyChanging();
+				this._fecha = value;
+				this.SendPropertyChanged("fecha");
+				this.OnfechaChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_tipo_premio", DbType="NVarChar(50)")]
+	public string tipo_premio
+	{
+		get
+		{
+			return this._tipo_premio;
+		}
+		set
+		{
+			if ((this._tipo_premio != value))
+			{
+				this.Ontipo_premioChanging(value);
+				this.SendPropertyChanging();
+				this._tipo_premio = value;
+				this.SendPropertyChanged("tipo_premio");
+				this.Ontipo_premioChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_Otorga_premio", DbType="NVarChar(250)")]
+	public string Otorga_premio
+	{
+		get
+		{
+			return this._Otorga_premio;
+		}
+		set
+		{
+			if ((this._Otorga_premio != value))
+			{
+				this.OnOtorga_premioChanging(value);
+				this.SendPropertyChanging();
+				this._Otorga_premio = value;
+				this.SendPropertyChanged("Otorga_premio");
+				this.OnOtorga_premioChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_pais", DbType="NVarChar(250)")]
+	public string pais
+	{
+		get
+		{
+			return this._pais;
+		}
+		set
+		{
+			if ((this._pais != value))
+			{
+				this.OnpaisChanging(value);
+				this.SendPropertyChanging();
+				this._pais = value;
+				this.SendPropertyChanged("pais");
+				this.OnpaisChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_descripcion", DbType="NVarChar(300)")]
+	public string descripcion
+	{
+		get
+		{
+			return this._descripcion;
+		}
+		set
+		{
+			if ((this._descripcion != value))
+			{
+				this.OndescripcionChanging(value);
+				this.SendPropertyChanging();
+				this._descripcion = value;
+				this.SendPropertyChanged("descripcion");
+				this.OndescripcionChanged();
+			}
+		}
+	}
+	
+	public event PropertyChangingEventHandler PropertyChanging;
+	
+	public event PropertyChangedEventHandler PropertyChanged;
+	
+	protected virtual void SendPropertyChanging()
+	{
+		if ((this.PropertyChanging != null))
+		{
+			this.PropertyChanging(this, emptyChangingEventArgs);
+		}
+	}
+	
+	protected virtual void SendPropertyChanged(String propertyName)
+	{
+		if ((this.PropertyChanged != null))
+		{
+			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+		}
+	}
+}
+
+[Table(Name="dbo.area_intervencion")]
+public partial class area_intervencion : INotifyPropertyChanging, INotifyPropertyChanged
+{
+	
+	private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+	
+	private int _id_area_intervencion;
+	
+	private string _nombre;
+	
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void Onid_area_intervencionChanging(int value);
+    partial void Onid_area_intervencionChanged();
+    partial void OnnombreChanging(string value);
+    partial void OnnombreChanged();
+    #endregion
+	
+	public area_intervencion()
+	{
+		OnCreated();
+	}
+	
+	[Column(Storage="_id_area_intervencion", DbType="Int NOT NULL", IsPrimaryKey=true)]
+	public int id_area_intervencion
+	{
+		get
+		{
+			return this._id_area_intervencion;
+		}
+		set
+		{
+			if ((this._id_area_intervencion != value))
+			{
+				this.Onid_area_intervencionChanging(value);
+				this.SendPropertyChanging();
+				this._id_area_intervencion = value;
+				this.SendPropertyChanged("id_area_intervencion");
+				this.Onid_area_intervencionChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_nombre", DbType="VarChar(100)")]
+	public string nombre
+	{
+		get
+		{
+			return this._nombre;
+		}
+		set
+		{
+			if ((this._nombre != value))
+			{
+				this.OnnombreChanging(value);
+				this.SendPropertyChanging();
+				this._nombre = value;
+				this.SendPropertyChanged("nombre");
+				this.OnnombreChanged();
+			}
+		}
+	}
+	
+	public event PropertyChangingEventHandler PropertyChanging;
+	
+	public event PropertyChangedEventHandler PropertyChanged;
+	
+	protected virtual void SendPropertyChanging()
+	{
+		if ((this.PropertyChanging != null))
+		{
+			this.PropertyChanging(this, emptyChangingEventArgs);
+		}
+	}
+	
+	protected virtual void SendPropertyChanged(String propertyName)
+	{
+		if ((this.PropertyChanged != null))
+		{
+			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+		}
+	}
+}
+
+public partial class p_Select_ODS_PerfilResult
+{
+	
+	private int _Id;
+	
+	private string _AreaIntervencion;
+	
+	private short _Id_AreaIntervencion;
+	
+	private System.Nullable<int> _PersonalVoluntarionFem;
+	
+	private System.Nullable<int> _PersonalVoluntarionMas;
+	
+	private System.Nullable<int> _PersonalRemuneradoFem;
+	
+	private System.Nullable<int> _PersonalRemuneradoMas;
+	
+	public p_Select_ODS_PerfilResult()
+	{
+	}
+	
+	[Column(Storage="_Id", DbType="Int NOT NULL")]
+	public int Id
+	{
+		get
+		{
+			return this._Id;
+		}
+		set
+		{
+			if ((this._Id != value))
+			{
+				this._Id = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_AreaIntervencion", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
+	public string AreaIntervencion
+	{
+		get
+		{
+			return this._AreaIntervencion;
+		}
+		set
+		{
+			if ((this._AreaIntervencion != value))
+			{
+				this._AreaIntervencion = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_Id_AreaIntervencion", DbType="SmallInt NOT NULL")]
+	public short Id_AreaIntervencion
+	{
+		get
+		{
+			return this._Id_AreaIntervencion;
+		}
+		set
+		{
+			if ((this._Id_AreaIntervencion != value))
+			{
+				this._Id_AreaIntervencion = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_PersonalVoluntarionFem", DbType="Int")]
+	public System.Nullable<int> PersonalVoluntarionFem
+	{
+		get
+		{
+			return this._PersonalVoluntarionFem;
+		}
+		set
+		{
+			if ((this._PersonalVoluntarionFem != value))
+			{
+				this._PersonalVoluntarionFem = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_PersonalVoluntarionMas", DbType="Int")]
+	public System.Nullable<int> PersonalVoluntarionMas
+	{
+		get
+		{
+			return this._PersonalVoluntarionMas;
+		}
+		set
+		{
+			if ((this._PersonalVoluntarionMas != value))
+			{
+				this._PersonalVoluntarionMas = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_PersonalRemuneradoFem", DbType="Int")]
+	public System.Nullable<int> PersonalRemuneradoFem
+	{
+		get
+		{
+			return this._PersonalRemuneradoFem;
+		}
+		set
+		{
+			if ((this._PersonalRemuneradoFem != value))
+			{
+				this._PersonalRemuneradoFem = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_PersonalRemuneradoMas", DbType="Int")]
+	public System.Nullable<int> PersonalRemuneradoMas
+	{
+		get
+		{
+			return this._PersonalRemuneradoMas;
+		}
+		set
+		{
+			if ((this._PersonalRemuneradoMas != value))
+			{
+				this._PersonalRemuneradoMas = value;
+			}
+		}
+	}
+}
+
+public partial class pa_GetSubCategoriaAreaResult
+{
+	
+	private int _ID_SubCategoriaArea;
+	
+	private string _NOMBRE;
+	
+	public pa_GetSubCategoriaAreaResult()
+	{
+	}
+	
+	[Column(Storage="_ID_SubCategoriaArea", DbType="Int NOT NULL")]
+	public int ID_SubCategoriaArea
+	{
+		get
+		{
+			return this._ID_SubCategoriaArea;
+		}
+		set
+		{
+			if ((this._ID_SubCategoriaArea != value))
+			{
+				this._ID_SubCategoriaArea = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_NOMBRE", DbType="NVarChar(100)")]
+	public string NOMBRE
+	{
+		get
+		{
+			return this._NOMBRE;
+		}
+		set
+		{
+			if ((this._NOMBRE != value))
+			{
+				this._NOMBRE = value;
+			}
+		}
+	}
+}
+
+public partial class MAPA_ODS_ALLResult
+{
+	
+	private string _nombre;
+	
+	private int _id_ods;
+	
+	private string _Latitud;
+	
+	private string _Longitud;
+	
+	public MAPA_ODS_ALLResult()
+	{
+	}
+	
+	[Column(Storage="_nombre", DbType="VarChar(1024) NOT NULL", CanBeNull=false)]
+	public string nombre
+	{
+		get
+		{
+			return this._nombre;
+		}
+		set
+		{
+			if ((this._nombre != value))
+			{
+				this._nombre = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_id_ods", DbType="Int NOT NULL")]
+	public int id_ods
+	{
+		get
+		{
+			return this._id_ods;
+		}
+		set
+		{
+			if ((this._id_ods != value))
+			{
+				this._id_ods = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_Latitud", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
+	public string Latitud
+	{
+		get
+		{
+			return this._Latitud;
+		}
+		set
+		{
+			if ((this._Latitud != value))
+			{
+				this._Latitud = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_Longitud", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
+	public string Longitud
+	{
+		get
+		{
+			return this._Longitud;
+		}
+		set
+		{
+			if ((this._Longitud != value))
+			{
+				this._Longitud = value;
+			}
+		}
+	}
+}
+
+public partial class MAPA_COOP_ALLResult
+{
+	
+	private int _id_coperante;
+	
+	private string _nombre;
+	
+	private string _Latitud;
+	
+	private string _Longitud;
+	
+	public MAPA_COOP_ALLResult()
+	{
+	}
+	
+	[Column(Storage="_id_coperante", DbType="Int NOT NULL")]
+	public int id_coperante
+	{
+		get
+		{
+			return this._id_coperante;
+		}
+		set
+		{
+			if ((this._id_coperante != value))
+			{
+				this._id_coperante = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_nombre", DbType="NVarChar(1024)")]
+	public string nombre
+	{
+		get
+		{
+			return this._nombre;
+		}
+		set
+		{
+			if ((this._nombre != value))
+			{
+				this._nombre = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_Latitud", DbType="NVarChar(100)")]
+	public string Latitud
+	{
+		get
+		{
+			return this._Latitud;
+		}
+		set
+		{
+			if ((this._Latitud != value))
+			{
+				this._Latitud = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_Longitud", DbType="NVarChar(100)")]
+	public string Longitud
+	{
+		get
+		{
+			return this._Longitud;
+		}
+		set
+		{
+			if ((this._Longitud != value))
+			{
+				this._Longitud = value;
+			}
 		}
 	}
 }
