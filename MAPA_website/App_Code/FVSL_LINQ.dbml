@@ -83,7 +83,7 @@
     </Type>
   </Table>
   <Table Name="dbo.tb_Coperante" Member="tb_Coperantes">
-    <Type Name="tb_Coperante">
+    <Type Name="tb_Coperante" Id="ID4">
       <Column Name="id_coperante" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="nombre" Type="System.String" DbType="NVarChar(1024)" CanBeNull="true" />
       <Column Name="siglas" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
@@ -148,6 +148,19 @@
       <Column Name="nombre" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="dbo.tb_Premios_Coperante" Member="tb_Premios_Coperantes">
+    <Type Name="tb_Premios_Coperante" Id="ID5">
+      <Column Name="id_premios" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="id_coperante" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="id_Otorgado_Recibido" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="nombre" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="fecha" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="tipo_premio" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Otorga_premio" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="pais" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="descripcion" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+    </Type>
+  </Table>
   <Function Name="dbo.MAPA_ODS_DETAILS" Method="MAPA_ODS_DETAILS">
     <Parameter Name="id_in" Type="System.Int32" DbType="Int" />
     <ElementType IdRef="ID1" />
@@ -179,14 +192,6 @@
       <Column Name="NOMBRE" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
     </ElementType>
   </Function>
-  <Function Name="dbo.MAPA_SEARCH_ODS_BY" Method="MAPA_SEARCH_ODS_BY">
-    <Parameter Name="idPais" Type="System.Int32" DbType="Int" />
-    <Parameter Name="idEstado" Type="System.Int32" DbType="Int" />
-    <Parameter Name="nombre" Type="System.String" DbType="VarChar(8000)" />
-    <Parameter Name="area_intervencion" Type="System.String" DbType="VarChar(8000)" />
-    <Parameter Name="premios" Type="System.String" DbType="VarChar(8000)" />
-    <Return Type="System.Int32" />
-  </Function>
   <Function Name="dbo.MAPA_ODS_ALL" Method="MAPA_ODS_ALL">
     <ElementType Name="MAPA_ODS_ALLResult">
       <Column Name="nombre" Type="System.String" DbType="VarChar(1024) NOT NULL" CanBeNull="false" />
@@ -202,5 +207,42 @@
       <Column Name="Latitud" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
       <Column Name="Longitud" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
     </ElementType>
+  </Function>
+  <Function Name="dbo.MAPA_COOP_DETAILS" Method="MAPA_COOP_DETAILS">
+    <Parameter Name="id_in" Type="System.Int32" DbType="Int" />
+    <ElementType IdRef="ID4" />
+  </Function>
+  <Function Name="dbo.MAPA_GET_BENEF_COOP" Method="MAPA_GET_BENEF_COOP">
+    <Parameter Name="id_coop" Type="System.Int32" DbType="Int" />
+    <ElementType IdRef="ID2" />
+  </Function>
+  <Function Name="dbo.MAPA_GET_AWA_COOP" Method="MAPA_GET_AWA_COOP">
+    <Parameter Name="id_coop" Type="System.Int32" DbType="Int" />
+    <ElementType IdRef="ID5" />
+  </Function>
+  <Function Name="dbo.MAPA_GET_SUBAREA_COOP" Method="MAPA_GET_SUBAREA_COOP">
+    <Parameter Name="id_coop" Type="System.Int32" DbType="Int" />
+    <ElementType Name="MAPA_GET_SUBAREA_COOPResult">
+      <Column Name="subcategoria" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="areaintervencion" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.MAPA_SEARCH_COOP_BY" Method="MAPA_SEARCH_COOP_BY">
+    <Parameter Name="idEstado" Type="System.Int32" DbType="Int" />
+    <Parameter Name="nombre" Type="System.String" DbType="VarChar(8000)" />
+    <Parameter Name="tipoOrg" Type="System.Int32" DbType="Int" />
+    <Parameter Name="fat" Type="System.Int32" DbType="Int" />
+    <Parameter Name="area_intervencion" Type="System.String" DbType="VarChar(8000)" />
+    <Parameter Name="enfoque_geografico" Type="System.Int32" DbType="Int" />
+    <Parameter Name="premios" Type="System.String" DbType="VarChar(8000)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.MAPA_SEARCH_ODS_BY" Method="MAPA_SEARCH_ODS_BY">
+    <Parameter Name="idPais" Type="System.Int32" DbType="Int" />
+    <Parameter Name="idEstado" Type="System.Int32" DbType="Int" />
+    <Parameter Name="nombre" Type="System.String" DbType="VarChar(8000)" />
+    <Parameter Name="area_intervencion" Type="System.String" DbType="VarChar(8000)" />
+    <Parameter Name="premios" Type="System.String" DbType="VarChar(8000)" />
+    <Return Type="System.Int32" />
   </Function>
 </Database>

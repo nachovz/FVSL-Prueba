@@ -38,5 +38,11 @@
         <elementListCompartment Id="dd80a30d-3207-419e-9f87-fb4779d1a2ad" absoluteBounds="4.89, 3.71, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
+    <classShape Id="2adc1d63-9063-4b55-b2f3-8b580c233542" absoluteBounds="4.875, 4.5, 2, 2.5401025390625">
+      <DataClassMoniker Name="/FVSL_LINQDataContext/tb_Premios_Coperante" />
+      <nestedChildShapes>
+        <elementListCompartment Id="490ef090-858c-45b7-97c0-09350eafcfdc" absoluteBounds="4.89, 4.96, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

@@ -24,11 +24,6 @@ public class MAPA_ODS : System.Web.Services.WebService {
     }
 
     [WebMethod]
-    public string HelloWorld() {
-        return "Hello World";
-    }
-
-    [WebMethod]
     public List<ODSVO> getODSD(int inods)                                       //getODSD receive (id_ods) Return List of ODSVO
     {
         FVSL_LINQDataContext dbcon = new FVSL_LINQDataContext();                //Create LINQ-SQL connection
@@ -92,6 +87,7 @@ public class MAPA_ODS : System.Web.Services.WebService {
 
         return lista;
     }
+    
     private ODSVO FODS(ODS_ODS odsin)                                           //FODS receive (ODS_ODS) Return ODSVO object (full)
     {
         ODSVO aux = new ODSVO();
