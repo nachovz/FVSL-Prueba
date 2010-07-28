@@ -19,7 +19,7 @@
 		<link>
 			<name>bin-debug</name>
 			<type>2</type>
-			<location>C:/wamp/www/vsl-maps/mapengine/bin-debug</location>
+			<locationURI>DOCUMENTS/mapengine/bin-debug</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

@@ -2,507 +2,67 @@
 <mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="100%" height="100%"
 	xmlns:maps="com.google.maps.*" xmlns:business="com.stc.maps.business.*" xmlns:view="com.stc.maps.view.*" 
 	xmlns:components="com.stc.maps.view.components.*"
-	resize="map_resize(event)">
+	resize="mapModel.map_resize(event)"
+	initialize="module1_initializeHandler(event)">
 	<mx:Script>
 		<![CDATA[
-			import com.stc.maps.event.SearchEvent;
-			import com.stc.maps.view.components.event.AdvancedSearchEvent;
-			import com.stc.maps.view.components.event.EntityRendererEvent;
-			import com.stc.maps.vo.NetworkVO;
-			import com.stc.maps.view.components.InputBox;
-			import mx.managers.PopUpManager;
-			import com.google.maps.MapMouseEvent;
-			import mx.events.ResizeEvent;
-			import com.stc.maps.event.FiltersEvent;
-			import com.google.maps.InfoWindowOptions;
-			import com.stc.maps.view.components.event.EntityRendererListEvent;
-			import mx.events.ItemClickEvent;
-			import mx.controls.Alert;
-			import com.google.maps.overlays.Marker;
-			import com.google.maps.overlays.MarkerOptions;
-			import mx.collections.ArrayCollection;
-			import mx.rpc.events.FaultEvent;
-			import mx.rpc.events.ResultEvent;
-			import mx.rpc.Responder;
+			import com.stc.maps.model.MapModel;
 			import com.stc.maps.vo.EntityVO;
-			import com.stc.maps.event.EntitiesEvent;
-			import com.google.maps.LatLng;
-			import com.google.maps.controls.NavigationControl;
-			import com.google.maps.controls.MapTypeControl;
-			import com.stc.maps.control.MapsController;
-			import com.stc.maps.model.ModelLocator;
-			import flash.utils.Dictionary;
+			
+			import mx.events.FlexEvent;
+			
 /* 			import flash.utils.Dictionary; */
-    	
-    		/**
-    		 * Below the definitions of all the Map Markers that are going to be used
-    		 * in the application. They all have to be defined here because there is no
-    		 * posibility to define them on runtime
-    		 * */
-    		 [Bindable]
-			[Embed(source="com/assets/markers/3/cooperantes.png")]
-		   	private var cooperant:Class;
-		   	
-		   	[Bindable]
-			[Embed(source="com/assets/markers/3/ods.png")]
-		   	private var ods:Class;
-		   	
-		   	[Bindable]
-			[Embed(source="com/assets/markers/3/empresas.png")]
-		   	private var company:Class;
-		   	
-		   	[Bindable]
-			[Embed(source="com/assets/markers/3/redes.png")]
-		   	private var network:Class;
-		   	
-    		 [Bindable]
-			[Embed(source="com/assets/markers/3/cooperantes_small.png")]
-		   	private var cooperantSmall:Class;
-		   	
-		   	[Bindable]
-			[Embed(source="com/assets/markers/3/ods_small.png")]
-		   	private var odsSmall:Class;
-		   	
-		   	[Bindable]
-			[Embed(source="com/assets/markers/3/empresas_small.png")]
-		   	private var companySmall:Class;
-		   	
-		   	[Bindable]
-			[Embed(source="com/assets/markers/3/redes_small.png")]
-		   	private var networkSmall:Class;
-    	
-    		/**
-    		 * This is the central model of the application, the point of this is
-    		 * that we only have to go to the server the first time a data request is made.
-    		 * From then on the data iretrived from this main applicacion model.
-    		 * 
-    		 * */
-			[Bindable]
-			private var model : ModelLocator = ModelLocator.getInstance();
-			
 			/**
-			 * This controller handles all the requests of data that are made by the application
+			 * Below the definitions of all the Map Markers that are going to be used
+			 * in the application. They all have to be defined here because there is no
+			 * posibility to define them on runtime
 			 * */
-			private var controller : MapsController = new MapsController();	
 			
-			/**
-			 * Request data habdlers
-			*/
-			private var getEntitiesHandlers : mx.rpc.Responder = new mx.rpc.Responder(getEntitiesResult, getEntitiesFault);
-			private var getFiltersHandlers : mx.rpc.Responder = new mx.rpc.Responder(getFiltersResult, getFiltersFault);
-			private var searchHandlers : mx.rpc.Responder = new mx.rpc.Responder(advancedSearchResult, advancedSearchFault);
-    	
-			/**
-			 * All the layers are being displayed on runtime in the application.
-			*/
-		   	private var selectedentityList : Array = [EntityVO.COOPERANT,EntityVO.ODS,EntityVO.NETWORK];
-		   	
-		   	
-			/**
-			 * Mapping structure to get the EntityVO of the given Icon Marker Instance.
-			*/
-		   	private var markerEntity : Dictionary = new Dictionary(true);
-		   	
-		   	[Bindable]
-			/**
-			 * If the advanced search panel is visible or not.
-			*/
-		   	private var searchVisibility : Boolean = false;
-		   	[Bindable]
-			/**
-			 * If the toggle button bar for layers is visible or not.
-			*/
-		   	private var toggleVisibility : Boolean = false;
-		   	
-		   	
-			/**
-			 * Called when the Google Map has been loaded successfully
-			*/
-		   	public function mapready_handler(e : Event) : void
-		   	{
-	 	   		mainMap.enableScrollWheelZoom();
-		   		//mainMap.addControl(new MapTypeControl());
-		   		mainMap.addControl(new NavigationControl());
-		   		
-		   		mainMap.setCenter(new LatLng(7.5803277913301415,-66.26953125));
-		   		mainMap.setZoom(4);
-		   		
-		   		getEntityies();
-		   		addEventListeners();
-		   		toggleVisibility = true;
-		   	}
-		   	
-			/**
-			 * We start listening for user interaction
-			*/
-		   	private function addEventListeners() : void
-		   	{
-		   		this.addEventListener(EntityRendererListEvent.FOCUS_MAP_ITEM,focusMap);
-		   		this.addEventListener(EntityRendererEvent.HIDE_ITEM,hideMarker);
-		   		this.addEventListener(EntityRendererEvent.SHOW_ITEM,showMarker);
-		   		this.addEventListener(EntityRendererEvent.HIDE_NETWORK,hideNetwork);
-		   		this.addEventListener(EntityRendererEvent.SHOW_NETWORK,showNetwork);
-		   		advancedSearch.addEventListener(AdvancedSearchEvent.SEARCH,advancedSearch_AdvancedSearchEvent,false,0,true);
-		   	}
-		   	
-			/**
-			 * We center the map to the given EntityVO
-			*/
-		   	private function focusMap(ev : EntityRendererListEvent)
-		   	{
-		   		var entity : EntityVO = ev.item as EntityVO;
-		   		mainMap.setCenter(new LatLng(entity.lat,entity.long));
-		   		mainMap.openInfoWindow(mainMap.getCenter(), new InfoWindowOptions({title: entity.title}));
-		   	}
-		   	
-			/**
-			 * Initial request of all the data layers
-			*/
-		   	private function getEntityies() : void
-		   	{
-		   		var getCooperantes : EntitiesEvent = new EntitiesEvent(EntitiesEvent.GET_ENTITY_LIST,getEntitiesHandlers);
-		   		getCooperantes.entityType = EntityVO.COOPERANT;
-		   		getCooperantes.dispatch();
- 		   		var getCooperantes : EntitiesEvent = new EntitiesEvent(EntitiesEvent.GET_ENTITY_LIST,getEntitiesHandlers);
-		   		getCooperantes.entityType = EntityVO.ODS;
-		   		getCooperantes.dispatch(); 
-		   		var getCooperantes : EntitiesEvent = new EntitiesEvent(EntitiesEvent.GET_ENTITY_LIST,getEntitiesHandlers);
-		   		getCooperantes.entityType = EntityVO.NETWORK;
-		   		getCooperantes.dispatch();
-		   	}
-		   	
-			/**
-			 * When a layer (Cooperants, Networks, Companies, etc.) is ready to be displayed
-			*/
-		   	private function getEntitiesResult(event : ResultEvent) : void
-		   	{
-		   		var entities : ArrayCollection = event.result as ArrayCollection;
-		   		if(entities && entities.length>0)
-		   		{
-		   			if(EntityVO(entities.getItemAt(0)).type)
-		   			{
-				   		model.entities[Object(entities.getItemAt(0)).type] = entities;
-				   		addEntityToMenu(Object(entities.getItemAt(0)).type);
-				   		addMapLayer(entities);
-		   			}
-		   		}
-		   	}
-		   	
-			/**
-			 * When a layer (Cooperants, Networks, Companies, etc.) is ready to be displayed
-			*/
-		   	private function advancedSearchResult(event : ResultEvent) : void
-		   	{
-		   		var entities : ArrayCollection = event.result as ArrayCollection;
-		   		if(entities && entities.length>0)
-		   		{
-		   			if(EntityVO(entities.getItemAt(0)).type)
-		   			{
-		   				clearMap();
-				   		menu.entities = entities;
-				   		addMapLayer(entities);
-		   			}
-		   		}
-		   		else
-		   		{
-		   			Alert.show("No hay Resultados");
-		   		}
-		   	}
-		   	
-			/**
-			 * This handles the result of the request for the filters of a specific layer.
-			*/
-		   	private function getFiltersResult(event : ResultEvent) : void
-		   	{
-		   		var searchFilters : ArrayCollection = event.result as ArrayCollection;
-		   		if(searchFilters && searchFilters.length>0)
-		   		{
-		   			model.filterOptions[selectedentityList[0]] = searchFilters;
-		   			searchVisibility = true;
-			   		advancedSearch.searchFilters = searchFilters;
-		   		}
-		   		else
-		   			searchVisibility = false;
-		   	}
-		   	
-			/**
-			 * Merge the current list of entitys being displayed on le tools bar with the new list
-			 * that is going to be displayed on the map
-			*/
-		   	private function addEntityToMenu(entity : String) : void
-		   	{
-		   		var auxArray : ArrayCollection = (menu.entities) ? menu.entities : new ArrayCollection();
-		   		
-	   			if(model.entities[entity] && model.entities[entity].length>0)
-	   				auxArray.source = auxArray.source.concat(model.entities[entity].source);
+			[Bindable]
+			[Embed(source="com/assets/markers/3/cooperantes_small.png")]
+			private var cooperantSmall:Class;
+			
+			[Bindable]
+			[Embed(source="com/assets/markers/3/ods_small.png")]
+			private var odsSmall:Class;
+			
+			[Bindable]
+			[Embed(source="com/assets/markers/3/empresas_small.png")]
+			private var companySmall:Class;
+			
+			[Bindable]
+			[Embed(source="com/assets/markers/3/redes_small.png")]
+			private var networkSmall:Class;
+			
+			
+			private var mapModel:MapModel = MapModel.getInstance();
 
-				menu.entities = auxArray;
-		   	}
-		   	
-		   	private function hideMarker(ev : EntityRendererEvent) : void
-		   	{
-		   		var entity : EntityVO = ev.item as EntityVO;
-		   		if(entity.marker) Marker(entity.marker).visible = false;
-		   		if(entity.type==EntityVO.NETWORK)
-		   		{
-		   			var network : NetworkVO = entity as NetworkVO;
-					for each(var entt : EntityVO in network.nodes)
-		   				if(entt.marker) Marker(entt.marker).visible = false;
-		   		}
-		   	}
-
-		   	private function showMarker(ev : EntityRendererEvent) : void
-		   	{
-		   		var entity : EntityVO = ev.item as EntityVO;
-		   		if(entity.marker) Marker(entity.marker).visible = true;
-		   		if(entity.type==EntityVO.NETWORK)
-		   		{
-		   			var network : NetworkVO = entity as NetworkVO;
-					for each(var entt : EntityVO in network.nodes)
-		   				if(entt.marker) Marker(entt.marker).visible = true;
-		   		}
-		   	}
-		   	
-		   	private function addMapLayer(entitiesList : ArrayCollection) : void
-		   	{
-		   		var totalLayers : int = selectedentityList.length;
-				for each(var entity : EntityVO in entitiesList)
-				{
-					if(entity.lat && entity.long)
-					{
-						if(entity.type==EntityVO.NETWORK && totalLayers==1) renderNetwork(entity as NetworkVO);
-						
-						if(model.makersLatLongDictionary[entity.lat] && model.makersLatLongDictionary[entity.lat][entity.long] && totalLayers>1)
-						{
-							var ent : EntityVO = model.makersLatLongDictionary[entity.lat][entity.long];
-							if(entity.type==EntityVO.NETWORK)
-							{
-								Marker(ent.marker).visible = false;
-								createMarker( entity, getEntityIcon(entity.type) )
-							}
-							else if(ent.type!=EntityVO.NETWORK) createMarker( entity, getEntityIcon(entity.type) );
-								
-						}
-						else
-							createMarker( entity, getEntityIcon(entity.type) );
-					}
-				}
-		   	}
-		   	
-		   	/**
-		   	 * This method dispatch a cairgorm event to call the searchCoperant webservice
-		   	 * */
-		   	private function advancedSearch_AdvancedSearchEvent(event : AdvancedSearchEvent) : void
-		   	{
-		   		var ev : SearchEvent = new SearchEvent(SearchEvent.SEARCH_ENTITY,searchHandlers);
-		   		ev.entityType = selectedentityList[0];
-		   		ev.filterVaues = event.searchFilterValues;
-		   		ev.dispatch();
-		   	}
-		   	
-		   	private function renderNetwork(network:NetworkVO)
-		   	{
-				for each(var entity : EntityVO in network.nodes)
-				{
-					createMarker( entity, getEntityIcon(entity.type) );
-				}   		
-		   	}
-		   	
-		   	private function getEntityIcon( type : String ) : Object
-		   	{
-				switch(type)
-				{
-					case EntityVO.COOPERANT:
-						return new cooperant();
-					break; 
-					case EntityVO.COMPANY:
-						return new company(); 
-					break; 
-					case EntityVO.ODS:
-						return new ods();
-					break; 
-					case EntityVO.NETWORK:
-						return new network();
-					break; 
-					default:
-						return new cooperant();
-					break;
-				} 
-		   	}
-		   	
-			private function createMarker( entity:EntityVO , auxIcon : Object) : void 
+			protected function module1_initializeHandler(event:FlexEvent):void
 			{
-				if(!entity.marker)
-				{
-				 	var latlang : LatLng = new LatLng( entity.lat, entity.long );
-				 	var markerOption : MarkerOptions = new MarkerOptions( 
-				 	{  
-				   		label:entity.title,  
-				   		tooltip:entity.title,  
-				   		name: entity.title,
-				   		icon: auxIcon,  
-				     	hasShadow:true 
-				     });
-				     
-				 	var pMarker:Marker = new Marker(latlang,markerOption);
-				     entity.marker = pMarker;
-					entity.marker.addEventListener(MapMouseEvent.CLICK,marker_click,false,0,true);
-				}
-				
-				markerEntity[entity.marker] = entity;
-				
-				if(model.makersLatLongDictionary[entity.lat]==null) model.makersLatLongDictionary[entity.lat] = new Dictionary();
-				model.makersLatLongDictionary[entity.lat][entity.long] = entity;
-			 	mainMap.addOverlay( entity.marker as Marker);  
+				// TODO Auto-generated method stub
+				mapModel.advancedSearch = advancedSearch;
+				mapModel.mainMap = mainMap;
+				mapModel.menu = menu;
+				mapModel.containerThis = this;
 			}
-			
-			private function marker_click(event : MapMouseEvent) : void
-			{
-				var entity : EntityVO = markerEntity[event.target] as EntityVO;
-				var input : InputBox = new InputBox();
-				input.data = entity;
-				input.addEventListener(EntityRendererEvent.EXPAND_NETWORK,expandNetwork,false,0,true);
-				
-				var ev : EntitiesEvent = new EntitiesEvent(EntitiesEvent.GET_ENTITY_DETAILS,input.getEntityDetailsHandlers);
-				ev.entityId = entity.id.toString();
-				if(entity.type!="network") ev.entityType = entity.type;
-				else ev.entityType = NetworkVO(entity).parentType;
-				ev.dispatch();
-				
-				PopUpManager.addPopUp(input,this);
-				PopUpManager.centerPopUp(input);
-				input.y = input.y-100;
-			}
-
-			
-			private function clearMap() : void
-			{
-				mainMap.clearOverlays();
-				markerEntity = new Dictionary(true);
-			}
-			
-			private function expandNetwork(ev : EntityRendererEvent) : void
-			{
-				clearMap();
-				
-				createMarker(ev.network as EntityVO,getEntityIcon(ev.network.type));
-				renderNetwork(ev.network as NetworkVO);
-				menu.entities = ev.network.nodes;
-			}
-			
-			private function showNetwork(ev : EntityRendererEvent) : void
-			{
-				EntityVO(ev.item).marker.visible = true;
-				if(selectedentityList[0]==EntityVO.NETWORK)
-					for each(var node : EntityVO in ev.item.nodes)
-					{
-						if(node.marker) node.marker.visible = true;
-					}
-			}
-			
-			private function hideNetwork(ev : EntityRendererEvent) : void
-			{
-				EntityVO(ev.item).marker.visible = false;
-				if(selectedentityList[0]==EntityVO.NETWORK)
-					for each(var node : EntityVO in ev.item.nodes)
-					{
-						if(node.marker) node.marker.visible = false;
-					}
-			}
-			
-			private function changeLayer(entityesList : Array) : void
-			{
-				clearMap();
-				
-				for each(var entity : String in entityesList)
-					addMapLayer(model.entities[entity]);
-			}
-			
-			private function changeMenuDatasourceTypes(entityesList : Array) : void
-			{
-				var menuData : ArrayCollection = new ArrayCollection();
-				
-				for each(var entity : String in entityesList)
-					if(model.entities[entity])
-						menuData.source = menuData.source.concat(model.entities[entity].source);
-						
-				menu.entities = menuData;
-			}
-			
-			private function showAdvancedSearch(keyName : String) : void
-			{
-				if(!model.filterOptions[keyName])
-				{
-					var ev : FiltersEvent = new FiltersEvent(FiltersEvent.GET_FILTERS_LIST,getFiltersHandlers);
-					ev.entityType = keyName;
-					ev.dispatch();
-				}
-				else
-				{
-					var event : mx.rpc.events.ResultEvent = new mx.rpc.events.ResultEvent(ResultEvent.RESULT,false,true,model.filterOptions[keyName]);
-					getFiltersResult(event);
-				}
-			}
-			
-            private function toggleOptons_clickHandler(event:ItemClickEvent):void 
-            {
-            	var entityList : Array = [];
-         		
-         		if(event.item.keyName!="all" && event.item.keyName!="network")
-         		{
-	                entityList.push(event.item.keyName);
-	                selectedentityList = entityList;
-	                showAdvancedSearch(event.item.keyName);
-         		}
-         		else if(event.item.keyName=="all")
-         		{
-	                entityList.push(EntityVO.COMPANY);
-	                entityList.push(EntityVO.ODS);
-	                entityList.push(EntityVO.COOPERANT);
-	                entityList.push(EntityVO.NETWORK);
-	                
-	                selectedentityList = entityList;
-	                searchVisibility = false;
-         		}
-         		else if(event.item.keyName=="network")
-         		{
-	                entityList.push(EntityVO.NETWORK);
-	                selectedentityList = entityList;
-	                showAdvancedSearch(event.item.keyName);
-         		}
-
-                changeLayer(entityList);
-                changeMenuDatasourceTypes(entityList);
-            }
-            
-            private function map_resize(event : ResizeEvent) : void
-            {
-            	menu.height = this.height;
-            }
-            
-		   	
-		   	private function getEntitiesFault(event : FaultEvent) : void
-		   	{
-		   		Alert.show("A ocurrido un error buscando las entidades.");
-		   	}
-		   	private function getFiltersFault(event : FaultEvent) : void
-		   	{
-		   		Alert.show("A ocurrido un error buscando los filtros de busqueda.");
-		   	}
-		   	private function advancedSearchFault(event : FaultEvent) : void
-		   	{
-		   		Alert.show("A ocurrido un error en la busqueda avanzada.");
-		   	}
+//MI CLAVE DE MAP
+//ABQIAAAAssXQm8mCsuDbHXTVDzUbABTPK7DoDRCvKRyAt-uHrA5m1ZoR5hRJ4IeA14U3X6epSvuQXgXqdvvvlQ		
+//MAP KEY DE ALEJANDRO
+//ABQIAAAAEuJqUl4X79npk_A40fNvIBRMSRaTAPbY4Ge5Tit061c7iz4HGRSiY2obSozE7R1c6g7oyXzzrvgfDA
 		]]>
 	</mx:Script>
 	  <maps:Map
 	    id="mainMap"
 	    key="ABQIAAAAEuJqUl4X79npk_A40fNvIBRMSRaTAPbY4Ge5Tit061c7iz4HGRSiY2obSozE7R1c6g7oyXzzrvgfDA" 
-	    mapevent_mapready="mapready_handler(event)"
-	    width="100%" height="100%" />
-      <mx:ToggleButtonBar id="toggleOptons" itemClick="toggleOptons_clickHandler(event);"
-      	top="10" right="10" toggleOnClick="false"
-      	visible="{toggleVisibility}">
+	    mapevent_mapready="mapModel.mapready_handler(event);"
+	    width="100%" height="100%" 
+		mapevent_mappreinitialize="mapModel.mainMap_mapevent_mappreinitializeHandler(event)"
+		/>
+      <mx:ToggleButtonBar id="toggleOptons" 
+		itemClick="mapModel.toggleOptons_clickHandler(event);"
+      	top="10" right="10" 
+		toggleOnClick="false"
+      	visible="{mapModel.toggleVisibility}">
           <mx:dataProvider>
               <mx:Array>
                   <mx:Object label="Todos" keyName="all" />
@@ -514,14 +74,14 @@
           </mx:dataProvider>
       </mx:ToggleButtonBar>
 	  <components:AdvancedSearch 
-	  	visible="{searchVisibility}"
+	  	id="advancedSearch" 
+	  	visible="{mapModel.searchVisibility}"
 	  	title="Puedes realizar una busqueda avanzada:"
 	  	right="10" top="40"
 	  	width="350"
-	  	id="advancedSearch" 
 	  	backgroundColor="#FFFFFF"
 	  	  />
-	  <view:CollapsableMenu x="0" y="0" id="menu" width="0" expandedWidth="300" />
+	  <view:CollapsableMenu id="menu" x="0" y="0" width="0" expandedWidth="300" />
 	  <mx:Image source="com/assets/img/ur_logo.gif" right="2" bottom="2" />
     <business:Services id="services" />
 </mx:Module>
