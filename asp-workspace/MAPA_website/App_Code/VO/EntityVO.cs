@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Xml.Serialization;
 
 /// <summary>
 /// Summary description for EntityVO
 /// </summary>
-public class EntityVO
+[XmlInclude(typeof(ODSVO))]
+[XmlInclude(typeof(CooperantVO))]
+public class EntityVO 
 {
     public String type = "";
     public String name = "";

@@ -1,30 +1,31 @@
 ﻿using System;
-using System.Collections;
+using System.Data;
+using System.Configuration;
 using System.Linq;
 using System.Web;
-using System.Web.Services;
-using System.Web.Services.Protocols;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using System.Collections.Generic;
 using System.Data.Linq;
 
 /// <summary>
-/// Summary description for MAPA_COOP
+/// Summary description for COOPextract
 /// </summary>
-[WebService(Namespace = "http://tempuri.org/")]
-[WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
-// To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
-// [System.Web.Script.Services.ScriptService]
-public class MAPA_COOP : System.Web.Services.WebService {
+public class COOPextract: IEntityExtractor
+{
+	public COOPextract()
+	{
+		//
+		// TODO: Add constructor logic here
+		//
+	}
 
-    public MAPA_COOP () {
 
-        //Uncomment the following line if using designed components 
-        //InitializeComponent(); 
-    }
-
-    [WebMethod]
-    public List<CooperantVO> getCOOPD(int incoop)
+    /*public List<CooperantVO> getCOOPD(int incoop)
     {
         FVSL_LINQDataContext dbcon = new FVSL_LINQDataContext();
 
@@ -38,18 +39,55 @@ public class MAPA_COOP : System.Web.Services.WebService {
         }
 
         return lista;
+    }*/
+    public EntityVO getDetails(int incoop)
+    {
+        FVSL_LINQDataContext dbcon = new FVSL_LINQDataContext();                //Create LINQ-SQL connection
+
+        //List<ODS_ODS> resultset = dbcon.MAPA_ODS_DETAILS(inods).ToList();       //Create ODS_ODS List AND assign SPROC result
+        //ISingleResult<ODS_ODS> resultset = dbcon.MAPA_ODS_DETAILS(inods); ;
+        //List<ODSVO> result = new List<ODSVO>();                                 //Create Return list
+        var resultset = dbcon.MAPA_COOP_DETAILS(incoop);
+
+        foreach (tb_Coperante coop in resultset)                                      //Start reading Resulset list, and adding to Result
+        {
+            return FCOOP(coop);
+            //break;
+        }
+
+
+        return null;
     }
-    [WebMethod]
-    public List<EntityVO> getCOOPsearch(int idestado, string nombre,int tiporg,int fat, string area,int enfoq, string premios)
+
+    //getSearch in:List<String> (int enfoq, int idestado, string nombre, string area, string premios, int tiporg, int fat)
+
+    public List<EntityVO> getSearch(List<String> datos)
     {
         FVSL_LINQDataContext dbcon = new FVSL_LINQDataContext();
 
         List<EntityVO> lista = new List<EntityVO>();
 
-        ISingleResult<dynamicLINQC> resultset = dbcon.MAPA_SEARCH_COOP_BY(idestado, nombre, tiporg, fat, area, enfoq, premios);
+        ISingleResult<dynamicLINQC> resultset = dbcon.MAPA_SEARCH_COOP_BY(1, "se",2,4, "se",5, "se"/*datos[1], datos[2], (int)datos[5], (int)datos[6], datos[3], (int)datos[0], datos[4]*/);
 
-        EntityVO EVO2 = new EntityVO();
-        lista.Add(EVO2);
+        //EntityVO EVO2 = new EntityVO();
+        //lista.Add(EVO2);
+
+/*
+        if (resultset.Count().Equals(1))
+        {
+            EntityVO EVO = new EntityVO();
+
+            EVO.id = resultset.ElementAt(0).id_coperante.ToString();
+            EVO.name = resultset.ElementAt(0).nombre;
+            EVO.latitude = resultset.ElementAt(0).Latitud.ToString();
+            EVO.longitude = resultset.ElementAt(0).Longitud.ToString();
+
+            //lista.Add(EVO);
+            return EVO;
+        }
+
+        return null;
+        */
 
         foreach (dynamicLINQC dyn in resultset)
         {
@@ -66,9 +104,10 @@ public class MAPA_COOP : System.Web.Services.WebService {
         //IEnumerable<dynamicLINQ> result = FVSL_LINQDataContext.ExecuteQuery<dynamicLINQ>("EXEC MAPA_SEARCH_ODS_BY",2,null,"IS",null,NULL);
 
         return lista;
+
     }
-    [WebMethod]
-    public List<EntityVO> getCOOPA()
+
+    public List<EntityVO> getAll()
     {
         FVSL_LINQDataContext dbcon = new FVSL_LINQDataContext();
 
@@ -91,7 +130,7 @@ public class MAPA_COOP : System.Web.Services.WebService {
         return lista;
     }
 
-    private CooperantVO FCOOP(tb_Coperante coopin)
+    private EntityVO FCOOP(tb_Coperante coopin)
     {
         CooperantVO aux = new CooperantVO();
 
@@ -144,7 +183,7 @@ public class MAPA_COOP : System.Web.Services.WebService {
             AwardVO AVO = new AwardVO();
 
             AVO.awardId = awa.id_premios;
-            AVO.awardName = awa.nombre; 
+            AVO.awardName = awa.nombre;
             AVO.recibido = awa.id_Otorgado_Recibido.GetValueOrDefault();
 
             lista.Add(AVO);
@@ -168,4 +207,3 @@ public class MAPA_COOP : System.Web.Services.WebService {
         return lista;
     }
 }
-

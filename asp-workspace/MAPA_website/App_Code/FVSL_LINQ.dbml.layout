@@ -44,5 +44,11 @@
         <elementListCompartment Id="490ef090-858c-45b7-97c0-09350eafcfdc" absoluteBounds="4.89, 4.96, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
+    <classShape Id="39a28440-7b1d-4ef6-9da8-185c0ec1f08b" absoluteBounds="4.75, 0.5, 2, 7.3476383463541657">
+      <DataClassMoniker Name="/FVSL_LINQDataContext/EMP_Empresa" />
+      <nestedChildShapes>
+        <elementListCompartment Id="c6bf0bcf-49a6-401c-8ad9-36bcdf7c19d5" absoluteBounds="4.765, 0.96, 1.9700000000000002, 6.7876383463541661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

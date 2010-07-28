@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Database Name="PortalVSL" Class="FVSL_LINQDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=localhost;Initial Catalog=PortalVSL;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="PortalVSLConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=localhost;Initial Catalog=PortalVSL;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="PortalVSLConnectionString2" Provider="System.Data.SqlClient" />
   <Table Name="dbo.ODS_ODS" Member="ODS_ODS">
     <Type Name="ODS_ODS" Id="ID1">
       <Column Name="id_ods" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -161,6 +161,44 @@
       <Column Name="descripcion" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="dbo.EMP_Empresa" Member="EMP_Empresas">
+    <Type Name="EMP_Empresa" Id="ID6">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(1024) NOT NULL" CanBeNull="false" />
+      <Column Name="Rif" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="PaginaWeb" Type="System.String" DbType="VarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="Correo" Type="System.String" DbType="VarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="Facebook" Type="System.String" DbType="VarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="Twitter" Type="System.String" DbType="VarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="LinkedIn" Type="System.String" DbType="VarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="MySpace" Type="System.String" DbType="VarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="Alcance" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="Sector" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="Pais" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="Estado" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="Municipio" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="Parroquia" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="Ciudad" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Urbanizacion" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Calle" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Casa" Type="System.String" DbType="VarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="Piso" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="CodigoPostal" Type="System.String" DbType="VarChar(6) NOT NULL" CanBeNull="false" />
+      <Column Name="Latitud" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Longitud" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Logo" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Alianza" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="DescripcionAlianzas" Type="System.String" DbType="VarChar(1024) NOT NULL" CanBeNull="false" />
+      <Column Name="RazonSocial" Type="System.String" DbType="VarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="Usuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Telefono" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Financia" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Presupuesto" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="Enfoque" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="Estatus" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="TipoOrganismo" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+    </Type>
+  </Table>
   <Function Name="dbo.MAPA_ODS_DETAILS" Method="MAPA_ODS_DETAILS">
     <Parameter Name="id_in" Type="System.Int32" DbType="Int" />
     <ElementType IdRef="ID1" />
@@ -244,5 +282,21 @@
     <Parameter Name="area_intervencion" Type="System.String" DbType="VarChar(8000)" />
     <Parameter Name="premios" Type="System.String" DbType="VarChar(8000)" />
     <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.MAPA_EMP_ALL" Method="MAPA_EMP_ALL">
+    <ElementType Name="MAPA_EMP_ALLResult">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(1024) NOT NULL" CanBeNull="false" />
+      <Column Name="Latitud" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Longitud" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.MAPA_EMP_DETAILS" Method="MAPA_EMP_DETAILS">
+    <Parameter Name="id_in" Type="System.Int32" DbType="Int" />
+    <ElementType IdRef="ID6" />
+  </Function>
+  <Function Name="dbo.MAPA_GET_BENEF_EMP" Method="MAPA_GET_BENEF_EMP">
+    <Parameter Name="emp_in" Type="System.Int32" DbType="Int" />
+    <ElementType IdRef="ID2" />
   </Function>
 </Database>
