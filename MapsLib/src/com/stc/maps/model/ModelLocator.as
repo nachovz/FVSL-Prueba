@@ -25,11 +25,12 @@ package com.stc.maps.model
 					throw new Error( "Only one ModelLocator instance should be instantiated" );	
 	   	}
 		
-		public var entities : Dictionary = new Dictionary();
-		public var filterOptions : Dictionary = new Dictionary();
+		public var allEntities	:Array = [];
 		
-		public var searchFilters : Dictionary = new Dictionary();
-		public var makersLatLongDictionary = new Dictionary();
+		public var entities 				:Dictionary = new Dictionary();
+		public var filterOptions			:Dictionary = new Dictionary();
+		public var searchFilters 			:Dictionary = new Dictionary();
+		public var makersLatLongDictionary	:Dictionary = new Dictionary();
 		
 	}	
 }
