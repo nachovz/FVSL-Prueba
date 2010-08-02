@@ -133,11 +133,11 @@ public class ODSextract: IEntityExtractor
         List<String> lista = new List<String>();
         FVSL_LINQDataContext dbaux = new FVSL_LINQDataContext();
 
-        List<beneficiario> benefs = dbaux.MAPA_GET_BENF_ODS(id).ToList();
+        List<MAPA_GET_BENFResult> benefs = dbaux.MAPA_GET_BENF(id, 2).ToList();
 
-        foreach (beneficiario ben in benefs)
+        foreach (MAPA_GET_BENFResult ben in benefs)
         {
-            lista.Add(ben.nombre);
+            lista.Add(ben.Nombre);
         }
 
         return lista;
@@ -146,27 +146,26 @@ public class ODSextract: IEntityExtractor
     private List<AwardVO> getODSaward(int id)                                   //getODSaward receive (id_ods) Return List of Award
     {
         List<AwardVO> lista = new List<AwardVO>();
+
         FVSL_LINQDataContext dbaux = new FVSL_LINQDataContext();
 
-        List<tb_Premios_ODS> awards = dbaux.MAPA_GET_AWA_ODS(id).ToList();
+        List<MAPA_GET_AWAResult> awards = dbaux.MAPA_GET_AWA(id,2).ToList();
 
-        foreach (tb_Premios_ODS awa in awards)
+        foreach (MAPA_GET_AWAResult awa in awards)
         {
             AwardVO AVO = new AwardVO();
 
-            AVO.awardId = awa.id_premios;
-            AVO.awardName = awa.nombre;
-            //if(!awa.id_Ortogado_Recibido.Equals(null)) 
-            AVO.recibido = awa.id_Ortogado_Recibido.GetValueOrDefault();
+            AVO.awardName = awa.nombre; 
+            AVO.recibido = awa.Otorgado;
 
             lista.Add(AVO);
         }
 
         return lista;
     }
-    private List<String> getODSarea(int id)                                     //getODSarea receive (id_ods) Return List of Areas
+    private List<AreaVO> getODSarea(int id)                                     //getODSarea receive (id_ods) Return List of Areas
     {
-        List<String> lista = new List<String>();
+        List<AreaVO> lista = new List<AreaVO>();
         FVSL_LINQDataContext dbaux = new FVSL_LINQDataContext();
 
         List<p_Select_ODS_PerfilResult> areas = dbaux.p_Select_ODS_Perfil(id).ToList();
@@ -174,7 +173,10 @@ public class ODSextract: IEntityExtractor
 
         foreach (p_Select_ODS_PerfilResult are in areas)
         {
-            lista.Add(are.AreaIntervencion.ToString());
+            AreaVO A = new AreaVO();
+            A.area = are.AreaIntervencion;
+
+            lista.Add(A);
         }
 
         return lista;

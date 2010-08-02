@@ -9,7 +9,7 @@ using System.Web;
 public class ODSVO : EntityVO
 {
     public List<AwardVO> awards;
-    public List<String> areas;
+    public List<AreaVO> areas;
     public List<String> beneficiarios;
     public String enfoque;
     public String tipoOrganizacion;

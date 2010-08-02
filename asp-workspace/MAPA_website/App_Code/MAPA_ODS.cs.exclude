@@ -119,7 +119,7 @@ public class MAPA_ODS : System.Web.Services.WebService {
         List<String> lista = new List<string>();
         FVSL_LINQDataContext dbaux = new FVSL_LINQDataContext();
 
-        List<beneficiario> benefs = dbaux.MAPA_GET_BENF_ODS(id).ToList();
+        List<beneficiario> benefs = dbaux.MAPA_GET_BENF(id,2).ToList();
 
         foreach (beneficiario ben in benefs)
         {

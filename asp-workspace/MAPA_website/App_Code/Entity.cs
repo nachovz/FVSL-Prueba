@@ -28,8 +28,8 @@ public class Entity : System.Web.Services.WebService {
     }
     [WebMethod]
     public EntityVO getDetails(String type,int i) {
-        EntityVO objeto = EntityExtractor.create(type).getDetails(i);
-        return objeto;
+        return EntityExtractor.create(type).getDetails(i);
+         
     }
     [WebMethod]
     //public EntityVO getSearch(String type, int idpais, int idestado, string nombre, string area, string premios) {

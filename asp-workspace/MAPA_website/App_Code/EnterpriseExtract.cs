@@ -56,6 +56,8 @@ public class EnterpriseExtract : IEntityExtractor
         if (resultset.Count == 1) {
             EMP = FEMP(resultset[0]);
         }
+
+        return EMP;
     }
 
     private EnterpriseVO FEMP(EMP_Empresa empin)
@@ -77,6 +79,8 @@ public class EnterpriseExtract : IEntityExtractor
         aux.awards = getEMPaward(empin.Id);
         aux.areas = getEMParea(empin.Id);
         if (empin.Logo != null) aux.imgdata = empin.Logo.ToArray();
+
+        return aux;
     }
 
     private List<string> getEMParea(int p)
@@ -86,27 +90,43 @@ public class EnterpriseExtract : IEntityExtractor
 
     private List<AwardVO> getEMPaward(int p)
     {
-        throw new NotImplementedException();
+        List<AwardVO> lista = new List<AwardVO>();
+
+        FVSL_LINQDataContext dbaux = new FVSL_LINQDataContext();
+
+        List<MAPA_GET_AWAResult> awards = dbaux.MAPA_GET_AWA(p, 1).ToList();
+
+        foreach (MAPA_GET_AWAResult awa in awards)
+        {
+            AwardVO AVO = new AwardVO();
+
+            AVO.awardName = awa.nombre;
+            AVO.recibido = awa.Otorgado;
+
+            lista.Add(AVO);
+        }
+
+        return lista;
     }
 
     private List<String> getEMPbeneficiario(int p)
     {
-        List<String> lista = new List<String>;
+        List<String> lista = new List<String>();
 
         FVSL_LINQDataContext dbcon = new FVSL_LINQDataContext();
 
-        List<beneficiario> resultset = dbcon.MAPA_GET_BENEF_EMP(p).ToList();
+        List<MAPA_GET_BENFResult> resultset = dbcon.MAPA_GET_BENF(p,1).ToList();
 
-        foreach(beneficiario benef in resultset)
+        foreach(MAPA_GET_BENFResult benef in resultset)
         {
-            lista.Add(benef.nombre);
+            lista.Add(benef.Nombre);
         }
 
         return lista;
 
     }
 
-    public List<EntityVO> getSearch(System.Collections.Generic.List<string> arr)
+    public List<EntityVO> getSearch(List<string> arr)
     {
         throw new NotImplementedException();
     }

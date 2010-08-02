@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Database Name="PortalVSL" Class="FVSL_LINQDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=localhost;Initial Catalog=PortalVSL;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="PortalVSLConnectionString2" Provider="System.Data.SqlClient" />
+<Database Name="C291728_vsl" Class="FVSL_LINQDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=mssql503.ixwebhosting.com;Initial Catalog=C291728_vsl;Persist Security Info=True;User ID=C291728_alejandro" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="C291728_vslConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.ODS_ODS" Member="ODS_ODS">
     <Type Name="ODS_ODS" Id="ID1">
       <Column Name="id_ods" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -68,22 +68,8 @@
       <Column Name="Usuario" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.beneficiario" Member="beneficiarios">
-    <Type Name="beneficiario" Id="ID2">
-      <Column Name="id_beneficiario" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="nombre" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.ods_beneficiario" Member="ods_beneficiarios">
-    <Type Name="ods_beneficiario">
-      <Column Name="id_ods_beneficiario" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="id_ods" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="id_beneficiario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="cantidad" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
   <Table Name="dbo.tb_Coperante" Member="tb_Coperantes">
-    <Type Name="tb_Coperante" Id="ID4">
+    <Type Name="tb_Coperante" Id="ID2">
       <Column Name="id_coperante" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="nombre" Type="System.String" DbType="NVarChar(1024)" CanBeNull="true" />
       <Column Name="siglas" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
@@ -129,40 +115,8 @@
       <Column Name="EnfoqueGeografico" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.tb_Premios_ODS" Member="tb_Premios_ODS">
-    <Type Name="tb_Premios_ODS" Id="ID3">
-      <Column Name="id_premios" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="id_ods" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="id_Ortogado_Recibido" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="nombre" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="fecha" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-      <Column Name="tipo_premio" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Otorga_premio" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="pais" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="descripcion" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.area_intervencion" Member="area_intervencions">
-    <Type Name="area_intervencion">
-      <Column Name="id_area_intervencion" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="nombre" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.tb_Premios_Coperante" Member="tb_Premios_Coperantes">
-    <Type Name="tb_Premios_Coperante" Id="ID5">
-      <Column Name="id_premios" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="id_coperante" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="id_Otorgado_Recibido" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="nombre" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
-      <Column Name="fecha" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
-      <Column Name="tipo_premio" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Otorga_premio" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="pais" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
-      <Column Name="descripcion" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.EMP_Empresa" Member="EMP_Empresas">
-    <Type Name="EMP_Empresa" Id="ID6">
+    <Type Name="EMP_Empresa" Id="ID3">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Nombre" Type="System.String" DbType="VarChar(1024) NOT NULL" CanBeNull="false" />
       <Column Name="Rif" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
@@ -203,14 +157,6 @@
     <Parameter Name="id_in" Type="System.Int32" DbType="Int" />
     <ElementType IdRef="ID1" />
   </Function>
-  <Function Name="dbo.MAPA_GET_BENF_ODS" Method="MAPA_GET_BENF_ODS">
-    <Parameter Name="id_ods" Type="System.Int32" DbType="Int" />
-    <ElementType IdRef="ID2" />
-  </Function>
-  <Function Name="dbo.MAPA_GET_AWA_ODS" Method="MAPA_GET_AWA_ODS">
-    <Parameter Name="id_ods" Type="System.Int32" DbType="Int" />
-    <ElementType IdRef="ID3" />
-  </Function>
   <Function Name="dbo.p_Select_ODS_Perfil" Method="p_Select_ODS_Perfil">
     <Parameter Name="id_ods" Type="System.Int32" DbType="Int" />
     <ElementType Name="p_Select_ODS_PerfilResult">
@@ -248,15 +194,7 @@
   </Function>
   <Function Name="dbo.MAPA_COOP_DETAILS" Method="MAPA_COOP_DETAILS">
     <Parameter Name="id_in" Type="System.Int32" DbType="Int" />
-    <ElementType IdRef="ID4" />
-  </Function>
-  <Function Name="dbo.MAPA_GET_BENEF_COOP" Method="MAPA_GET_BENEF_COOP">
-    <Parameter Name="id_coop" Type="System.Int32" DbType="Int" />
     <ElementType IdRef="ID2" />
-  </Function>
-  <Function Name="dbo.MAPA_GET_AWA_COOP" Method="MAPA_GET_AWA_COOP">
-    <Parameter Name="id_coop" Type="System.Int32" DbType="Int" />
-    <ElementType IdRef="ID5" />
   </Function>
   <Function Name="dbo.MAPA_GET_SUBAREA_COOP" Method="MAPA_GET_SUBAREA_COOP">
     <Parameter Name="id_coop" Type="System.Int32" DbType="Int" />
@@ -293,10 +231,29 @@
   </Function>
   <Function Name="dbo.MAPA_EMP_DETAILS" Method="MAPA_EMP_DETAILS">
     <Parameter Name="id_in" Type="System.Int32" DbType="Int" />
-    <ElementType IdRef="ID6" />
+    <ElementType IdRef="ID3" />
   </Function>
-  <Function Name="dbo.MAPA_GET_BENEF_EMP" Method="MAPA_GET_BENEF_EMP">
-    <Parameter Name="emp_in" Type="System.Int32" DbType="Int" />
-    <ElementType IdRef="ID2" />
+  <Function Name="dbo.MAPA_GET_AWA" Method="MAPA_GET_AWA">
+    <Parameter Name="id" Type="System.Int32" DbType="Int" />
+    <Parameter Name="type" Type="System.Int32" DbType="Int" />
+    <ElementType Name="MAPA_GET_AWAResult">
+      <Column Name="nombre" Type="System.String" DbType="NVarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="Otorgado" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.MAPA_GET_BENF" Method="MAPA_GET_BENF">
+    <Parameter Name="id" Type="System.Int32" DbType="Int" />
+    <Parameter Name="type" Type="System.Int32" DbType="Int" />
+    <ElementType Name="MAPA_GET_BENFResult">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.mapa_get_catalogo_premios" Method="mapa_get_catalogo_premios">
+    <Parameter Name="tipo_s" Type="System.String" DbType="VarChar(20)" />
+    <ElementType Name="mapa_get_catalogo_premiosResult">
+      <Column Name="nombre" Type="System.String" DbType="NVarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
   </Function>
 </Database>

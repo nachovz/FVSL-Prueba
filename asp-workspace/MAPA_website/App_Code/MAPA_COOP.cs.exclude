@@ -122,7 +122,7 @@ public class MAPA_COOP : System.Web.Services.WebService {
 
         FVSL_LINQDataContext dbcon = new FVSL_LINQDataContext();
 
-        List<beneficiario> benef = dbcon.MAPA_GET_BENEF_COOP(coopin).ToList();
+        List<beneficiario> benef = dbcon.MAPA_GET_BENF(coopin,3).ToList();
 
         foreach (beneficiario ben in benef)
         {

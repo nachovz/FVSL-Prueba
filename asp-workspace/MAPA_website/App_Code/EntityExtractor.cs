@@ -11,12 +11,13 @@ using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 
 /// <summary>
-/// Summary description for AEntityExtractor
+/// Summary description for EntityExtractor
 /// </summary>
 public class EntityExtractor
 {
     public static String ODS_EXTRACTOR { get{return "ods";} }
     public static String COOP_EXTRACTOR { get { return "cooperant"; } }
+    public static String EMP_EXTRACTOR { get { return "emp"; } }
 
     public static IEntityExtractor create(String type) 
     {
@@ -26,6 +27,9 @@ public class EntityExtractor
         }
         else if (type == COOP_EXTRACTOR) {
             return new COOPextract();
+        }
+        else if (type == EMP_EXTRACTOR) {
+            return new EnterpriseExtract();
         }
         return null;
     }

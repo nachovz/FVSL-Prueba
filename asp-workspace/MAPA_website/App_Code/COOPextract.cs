@@ -161,11 +161,11 @@ public class COOPextract: IEntityExtractor
 
         FVSL_LINQDataContext dbcon = new FVSL_LINQDataContext();
 
-        List<beneficiario> benef = dbcon.MAPA_GET_BENEF_COOP(coopin).ToList();
+        List<MAPA_GET_BENFResult> benef = dbcon.MAPA_GET_BENF(coopin, 3).ToList();
 
-        foreach (beneficiario ben in benef)
+        foreach (MAPA_GET_BENFResult ben in benef)
         {
-            lista.Add(ben.nombre);
+            lista.Add(ben.Nombre);
         }
 
         return lista;
@@ -176,15 +176,14 @@ public class COOPextract: IEntityExtractor
 
         FVSL_LINQDataContext dbaux = new FVSL_LINQDataContext();
 
-        List<tb_Premios_Coperante> awards = dbaux.MAPA_GET_AWA_COOP(id).ToList();
+        List<MAPA_GET_AWAResult> awards = dbaux.MAPA_GET_AWA(id,3).ToList();
 
-        foreach (tb_Premios_Coperante awa in awards)
+        foreach (MAPA_GET_AWAResult awa in awards)
         {
             AwardVO AVO = new AwardVO();
 
-            AVO.awardId = awa.id_premios;
             AVO.awardName = awa.nombre;
-            AVO.recibido = awa.id_Otorgado_Recibido.GetValueOrDefault();
+            AVO.recibido = awa.Otorgado;
 
             lista.Add(AVO);
         }

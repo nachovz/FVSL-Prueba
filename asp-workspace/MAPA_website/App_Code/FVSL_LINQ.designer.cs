@@ -21,7 +21,7 @@ using System.Reflection;
 
 
 
-[System.Data.Linq.Mapping.DatabaseAttribute(Name="PortalVSL")]
+[System.Data.Linq.Mapping.DatabaseAttribute(Name="C291728_vsl")]
 public partial class FVSL_LINQDataContext : System.Data.Linq.DataContext
 {
 	
@@ -32,31 +32,16 @@ public partial class FVSL_LINQDataContext : System.Data.Linq.DataContext
   partial void InsertODS_ODS(ODS_ODS instance);
   partial void UpdateODS_ODS(ODS_ODS instance);
   partial void DeleteODS_ODS(ODS_ODS instance);
-  partial void Insertbeneficiario(beneficiario instance);
-  partial void Updatebeneficiario(beneficiario instance);
-  partial void Deletebeneficiario(beneficiario instance);
-  partial void Insertods_beneficiario(ods_beneficiario instance);
-  partial void Updateods_beneficiario(ods_beneficiario instance);
-  partial void Deleteods_beneficiario(ods_beneficiario instance);
   partial void Inserttb_Coperante(tb_Coperante instance);
   partial void Updatetb_Coperante(tb_Coperante instance);
   partial void Deletetb_Coperante(tb_Coperante instance);
-  partial void Inserttb_Premios_ODS(tb_Premios_ODS instance);
-  partial void Updatetb_Premios_ODS(tb_Premios_ODS instance);
-  partial void Deletetb_Premios_ODS(tb_Premios_ODS instance);
-  partial void Insertarea_intervencion(area_intervencion instance);
-  partial void Updatearea_intervencion(area_intervencion instance);
-  partial void Deletearea_intervencion(area_intervencion instance);
-  partial void Inserttb_Premios_Coperante(tb_Premios_Coperante instance);
-  partial void Updatetb_Premios_Coperante(tb_Premios_Coperante instance);
-  partial void Deletetb_Premios_Coperante(tb_Premios_Coperante instance);
   partial void InsertEMP_Empresa(EMP_Empresa instance);
   partial void UpdateEMP_Empresa(EMP_Empresa instance);
   partial void DeleteEMP_Empresa(EMP_Empresa instance);
   #endregion
 	
 	public FVSL_LINQDataContext() : 
-			base(global::System.Configuration.ConfigurationManager.ConnectionStrings["PortalVSLConnectionString2"].ConnectionString, mappingSource)
+			base(global::System.Configuration.ConfigurationManager.ConnectionStrings["C291728_vslConnectionString"].ConnectionString, mappingSource)
 	{
 		OnCreated();
 	}
@@ -93,51 +78,11 @@ public partial class FVSL_LINQDataContext : System.Data.Linq.DataContext
 		}
 	}
 	
-	public System.Data.Linq.Table<beneficiario> beneficiarios
-	{
-		get
-		{
-			return this.GetTable<beneficiario>();
-		}
-	}
-	
-	public System.Data.Linq.Table<ods_beneficiario> ods_beneficiarios
-	{
-		get
-		{
-			return this.GetTable<ods_beneficiario>();
-		}
-	}
-	
 	public System.Data.Linq.Table<tb_Coperante> tb_Coperantes
 	{
 		get
 		{
 			return this.GetTable<tb_Coperante>();
-		}
-	}
-	
-	public System.Data.Linq.Table<tb_Premios_ODS> tb_Premios_ODS
-	{
-		get
-		{
-			return this.GetTable<tb_Premios_ODS>();
-		}
-	}
-	
-	public System.Data.Linq.Table<area_intervencion> area_intervencions
-	{
-		get
-		{
-			return this.GetTable<area_intervencion>();
-		}
-	}
-	
-	public System.Data.Linq.Table<tb_Premios_Coperante> tb_Premios_Coperantes
-	{
-		get
-		{
-			return this.GetTable<tb_Premios_Coperante>();
 		}
 	}
 	
@@ -154,20 +99,6 @@ public partial class FVSL_LINQDataContext : System.Data.Linq.DataContext
 	{
 		IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id_in);
 		return ((ISingleResult<ODS_ODS>)(result.ReturnValue));
-	}
-	
-	[Function(Name="dbo.MAPA_GET_BENF_ODS")]
-	public ISingleResult<beneficiario> MAPA_GET_BENF_ODS([Parameter(DbType="Int")] System.Nullable<int> id_ods)
-	{
-		IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id_ods);
-		return ((ISingleResult<beneficiario>)(result.ReturnValue));
-	}
-	
-	[Function(Name="dbo.MAPA_GET_AWA_ODS")]
-	public ISingleResult<tb_Premios_ODS> MAPA_GET_AWA_ODS([Parameter(DbType="Int")] System.Nullable<int> id_ods)
-	{
-		IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id_ods);
-		return ((ISingleResult<tb_Premios_ODS>)(result.ReturnValue));
 	}
 	
 	[Function(Name="dbo.p_Select_ODS_Perfil")]
@@ -205,20 +136,6 @@ public partial class FVSL_LINQDataContext : System.Data.Linq.DataContext
 		return ((ISingleResult<tb_Coperante>)(result.ReturnValue));
 	}
 	
-	[Function(Name="dbo.MAPA_GET_BENEF_COOP")]
-	public ISingleResult<beneficiario> MAPA_GET_BENEF_COOP([Parameter(DbType="Int")] System.Nullable<int> id_coop)
-	{
-		IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id_coop);
-		return ((ISingleResult<beneficiario>)(result.ReturnValue));
-	}
-	
-	[Function(Name="dbo.MAPA_GET_AWA_COOP")]
-	public ISingleResult<tb_Premios_Coperante> MAPA_GET_AWA_COOP([Parameter(DbType="Int")] System.Nullable<int> id_coop)
-	{
-		IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id_coop);
-		return ((ISingleResult<tb_Premios_Coperante>)(result.ReturnValue));
-	}
-	
 	[Function(Name="dbo.MAPA_GET_SUBAREA_COOP")]
 	public ISingleResult<MAPA_GET_SUBAREA_COOPResult> MAPA_GET_SUBAREA_COOP([Parameter(DbType="Int")] System.Nullable<int> id_coop)
 	{
@@ -254,11 +171,25 @@ public partial class FVSL_LINQDataContext : System.Data.Linq.DataContext
 		return ((ISingleResult<EMP_Empresa>)(result.ReturnValue));
 	}
 	
-	[Function(Name="dbo.MAPA_GET_BENEF_EMP")]
-	public ISingleResult<beneficiario> MAPA_GET_BENEF_EMP([Parameter(DbType="Int")] System.Nullable<int> emp_in)
+	[Function(Name="dbo.MAPA_GET_AWA")]
+	public ISingleResult<MAPA_GET_AWAResult> MAPA_GET_AWA([Parameter(DbType="Int")] System.Nullable<int> id, [Parameter(DbType="Int")] System.Nullable<int> type)
 	{
-		IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), emp_in);
-		return ((ISingleResult<beneficiario>)(result.ReturnValue));
+		IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id, type);
+		return ((ISingleResult<MAPA_GET_AWAResult>)(result.ReturnValue));
+	}
+	
+	[Function(Name="dbo.MAPA_GET_BENF")]
+	public ISingleResult<MAPA_GET_BENFResult> MAPA_GET_BENF([Parameter(DbType="Int")] System.Nullable<int> id, [Parameter(DbType="Int")] System.Nullable<int> type)
+	{
+		IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id, type);
+		return ((ISingleResult<MAPA_GET_BENFResult>)(result.ReturnValue));
+	}
+	
+	[Function(Name="dbo.mapa_get_catalogo_premios")]
+	public ISingleResult<mapa_get_catalogo_premiosResult> mapa_get_catalogo_premios([Parameter(DbType="VarChar(20)")] string tipo_s)
+	{
+		IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), tipo_s);
+		return ((ISingleResult<mapa_get_catalogo_premiosResult>)(result.ReturnValue));
 	}
 }
 
@@ -1812,226 +1743,6 @@ public partial class ODS_ODS : INotifyPropertyChanging, INotifyPropertyChanged
 	}
 }
 
-[Table(Name="dbo.beneficiario")]
-public partial class beneficiario : INotifyPropertyChanging, INotifyPropertyChanged
-{
-	
-	private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-	
-	private int _id_beneficiario;
-	
-	private string _nombre;
-	
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void Onid_beneficiarioChanging(int value);
-    partial void Onid_beneficiarioChanged();
-    partial void OnnombreChanging(string value);
-    partial void OnnombreChanged();
-    #endregion
-	
-	public beneficiario()
-	{
-		OnCreated();
-	}
-	
-	[Column(Storage="_id_beneficiario", DbType="Int NOT NULL", IsPrimaryKey=true)]
-	public int id_beneficiario
-	{
-		get
-		{
-			return this._id_beneficiario;
-		}
-		set
-		{
-			if ((this._id_beneficiario != value))
-			{
-				this.Onid_beneficiarioChanging(value);
-				this.SendPropertyChanging();
-				this._id_beneficiario = value;
-				this.SendPropertyChanged("id_beneficiario");
-				this.Onid_beneficiarioChanged();
-			}
-		}
-	}
-	
-	[Column(Storage="_nombre", DbType="VarChar(100)")]
-	public string nombre
-	{
-		get
-		{
-			return this._nombre;
-		}
-		set
-		{
-			if ((this._nombre != value))
-			{
-				this.OnnombreChanging(value);
-				this.SendPropertyChanging();
-				this._nombre = value;
-				this.SendPropertyChanged("nombre");
-				this.OnnombreChanged();
-			}
-		}
-	}
-	
-	public event PropertyChangingEventHandler PropertyChanging;
-	
-	public event PropertyChangedEventHandler PropertyChanged;
-	
-	protected virtual void SendPropertyChanging()
-	{
-		if ((this.PropertyChanging != null))
-		{
-			this.PropertyChanging(this, emptyChangingEventArgs);
-		}
-	}
-	
-	protected virtual void SendPropertyChanged(String propertyName)
-	{
-		if ((this.PropertyChanged != null))
-		{
-			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-		}
-	}
-}
-
-[Table(Name="dbo.ods_beneficiario")]
-public partial class ods_beneficiario : INotifyPropertyChanging, INotifyPropertyChanged
-{
-	
-	private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-	
-	private int _id_ods_beneficiario;
-	
-	private int _id_ods;
-	
-	private int _id_beneficiario;
-	
-	private int _cantidad;
-	
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void Onid_ods_beneficiarioChanging(int value);
-    partial void Onid_ods_beneficiarioChanged();
-    partial void Onid_odsChanging(int value);
-    partial void Onid_odsChanged();
-    partial void Onid_beneficiarioChanging(int value);
-    partial void Onid_beneficiarioChanged();
-    partial void OncantidadChanging(int value);
-    partial void OncantidadChanged();
-    #endregion
-	
-	public ods_beneficiario()
-	{
-		OnCreated();
-	}
-	
-	[Column(Storage="_id_ods_beneficiario", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-	public int id_ods_beneficiario
-	{
-		get
-		{
-			return this._id_ods_beneficiario;
-		}
-		set
-		{
-			if ((this._id_ods_beneficiario != value))
-			{
-				this.Onid_ods_beneficiarioChanging(value);
-				this.SendPropertyChanging();
-				this._id_ods_beneficiario = value;
-				this.SendPropertyChanged("id_ods_beneficiario");
-				this.Onid_ods_beneficiarioChanged();
-			}
-		}
-	}
-	
-	[Column(Storage="_id_ods", DbType="Int NOT NULL")]
-	public int id_ods
-	{
-		get
-		{
-			return this._id_ods;
-		}
-		set
-		{
-			if ((this._id_ods != value))
-			{
-				this.Onid_odsChanging(value);
-				this.SendPropertyChanging();
-				this._id_ods = value;
-				this.SendPropertyChanged("id_ods");
-				this.Onid_odsChanged();
-			}
-		}
-	}
-	
-	[Column(Storage="_id_beneficiario", DbType="Int NOT NULL")]
-	public int id_beneficiario
-	{
-		get
-		{
-			return this._id_beneficiario;
-		}
-		set
-		{
-			if ((this._id_beneficiario != value))
-			{
-				this.Onid_beneficiarioChanging(value);
-				this.SendPropertyChanging();
-				this._id_beneficiario = value;
-				this.SendPropertyChanged("id_beneficiario");
-				this.Onid_beneficiarioChanged();
-			}
-		}
-	}
-	
-	[Column(Storage="_cantidad", DbType="Int NOT NULL")]
-	public int cantidad
-	{
-		get
-		{
-			return this._cantidad;
-		}
-		set
-		{
-			if ((this._cantidad != value))
-			{
-				this.OncantidadChanging(value);
-				this.SendPropertyChanging();
-				this._cantidad = value;
-				this.SendPropertyChanged("cantidad");
-				this.OncantidadChanged();
-			}
-		}
-	}
-	
-	public event PropertyChangingEventHandler PropertyChanging;
-	
-	public event PropertyChangedEventHandler PropertyChanged;
-	
-	protected virtual void SendPropertyChanging()
-	{
-		if ((this.PropertyChanging != null))
-		{
-			this.PropertyChanging(this, emptyChangingEventArgs);
-		}
-	}
-	
-	protected virtual void SendPropertyChanged(String propertyName)
-	{
-		if ((this.PropertyChanged != null))
-		{
-			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-		}
-	}
-}
-
 [Table(Name="dbo.tb_Coperante")]
 public partial class tb_Coperante : INotifyPropertyChanging, INotifyPropertyChanged
 {
@@ -3077,600 +2788,6 @@ public partial class tb_Coperante : INotifyPropertyChanging, INotifyPropertyChan
 				this._EnfoqueGeografico = value;
 				this.SendPropertyChanged("EnfoqueGeografico");
 				this.OnEnfoqueGeograficoChanged();
-			}
-		}
-	}
-	
-	public event PropertyChangingEventHandler PropertyChanging;
-	
-	public event PropertyChangedEventHandler PropertyChanged;
-	
-	protected virtual void SendPropertyChanging()
-	{
-		if ((this.PropertyChanging != null))
-		{
-			this.PropertyChanging(this, emptyChangingEventArgs);
-		}
-	}
-	
-	protected virtual void SendPropertyChanged(String propertyName)
-	{
-		if ((this.PropertyChanged != null))
-		{
-			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-		}
-	}
-}
-
-[Table(Name="dbo.tb_Premios_ODS")]
-public partial class tb_Premios_ODS : INotifyPropertyChanging, INotifyPropertyChanged
-{
-	
-	private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-	
-	private int _id_premios;
-	
-	private System.Nullable<int> _id_ods;
-	
-	private System.Nullable<int> _id_Ortogado_Recibido;
-	
-	private string _nombre;
-	
-	private string _fecha;
-	
-	private string _tipo_premio;
-	
-	private string _Otorga_premio;
-	
-	private string _pais;
-	
-	private string _descripcion;
-	
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void Onid_premiosChanging(int value);
-    partial void Onid_premiosChanged();
-    partial void Onid_odsChanging(System.Nullable<int> value);
-    partial void Onid_odsChanged();
-    partial void Onid_Ortogado_RecibidoChanging(System.Nullable<int> value);
-    partial void Onid_Ortogado_RecibidoChanged();
-    partial void OnnombreChanging(string value);
-    partial void OnnombreChanged();
-    partial void OnfechaChanging(string value);
-    partial void OnfechaChanged();
-    partial void Ontipo_premioChanging(string value);
-    partial void Ontipo_premioChanged();
-    partial void OnOtorga_premioChanging(string value);
-    partial void OnOtorga_premioChanged();
-    partial void OnpaisChanging(string value);
-    partial void OnpaisChanged();
-    partial void OndescripcionChanging(string value);
-    partial void OndescripcionChanged();
-    #endregion
-	
-	public tb_Premios_ODS()
-	{
-		OnCreated();
-	}
-	
-	[Column(Storage="_id_premios", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-	public int id_premios
-	{
-		get
-		{
-			return this._id_premios;
-		}
-		set
-		{
-			if ((this._id_premios != value))
-			{
-				this.Onid_premiosChanging(value);
-				this.SendPropertyChanging();
-				this._id_premios = value;
-				this.SendPropertyChanged("id_premios");
-				this.Onid_premiosChanged();
-			}
-		}
-	}
-	
-	[Column(Storage="_id_ods", DbType="Int")]
-	public System.Nullable<int> id_ods
-	{
-		get
-		{
-			return this._id_ods;
-		}
-		set
-		{
-			if ((this._id_ods != value))
-			{
-				this.Onid_odsChanging(value);
-				this.SendPropertyChanging();
-				this._id_ods = value;
-				this.SendPropertyChanged("id_ods");
-				this.Onid_odsChanged();
-			}
-		}
-	}
-	
-	[Column(Storage="_id_Ortogado_Recibido", DbType="Int")]
-	public System.Nullable<int> id_Ortogado_Recibido
-	{
-		get
-		{
-			return this._id_Ortogado_Recibido;
-		}
-		set
-		{
-			if ((this._id_Ortogado_Recibido != value))
-			{
-				this.Onid_Ortogado_RecibidoChanging(value);
-				this.SendPropertyChanging();
-				this._id_Ortogado_Recibido = value;
-				this.SendPropertyChanged("id_Ortogado_Recibido");
-				this.Onid_Ortogado_RecibidoChanged();
-			}
-		}
-	}
-	
-	[Column(Storage="_nombre", DbType="NVarChar(250)")]
-	public string nombre
-	{
-		get
-		{
-			return this._nombre;
-		}
-		set
-		{
-			if ((this._nombre != value))
-			{
-				this.OnnombreChanging(value);
-				this.SendPropertyChanging();
-				this._nombre = value;
-				this.SendPropertyChanged("nombre");
-				this.OnnombreChanged();
-			}
-		}
-	}
-	
-	[Column(Storage="_fecha", DbType="NVarChar(20)")]
-	public string fecha
-	{
-		get
-		{
-			return this._fecha;
-		}
-		set
-		{
-			if ((this._fecha != value))
-			{
-				this.OnfechaChanging(value);
-				this.SendPropertyChanging();
-				this._fecha = value;
-				this.SendPropertyChanged("fecha");
-				this.OnfechaChanged();
-			}
-		}
-	}
-	
-	[Column(Storage="_tipo_premio", DbType="NVarChar(50)")]
-	public string tipo_premio
-	{
-		get
-		{
-			return this._tipo_premio;
-		}
-		set
-		{
-			if ((this._tipo_premio != value))
-			{
-				this.Ontipo_premioChanging(value);
-				this.SendPropertyChanging();
-				this._tipo_premio = value;
-				this.SendPropertyChanged("tipo_premio");
-				this.Ontipo_premioChanged();
-			}
-		}
-	}
-	
-	[Column(Storage="_Otorga_premio", DbType="NVarChar(250)")]
-	public string Otorga_premio
-	{
-		get
-		{
-			return this._Otorga_premio;
-		}
-		set
-		{
-			if ((this._Otorga_premio != value))
-			{
-				this.OnOtorga_premioChanging(value);
-				this.SendPropertyChanging();
-				this._Otorga_premio = value;
-				this.SendPropertyChanged("Otorga_premio");
-				this.OnOtorga_premioChanged();
-			}
-		}
-	}
-	
-	[Column(Storage="_pais", DbType="NVarChar(250)")]
-	public string pais
-	{
-		get
-		{
-			return this._pais;
-		}
-		set
-		{
-			if ((this._pais != value))
-			{
-				this.OnpaisChanging(value);
-				this.SendPropertyChanging();
-				this._pais = value;
-				this.SendPropertyChanged("pais");
-				this.OnpaisChanged();
-			}
-		}
-	}
-	
-	[Column(Storage="_descripcion", DbType="NVarChar(300)")]
-	public string descripcion
-	{
-		get
-		{
-			return this._descripcion;
-		}
-		set
-		{
-			if ((this._descripcion != value))
-			{
-				this.OndescripcionChanging(value);
-				this.SendPropertyChanging();
-				this._descripcion = value;
-				this.SendPropertyChanged("descripcion");
-				this.OndescripcionChanged();
-			}
-		}
-	}
-	
-	public event PropertyChangingEventHandler PropertyChanging;
-	
-	public event PropertyChangedEventHandler PropertyChanged;
-	
-	protected virtual void SendPropertyChanging()
-	{
-		if ((this.PropertyChanging != null))
-		{
-			this.PropertyChanging(this, emptyChangingEventArgs);
-		}
-	}
-	
-	protected virtual void SendPropertyChanged(String propertyName)
-	{
-		if ((this.PropertyChanged != null))
-		{
-			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-		}
-	}
-}
-
-[Table(Name="dbo.area_intervencion")]
-public partial class area_intervencion : INotifyPropertyChanging, INotifyPropertyChanged
-{
-	
-	private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-	
-	private int _id_area_intervencion;
-	
-	private string _nombre;
-	
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void Onid_area_intervencionChanging(int value);
-    partial void Onid_area_intervencionChanged();
-    partial void OnnombreChanging(string value);
-    partial void OnnombreChanged();
-    #endregion
-	
-	public area_intervencion()
-	{
-		OnCreated();
-	}
-	
-	[Column(Storage="_id_area_intervencion", DbType="Int NOT NULL", IsPrimaryKey=true)]
-	public int id_area_intervencion
-	{
-		get
-		{
-			return this._id_area_intervencion;
-		}
-		set
-		{
-			if ((this._id_area_intervencion != value))
-			{
-				this.Onid_area_intervencionChanging(value);
-				this.SendPropertyChanging();
-				this._id_area_intervencion = value;
-				this.SendPropertyChanged("id_area_intervencion");
-				this.Onid_area_intervencionChanged();
-			}
-		}
-	}
-	
-	[Column(Storage="_nombre", DbType="VarChar(100)")]
-	public string nombre
-	{
-		get
-		{
-			return this._nombre;
-		}
-		set
-		{
-			if ((this._nombre != value))
-			{
-				this.OnnombreChanging(value);
-				this.SendPropertyChanging();
-				this._nombre = value;
-				this.SendPropertyChanged("nombre");
-				this.OnnombreChanged();
-			}
-		}
-	}
-	
-	public event PropertyChangingEventHandler PropertyChanging;
-	
-	public event PropertyChangedEventHandler PropertyChanged;
-	
-	protected virtual void SendPropertyChanging()
-	{
-		if ((this.PropertyChanging != null))
-		{
-			this.PropertyChanging(this, emptyChangingEventArgs);
-		}
-	}
-	
-	protected virtual void SendPropertyChanged(String propertyName)
-	{
-		if ((this.PropertyChanged != null))
-		{
-			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-		}
-	}
-}
-
-[Table(Name="dbo.tb_Premios_Coperante")]
-public partial class tb_Premios_Coperante : INotifyPropertyChanging, INotifyPropertyChanged
-{
-	
-	private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-	
-	private int _id_premios;
-	
-	private System.Nullable<int> _id_coperante;
-	
-	private System.Nullable<int> _id_Otorgado_Recibido;
-	
-	private string _nombre;
-	
-	private string _fecha;
-	
-	private string _tipo_premio;
-	
-	private string _Otorga_premio;
-	
-	private string _pais;
-	
-	private string _descripcion;
-	
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void Onid_premiosChanging(int value);
-    partial void Onid_premiosChanged();
-    partial void Onid_coperanteChanging(System.Nullable<int> value);
-    partial void Onid_coperanteChanged();
-    partial void Onid_Otorgado_RecibidoChanging(System.Nullable<int> value);
-    partial void Onid_Otorgado_RecibidoChanged();
-    partial void OnnombreChanging(string value);
-    partial void OnnombreChanged();
-    partial void OnfechaChanging(string value);
-    partial void OnfechaChanged();
-    partial void Ontipo_premioChanging(string value);
-    partial void Ontipo_premioChanged();
-    partial void OnOtorga_premioChanging(string value);
-    partial void OnOtorga_premioChanged();
-    partial void OnpaisChanging(string value);
-    partial void OnpaisChanged();
-    partial void OndescripcionChanging(string value);
-    partial void OndescripcionChanged();
-    #endregion
-	
-	public tb_Premios_Coperante()
-	{
-		OnCreated();
-	}
-	
-	[Column(Storage="_id_premios", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-	public int id_premios
-	{
-		get
-		{
-			return this._id_premios;
-		}
-		set
-		{
-			if ((this._id_premios != value))
-			{
-				this.Onid_premiosChanging(value);
-				this.SendPropertyChanging();
-				this._id_premios = value;
-				this.SendPropertyChanged("id_premios");
-				this.Onid_premiosChanged();
-			}
-		}
-	}
-	
-	[Column(Storage="_id_coperante", DbType="Int")]
-	public System.Nullable<int> id_coperante
-	{
-		get
-		{
-			return this._id_coperante;
-		}
-		set
-		{
-			if ((this._id_coperante != value))
-			{
-				this.Onid_coperanteChanging(value);
-				this.SendPropertyChanging();
-				this._id_coperante = value;
-				this.SendPropertyChanged("id_coperante");
-				this.Onid_coperanteChanged();
-			}
-		}
-	}
-	
-	[Column(Storage="_id_Otorgado_Recibido", DbType="Int")]
-	public System.Nullable<int> id_Otorgado_Recibido
-	{
-		get
-		{
-			return this._id_Otorgado_Recibido;
-		}
-		set
-		{
-			if ((this._id_Otorgado_Recibido != value))
-			{
-				this.Onid_Otorgado_RecibidoChanging(value);
-				this.SendPropertyChanging();
-				this._id_Otorgado_Recibido = value;
-				this.SendPropertyChanged("id_Otorgado_Recibido");
-				this.Onid_Otorgado_RecibidoChanged();
-			}
-		}
-	}
-	
-	[Column(Storage="_nombre", DbType="VarChar(250)")]
-	public string nombre
-	{
-		get
-		{
-			return this._nombre;
-		}
-		set
-		{
-			if ((this._nombre != value))
-			{
-				this.OnnombreChanging(value);
-				this.SendPropertyChanging();
-				this._nombre = value;
-				this.SendPropertyChanged("nombre");
-				this.OnnombreChanged();
-			}
-		}
-	}
-	
-	[Column(Storage="_fecha", DbType="VarChar(20)")]
-	public string fecha
-	{
-		get
-		{
-			return this._fecha;
-		}
-		set
-		{
-			if ((this._fecha != value))
-			{
-				this.OnfechaChanging(value);
-				this.SendPropertyChanging();
-				this._fecha = value;
-				this.SendPropertyChanged("fecha");
-				this.OnfechaChanged();
-			}
-		}
-	}
-	
-	[Column(Storage="_tipo_premio", DbType="NVarChar(50)")]
-	public string tipo_premio
-	{
-		get
-		{
-			return this._tipo_premio;
-		}
-		set
-		{
-			if ((this._tipo_premio != value))
-			{
-				this.Ontipo_premioChanging(value);
-				this.SendPropertyChanging();
-				this._tipo_premio = value;
-				this.SendPropertyChanged("tipo_premio");
-				this.Ontipo_premioChanged();
-			}
-		}
-	}
-	
-	[Column(Storage="_Otorga_premio", DbType="NVarChar(250)")]
-	public string Otorga_premio
-	{
-		get
-		{
-			return this._Otorga_premio;
-		}
-		set
-		{
-			if ((this._Otorga_premio != value))
-			{
-				this.OnOtorga_premioChanging(value);
-				this.SendPropertyChanging();
-				this._Otorga_premio = value;
-				this.SendPropertyChanged("Otorga_premio");
-				this.OnOtorga_premioChanged();
-			}
-		}
-	}
-	
-	[Column(Storage="_pais", DbType="NVarChar(250)")]
-	public string pais
-	{
-		get
-		{
-			return this._pais;
-		}
-		set
-		{
-			if ((this._pais != value))
-			{
-				this.OnpaisChanging(value);
-				this.SendPropertyChanging();
-				this._pais = value;
-				this.SendPropertyChanged("pais");
-				this.OnpaisChanged();
-			}
-		}
-	}
-	
-	[Column(Storage="_descripcion", DbType="NVarChar(100)")]
-	public string descripcion
-	{
-		get
-		{
-			return this._descripcion;
-		}
-		set
-		{
-			if ((this._descripcion != value))
-			{
-				this.OndescripcionChanging(value);
-				this.SendPropertyChanging();
-				this._descripcion = value;
-				this.SendPropertyChanged("descripcion");
-				this.OndescripcionChanged();
 			}
 		}
 	}
@@ -5007,6 +4124,138 @@ public partial class MAPA_EMP_ALLResult
 			if ((this._Longitud != value))
 			{
 				this._Longitud = value;
+			}
+		}
+	}
+}
+
+public partial class MAPA_GET_AWAResult
+{
+	
+	private string _nombre;
+	
+	private bool _Otorgado;
+	
+	public MAPA_GET_AWAResult()
+	{
+	}
+	
+	[Column(Storage="_nombre", DbType="NVarChar(250) NOT NULL", CanBeNull=false)]
+	public string nombre
+	{
+		get
+		{
+			return this._nombre;
+		}
+		set
+		{
+			if ((this._nombre != value))
+			{
+				this._nombre = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_Otorgado", DbType="Bit NOT NULL")]
+	public bool Otorgado
+	{
+		get
+		{
+			return this._Otorgado;
+		}
+		set
+		{
+			if ((this._Otorgado != value))
+			{
+				this._Otorgado = value;
+			}
+		}
+	}
+}
+
+public partial class MAPA_GET_BENFResult
+{
+	
+	private int _Id;
+	
+	private string _Nombre;
+	
+	public MAPA_GET_BENFResult()
+	{
+	}
+	
+	[Column(Storage="_Id", DbType="Int NOT NULL")]
+	public int Id
+	{
+		get
+		{
+			return this._Id;
+		}
+		set
+		{
+			if ((this._Id != value))
+			{
+				this._Id = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_Nombre", DbType="VarChar(100)")]
+	public string Nombre
+	{
+		get
+		{
+			return this._Nombre;
+		}
+		set
+		{
+			if ((this._Nombre != value))
+			{
+				this._Nombre = value;
+			}
+		}
+	}
+}
+
+public partial class mapa_get_catalogo_premiosResult
+{
+	
+	private string _nombre;
+	
+	private int _id;
+	
+	public mapa_get_catalogo_premiosResult()
+	{
+	}
+	
+	[Column(Storage="_nombre", DbType="NVarChar(250) NOT NULL", CanBeNull=false)]
+	public string nombre
+	{
+		get
+		{
+			return this._nombre;
+		}
+		set
+		{
+			if ((this._nombre != value))
+			{
+				this._nombre = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_id", DbType="Int NOT NULL")]
+	public int id
+	{
+		get
+		{
+			return this._id;
+		}
+		set
+		{
+			if ((this._id != value))
+			{
+				this._id = value;
 			}
 		}
 	}

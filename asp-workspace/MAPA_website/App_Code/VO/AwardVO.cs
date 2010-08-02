@@ -8,9 +8,8 @@ using System.Web;
 /// </summary>
 public class AwardVO
 {
-    public int awardId;
     public String awardName;
-    public int recibido;
+    public bool recibido;
 
 	public AwardVO()
 	{
