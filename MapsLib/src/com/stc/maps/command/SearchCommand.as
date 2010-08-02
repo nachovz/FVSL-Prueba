@@ -26,21 +26,19 @@ package com.stc.maps.command
 				    searchNetworks(SearchEvent(event));
 				break;
 				default:
-				   	searchCooperants(SearchEvent(event));
+				   	searchEntity(SearchEvent(event));
 				break;
             }
 		}
 
-		private function searchCooperants(event : SearchEvent):void
+		private function searchEntity(event : SearchEvent):void
 		{
 			var delegate : SearchDelegate = new SearchDelegate(this,"ParticipantService");
-
-			delegate.searchCooperant(event.filterVaues);
+			delegate.searchEntity(event);
 		}
 		private function searchNetworks(event : SearchEvent):void
 		{
 			var delegate : SearchDelegate = new SearchDelegate(this,"ParticipantService");
-
 			delegate.searchNetwork(event.filterVaues);
 		}
 

@@ -19,32 +19,11 @@ package com.stc.maps.business
             super(commandHandlers, serviceName);
         }
 		
-		public function searchCountries(event : CatalogEvent) : void
+		public function getCatalog(event : CatalogEvent) : void
 		{
             _service = ServiceLocator.getInstance().getWebService("catalogsWS");
-			var token:AsyncToken = this._service.getCountries();
-			token.addResponder(this.responder);
-		}
-		
-		
-		public function searchOrgType(event : CatalogEvent) : void
-		{
-            _service = ServiceLocator.getInstance().getWebService("catalogsWS");
-			var token:AsyncToken = this._service.getOrganizationTypes();
-			token.addResponder(this.responder);
-		}
-		
-		public function searchEnfoqueType(event : CatalogEvent) : void
-		{
-            _service = ServiceLocator.getInstance().getWebService("catalogsWS");
-			var token:AsyncToken = this._service.getEnfoqueGeograficoTypes();
-			token.addResponder(this.responder);
-		}
-		
-		public function searchBeneficiaryType(event : CatalogEvent) : void
-		{
-            _service = ServiceLocator.getInstance().getWebService("catalogsWS");
-			var token:AsyncToken = this._service.getBeneficiaryTypes();
+			//var token:AsyncToken = this._service.getCatalog(event.keyName,-1);
+			var token:AsyncToken = this._service.getCatalog("premio",-1);
 			token.addResponder(this.responder);
 		}
 		

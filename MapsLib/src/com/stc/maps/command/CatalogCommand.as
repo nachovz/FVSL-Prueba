@@ -32,32 +32,13 @@ package com.stc.maps.command
 
 		private function getCatalog(event : CatalogEvent):void
 		{
-			var delegate : CatalogDelegate = new CatalogDelegate(this,"ParticipantService");
-
-			switch(event.keyName)
-			{
-				case FilterOptionVO.COUNTRY:
-					delegate.searchCountries(event);
-				break;
-				case FilterOptionVO.ORGANIZATION_TYPE:
-					delegate.searchOrgType(event);
-				break;
-				case FilterOptionVO.FINANCY:
-					delegate.searchFinancy(event);
-				break;
-				case FilterOptionVO.ENFOQUE_GEOGRAFICO:
-					delegate.searchEnfoqueType(event);
-				break;
-				case FilterOptionVO.BENEFICIARIO:
-					delegate.searchBeneficiaryType(event);
-				break;
-			}
+			//var delegate : CatalogDelegate = new CatalogDelegate(this,"ParticipantService");
+			//delegate.getCatalog(event);
 		}
 
 		override public function result(data : Object):void
 		{
 			var results : ArrayCollection = processCatalog(data.result as ArrayCollection);
-			
 			catalogManager.addCatalog(_event.keyName,results);
 		}
 

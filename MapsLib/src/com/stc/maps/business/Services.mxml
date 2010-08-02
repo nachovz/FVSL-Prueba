@@ -4,25 +4,12 @@
 	xmlns:mx="http://www.adobe.com/2006/mxml"
 	xmlns:cairngorm="com.adobe.cairngorm.business.*">
 
-<mx:WebService id="cooperantsWS" wsdl="http://mapas.venezuelasinlimites.org/servicios/Cooperants.asmx?WSDL" >
-	<mx:operation name="GetAllCooperants" resultFormat="object"/>
-	<mx:operation name="searchCooperants" resultFormat="object"/>
-	<mx:operation name="getCooperantDetails" resultFormat="object"/>
+<mx:WebService id="EntitiesWS" wsdl="http://www.mapasvsl.com/website/Entity.asmx?WSDL" >
+	<mx:operation name="getAll" resultFormat="object"/>
+	<mx:operation name="getDetails" resultFormat="object"/>
+	<mx:operation name="getSearch" resultFormat="object"/>
 </mx:WebService>
-<mx:WebService id="odsWS" wsdl="http://mapas.venezuelasinlimites.org/servicios/ODS.asmx?WSDL" >
-	<mx:operation name="GetAllODS" resultFormat="object"/>
-</mx:WebService>
-<mx:WebService id="companyWS" wsdl="http://mapas.venezuelasinlimites.org/servicios/Company.asmx?WSDL" >
-	<mx:operation name="GetCompanyDetails" resultFormat="object"/>
-</mx:WebService>
-<mx:WebService id="networkWS" wsdl="http://mapas.venezuelasinlimites.org/servicios/Network.asmx?WSDL" >
-	<mx:operation name="GetAllNetworks" resultFormat="object"/>
-	<mx:operation name="searchNetworks" resultFormat="object"/>
-</mx:WebService>
-<mx:WebService id="catalogsWS" wsdl="http://mapas.venezuelasinlimites.org/servicios/Catalogs.asmx?WSDL" >
-	<mx:operation name="getCountries" resultFormat="object"/>
-	<mx:operation name="getOrganizationTypes" resultFormat="object"	/>
-	<mx:operation name="getEnfoqueGeograficoTypes" resultFormat="object"	/>
-	<mx:operation name="getBeneficiaryTypes" resultFormat="object"	/>
+<mx:WebService id="catalogsWS" wsdl="http://www.mapasvsl.com/website/Catalog.asmx?WSDL" >
+	<mx:operation name="getCatalog" resultFormat="object"/>
 </mx:WebService>
 </cairngorm:ServiceLocator>

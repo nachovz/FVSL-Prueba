@@ -26,89 +26,48 @@ package com.stc.maps.business
 			
 			switch(event.entityType)
 			{
-				case EntityVO.COOPERANT:
-					getAllCooperants();
-				break;
-				case EntityVO.COMPANY:
-					//getAllODS();
-				break;
-				case EntityVO.ODS:
-					getAllODS();
-				break;
 				case EntityVO.NETWORK:
-					getAllNetworks();
+					//getAllNetworks();
+				break;
+				default:
+					getAllEntities(event.entityType);
 				break;
 			}
 
 			
 			//var ev : ResultEvent = new ResultEvent(ResultEvent.RESULT,false,true,arrayEntities);
-			
 			//event.callbacks.result(ev);
 		}
 		
-		public function getEntityDetails(event : EntitiesEvent ):void
+		public function getEntity(event : EntitiesEvent ):void
 		{
 			var arrayEntities : ArrayCollection;
-			
-			switch(event.entityType)
-			{
-				case EntityVO.COOPERANT:
-					getCooperantDetails(event);
-				break;
-				case EntityVO.COMPANY:
-					getCompanyDetails(event);
-				break;
-				case EntityVO.ODS:
-					getODSDetails(event);
-				break;
-			}
-
+			getDetails(event.entityType, parseInt(event.entityId));
 			
 			//var ev : ResultEvent = new ResultEvent(ResultEvent.RESULT,false,true,arrayEntities);
-			
 			//event.callbacks.result(ev);
 		}
 		
-		private function getAllCooperants() : void
+		
+		private function getAllEntities(type : String) : void
 		{
-            _service = ServiceLocator.getInstance().getWebService("cooperantsWS");
-			var token:AsyncToken = this._service.GetAllCooperants();
+            _service = ServiceLocator.getInstance().getWebService("EntitiesWS");
+			var token:AsyncToken = this._service.getAll(type);
 			token.addResponder(this.responder);
 		}
 		
-		private function getCooperantDetails(event : EntitiesEvent) : void
+		private function getDetails(type : String, id : int) : void
 		{
-            _service = ServiceLocator.getInstance().getWebService("cooperantsWS");
-			var token:AsyncToken = this._service.getCooperantDetails(event.entityId);
-			token.addResponder(this.responder);
-		}
-		
-		private function getCompanyDetails(event : EntitiesEvent) : void
-		{
-            _service = ServiceLocator.getInstance().getWebService("companyWS");
-			var token:AsyncToken = this._service.GetCompanyDetails(event.entityId);
-			token.addResponder(this.responder);
-		}
-		
-		private function getODSDetails(event : EntitiesEvent) : void
-		{
-            _service = ServiceLocator.getInstance().getWebService("odsWS");
-			var token:AsyncToken = this._service.getODSDetails(event.entityId);
-			token.addResponder(this.responder);
-		}
-
-		private function getAllODS() : void
-		{
-            _service = ServiceLocator.getInstance().getWebService("odsWS");
-			var token:AsyncToken = this._service.GetAllODS();
+            _service = ServiceLocator.getInstance().getWebService("EntitiesWS");
+			var token:AsyncToken = this._service.getDetails(type,id);
 			token.addResponder(this.responder);
 		}
 
 		private function getAllNetworks() : void
 		{
-            _service = ServiceLocator.getInstance().getWebService("networkWS");
-			var token:AsyncToken = this._service.GetAllNetworks();
-			token.addResponder(this.responder);
+            //_service = ServiceLocator.getInstance().getWebService("networkWS");
+			//var token:AsyncToken = this._service.GetAllNetworks();
+			//token.addResponder(this.responder);
 		}
 		
 		private function cooperantTest() : ArrayCollection

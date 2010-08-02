@@ -53,7 +53,7 @@ package com.stc.maps.command
 			_responder = event.callbacks
 			_type = event.entityType;
 			_event = event;
-			delegate.getEntityDetails(event);
+			delegate.getEntity(event);
 		}
 
 		private function getDetailsResult(data : Object):void
