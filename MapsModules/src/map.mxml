@@ -49,11 +49,13 @@
 //ABQIAAAAssXQm8mCsuDbHXTVDzUbABTPK7DoDRCvKRyAt-uHrA5m1ZoR5hRJ4IeA14U3X6epSvuQXgXqdvvvlQ		
 //MAP KEY DE ALEJANDRO
 //ABQIAAAAEuJqUl4X79npk_A40fNvIBRMSRaTAPbY4Ge5Tit061c7iz4HGRSiY2obSozE7R1c6g7oyXzzrvgfDA
+//MAP KEY DE MAPASVSL.COM
+//ABQIAAAAEuJqUl4X79npk_A40fNvIBT1POqMNciZTKN9TFKwgk54y371yBQwkx64VVaynQ-BdMsya1XdwVirUA
 		]]>
 	</mx:Script>
 	  <maps:Map
 	    id="mainMap"
-	    key="ABQIAAAAEuJqUl4X79npk_A40fNvIBRMSRaTAPbY4Ge5Tit061c7iz4HGRSiY2obSozE7R1c6g7oyXzzrvgfDA" 
+	    key="ABQIAAAAEuJqUl4X79npk_A40fNvIBT1POqMNciZTKN9TFKwgk54y371yBQwkx64VVaynQ-BdMsya1XdwVirUA" 
 	    mapevent_mapready="mapModel.mapready_handler(event);"
 	    width="100%" height="100%" 
 		mapevent_mappreinitialize="mapModel.mainMap_mapevent_mappreinitializeHandler(event)"
