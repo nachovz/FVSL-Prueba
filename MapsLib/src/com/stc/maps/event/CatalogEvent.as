@@ -11,6 +11,8 @@ package com.stc.maps.event
         public static const GET_CATALOG:String = "getCatalogEvent";
 
 		public var keyName : String;
+		public var idDepentency : String;
+		public var entityName : String;
 		public var dataProvider : ArrayCollection;
 		public function CatalogEvent(type:String,
 		                          handlers:IResponder=null,

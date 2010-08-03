@@ -43,7 +43,7 @@
 			return _entities;
 		}
 		
-		private function entityRendererList_creationComplete(event : FlexEvent):void
+		private function entityRendererList_creationComplete(event : FlexEvent) : void
 		{
 			addListeners();
 		}

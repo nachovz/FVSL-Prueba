@@ -2,8 +2,9 @@ package com.stc.maps.managers
 {
  	import com.adobe.cairngorm.model.IModelLocator;
  	import com.stc.maps.event.CatalogEvent;
- 	import flash.utils.Dictionary;
+ 	
  	import mx.collections.ArrayCollection;
+ 	import flash.utils.Dictionary;
 /*  	import flash.utils.Dictionary; */
 
 
@@ -28,15 +29,17 @@ package com.stc.maps.managers
 					throw new Error( "Only one CatalogManager instance should be instantiated" );	
 	   	}
 	   	
-	   	public function getCatalog(keyName : String) : ArrayCollection
+	   	public function getCatalog(keyName : String, idDepende : Number=-1, entityName : String='') : ArrayCollection
 	   	{
-	   		if(!catalogs[keyName])
+	   		if(!catalogs[keyName] || idDepende>-1)
 	   		{
 	   			catalogs[keyName] = new ArrayCollection();
 	   			
 	   			var event : CatalogEvent = new CatalogEvent(CatalogEvent.GET_CATALOG);
 	   			event.dataProvider = catalogs[keyName];
 	   			event.keyName = keyName;
+	   			event.idDepentency = idDepende.toString();
+	   			event.entityName = entityName;
 	   			event.dispatch();
 	   		}
 	   		

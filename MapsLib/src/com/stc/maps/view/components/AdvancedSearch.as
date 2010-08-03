@@ -1,13 +1,10 @@
 package com.stc.maps.view.components
 {
 	import com.stc.maps.managers.CatalogManager;
-	import com.stc.maps.model.ModelLocator;
 	import com.stc.maps.view.components.event.AdvancedSearchEvent;
-	import com.stc.maps.vo.FilterOptionVO;
+	import com.stc.maps.vo.CatalogValueVO;
 	import com.stc.maps.vo.FilterVO;
 	import com.stc.maps.vo.FilterValueVO;
-	
-	import flash.events.MouseEvent;
 	
 	import mx.collections.ArrayCollection;
 	import mx.containers.HBox;
@@ -19,6 +16,8 @@ package com.stc.maps.view.components
 	import mx.controls.TextInput;
 	import mx.core.UIComponent;
 	import mx.events.ResizeEvent;
+	import flash.events.MouseEvent;
+/* 	import flash.events.MouseEvent; */
 
 	public class AdvancedSearch extends SuperPanel
 	{
@@ -140,7 +139,7 @@ package com.stc.maps.view.components
 				filterValue.name = filter.keyName;
 				if(value is ArrayCollection) filterValue.values = value as ArrayCollection;
 				else if(value is String) filterValue.value = value as String;		
-				else if(value is FilterOptionVO) filterValue.value = FilterOptionVO(value).id.toString();	
+				else if(value is CatalogValueVO) filterValue.value = CatalogValueVO(value).id.toString();	
 				filters.addItem(filterValue);
 			}
 			
@@ -156,7 +155,7 @@ package com.stc.maps.view.components
 			invalidateProperties();
 		}
 		
-		private function advancedSearch_resize(event : ResizeEvent):void
+		private function advancedSearch_resize(event : ResizeEvent) : void
 		{
 			if(this.isExpanded)
 			{
@@ -202,6 +201,14 @@ package com.stc.maps.view.components
 					formItems.push(cmb);
 					return wraper;
 				break;
+				case FilterVO.YESNO:
+					var cmb : ComboBox = new ComboBox();
+					cmb.percentWidth = 80;
+					cmb.dataProvider = new ArrayCollection([{ id: "0", label: "No" },{ id: "1", label: "Si" }]);
+					wraper.addChild(cmb);
+					formItems.push(cmb);
+					return wraper;
+				break;	
 				case FilterVO.MULTIPLE:
 					var mult : MultiselectRenderer = new MultiselectRenderer();
 					mult.labelOption = filt.label;
@@ -211,9 +218,9 @@ package com.stc.maps.view.components
 					return mult;
 				break;
 				default:
-					var txtinptx : TextInput = new TextInput();
-					wraper.addChild(txtinptx);
-					formItems.push(txtinptx);
+					var txtinpt : TextInput = new TextInput();
+					wraper.addChild(txtinpt);
+					formItems.push(txtinpt);
 					return wraper;
 				break;
 			}
@@ -231,13 +238,17 @@ package com.stc.maps.view.components
 					var cmb : ComboBox = ComboBox(renderer);
 					return cmb.selectedItem;
 				break;
+				case FilterVO.YESNO:
+					var cmb : ComboBox = ComboBox(renderer);
+					return cmb.selectedItem;
+				break;
 				case FilterVO.MULTIPLE:
 					var mult : MultiselectRenderer = MultiselectRenderer(renderer);
-					return mult;
+					return mult.getSelectedValuesByComa();
 				break;
 				default:
-					var txtinptx : TextInput = TextInput(renderer);
-					return txtinptx.text;
+					var txtinpt : TextInput = TextInput(renderer);
+					return txtinpt.text;
 				break;
 			}
 		}

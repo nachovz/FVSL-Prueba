@@ -1,8 +1,8 @@
 package com.stc.maps.business
 {
 	import com.stc.maps.event.FiltersEvent;
+	import com.stc.maps.vo.CatalogValueVO;
 	import com.stc.maps.vo.EntityVO;
-	import com.stc.maps.vo.FilterOptionVO;
 	import com.stc.maps.vo.FilterVO;
 	import com.universalmind.cairngorm.business.Delegate;
 	
@@ -50,7 +50,7 @@ package com.stc.maps.business
 			var aux : FilterVO = new FilterVO();
 			aux.id = 1;
 			aux.type = FilterVO.COMBO;
-			aux.keyName = FilterOptionVO.COUNTRY;
+			aux.keyName = CatalogValueVO.COUNTRIES;
 			aux.label = "Pais";
 			arrayFilters.addItem(aux);
 			
@@ -61,55 +61,41 @@ package com.stc.maps.business
 			aux.label = "Nombre";
 			arrayFilters.addItem(aux);
 			
-/* 			var aux : FilterVO = new FilterVO();
+/*  			var aux : FilterVO = new FilterVO();
 			aux.id = 1;
 			aux.type = FilterVO.MULTIPLE;
 			aux.keyName = "theme";
 			aux.label = "Tematica";
-			aux.options = new ArrayCollection();
-			
-			var auxOpt : FilterOptionVO = new FilterOptionVO();
-			auxOpt.id = 1;
-			auxOpt.label = "Drogas";
-			aux.options.addItem(auxOpt);
-			var auxOpt : FilterOptionVO = new FilterOptionVO();
-			auxOpt.id = 2;
-			auxOpt.label = "Huerfanos";
-			aux.options.addItem(auxOpt);
-			var auxOpt : FilterOptionVO = new FilterOptionVO();
-			auxOpt.id = 2;
-			auxOpt.label = "Diversidad de generos";
-			aux.options.addItem(auxOpt);
-			
-			arrayFilters.addItem(aux); */
+			aux.options = new ArrayCollection();			
+			arrayFilters.addItem(aux);  */
 			
 			aux = new FilterVO();
 			aux.id = 1;
 			aux.type = FilterVO.COMBO;
-			aux.keyName = FilterOptionVO.ORGANIZATION_TYPE;
+			aux.keyName = CatalogValueVO.ORGANIZATION_TYPE;
 			aux.label = "Tipo de organizacion";
 			arrayFilters.addItem(aux);
 			
 			aux = new FilterVO();
 			aux.id = 1;
-			aux.type = FilterVO.COMBO;
-			aux.keyName = FilterOptionVO.FINANCY;
+			aux.type = FilterVO.YESNO;
+			aux.keyName = CatalogValueVO.FINANCY;
 			aux.label = "Financiamiento a terceros";
 			arrayFilters.addItem(aux);
 			
 			aux = new FilterVO();
 			aux.id = 1;
 			aux.type = FilterVO.COMBO;
-			aux.keyName = FilterOptionVO.ENFOQUE_GEOGRAFICO;
+			aux.keyName = CatalogValueVO.APPROACHES;
 			aux.label = "Enfoque geografico";
 			arrayFilters.addItem(aux);
 			
-/* 			var aux : FilterVO = new FilterVO();
+ 			var aux : FilterVO = new FilterVO();
 			aux.id = 1;
 			aux.type = FilterVO.MULTIPLE;
-			aux.keyName = FilterOptionVO.BENEFICIARIO;
+			aux.keyName = CatalogValueVO.BENEFICIARIES;
 			aux.label = "Poblacion de Interes";
-			arrayFilters.addItem(aux); */
+			arrayFilters.addItem(aux);
 
 			
 			return arrayFilters;
@@ -122,7 +108,7 @@ package com.stc.maps.business
 			var aux : FilterVO = new FilterVO();
 			aux.id = 1;
 			aux.type = FilterVO.COMBO;
-			aux.keyName = FilterOptionVO.COUNTRY;
+			aux.keyName = CatalogValueVO.COUNTRIES;
 			aux.label = "Pais";
 			arrayFilters.addItem(aux);
 			

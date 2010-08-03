@@ -4,7 +4,7 @@ package com.stc.maps.command
 	import com.stc.maps.business.CatalogDelegate;
 	import com.stc.maps.event.CatalogEvent;
 	import com.stc.maps.managers.CatalogManager;
-	import com.stc.maps.vo.FilterOptionVO;
+	import com.stc.maps.vo.CatalogValueVO;
 	import com.universalmind.cairngorm.commands.Command;
 	
 	import mx.collections.ArrayCollection;
@@ -19,6 +19,7 @@ package com.stc.maps.command
 			super.execute(event);
 
 			_event = event as CatalogEvent;
+			
             switch(event.type)
             {
 				case CatalogEvent.GET_CATALOG:
@@ -30,10 +31,10 @@ package com.stc.maps.command
             }
 		}
 
-		private function getCatalog(event : CatalogEvent):void
+		private function getCatalog(event : CatalogEvent) : void
 		{
-			//var delegate : CatalogDelegate = new CatalogDelegate(this,"ParticipantService");
-			//delegate.getCatalog(event);
+			var delegate : CatalogDelegate = new CatalogDelegate(this,"ParticipantService");
+			delegate.getCatalog(event);
 		}
 
 		override public function result(data : Object):void
@@ -54,7 +55,7 @@ package com.stc.maps.command
 			{
 				for each(var obj : Object in entitiesArray)
 				{
-					var entity : FilterOptionVO = new FilterOptionVO();
+					var entity : CatalogValueVO = new CatalogValueVO();
 					entity.id = obj.id;
 					entity.label = obj.value;
 					

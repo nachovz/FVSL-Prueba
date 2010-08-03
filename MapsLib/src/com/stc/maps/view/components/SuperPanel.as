@@ -1,12 +1,11 @@
 package com.stc.maps.view.components
 {
-    import flash.events.MouseEvent;
-    
     import mx.containers.Panel;
     import mx.controls.Button;
     import mx.core.UIComponent;
     import mx.effects.Resize;
 /*     import flash.events.MouseEvent; */
+    import flash.events.MouseEvent;
     
     public class SuperPanel extends Panel {
         [Bindable] public var showControls:Boolean = false;
@@ -44,7 +43,7 @@ package com.stc.maps.view.components
             this.addListeners();
         }
         
-        public function get isExpanded():Boolean
+        public function get isExpanded() : Boolean
         {
         	if(!oH) return true;
         	

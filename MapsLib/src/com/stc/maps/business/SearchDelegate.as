@@ -1,7 +1,7 @@
 package com.stc.maps.business
 {
 	import com.stc.maps.event.SearchEvent;
-	import com.stc.maps.vo.FilterOptionVO;
+	import com.stc.maps.vo.CatalogValueVO;
 	import com.stc.maps.vo.FilterValueVO;
 	import com.universalmind.cairngorm.business.Delegate;
 	import com.universalmind.cairngorm.business.ServiceLocator;
@@ -46,7 +46,7 @@ package com.stc.maps.business
 			//array[6] = Number(getValueByName(values,FilterOptionVO.FINANCY).value);
 			array[6] = 0;
 			//pais
-			array[7] = Number(getValueByName(values,FilterOptionVO.COUNTRY).value);
+			array[7] = Number(getValueByName(values,CatalogValueVO.COUNTRIES).value);
 
 			var params : ArrayCollection = new ArrayCollection(array);
 			
@@ -57,7 +57,7 @@ package com.stc.maps.business
 		
 		public function searchNetwork(values : ArrayCollection) : void
 		{
-			var pais : int = Number(getValueByName(values,FilterOptionVO.COUNTRY).value);
+			var pais : int = Number(getValueByName(values,CatalogValueVO.COUNTRIES).value);
 			var nombreNetwork : String = "%"+getValueByName(values,"name").value.toString()+"%";
 			
             _service = ServiceLocator.getInstance().getWebService("networkWS");

@@ -8,10 +8,10 @@ package com.stc.maps.view.components
 	import mx.controls.LinkButton;
 	import mx.controls.List;
 	import mx.controls.TextArea;
- 	import flash.events.MouseEvent; 
- 	import flash.text.TextFieldAutoSize;
 /* 	import flash.events.MouseEvent; 
  	import flash.text.TextFieldAutoSize;*/
+ 	import flash.events.MouseEvent; 
+ 	import flash.text.TextFieldAutoSize;
 
 	public class MultiselectRenderer extends ViewStack
 	{
@@ -69,6 +69,19 @@ package com.stc.maps.view.components
 				_selectedCriterias = value;
 				selectedCriteriasChange = true;
 			}
+		}
+		
+		public function getSelectedValuesByComa() : String
+		{
+			var text : String = "";
+			if(selectedCriterias)
+				for(var i : int = 0; i<selectedCriterias.length;i++)
+				{
+					text += selectedCriterias[i]["id"];
+					text += (i<selectedCriterias.length-1) ? "," : "";
+				}
+			
+			return text;
 		}
 
 		public function get selectedCriterias() : ArrayCollection
