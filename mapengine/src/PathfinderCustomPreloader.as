@@ -1,8 +1,10 @@
 package
 {
 	import flash.display.DisplayObject;
+	import flash.display.GradientType;
 	import flash.display.Sprite;
 	import flash.filters.DropShadowFilter;
+	import flash.geom.Matrix;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 
@@ -16,7 +18,15 @@ package
 		private var pathfLogo:DisplayObject;
 		private var bar:Sprite=new Sprite();
 		private var barFrame:Sprite;
+		private var background:Sprite;
 		private var mainColor:uint=0x00AEEF;
+		
+		private var type:String		= GradientType.LINEAR;
+		private var colors:Array	= [0xFFFFFF, 0x999999];
+		private var alphas:Array	= [1, 1];
+		private var ratios:Array	= [0, 255];
+		private var matrix:Matrix	= new Matrix();
+		
 		
 		public function PathfinderCustomPreloader()
 		{
@@ -49,10 +59,25 @@ package
 			bar.graphics.beginFill(mainColor,1)
 			bar.graphics.drawRoundRectComplex(0,0,bar.width * _fractionLoaded,15,12,12,12,12);
 			bar.graphics.endFill();
+			
+			
+			matrix.createGradientBox(stageWidth, stageHeight, Math.PI/2, 0, 0);
+			background.graphics.beginGradientFill(type,colors,alphas,ratios,matrix)
+			background.graphics.drawRect(0,0,stageWidth,stageHeight);
+			background.graphics.endFill();
+			
 		}
 		
 		protected function createAssets():void
 		{
+			//
+			background = new Sprite();
+			background.graphics.lineStyle(0,0,1);
+			background.graphics.beginGradientFill(type,colors,alphas,ratios,matrix);
+			background.graphics.drawRect(0,0,stageWidth,stageHeight);
+			background.graphics.endFill();
+			addChild(background);
+			
 			//create the logo
 			pathfLogo = new Logo();
 			pathfLogo.x = stageWidth/2 - pathfLogo.width/2;

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="100%" height="100%"
+<mx:Module backgroundColor="0xFFFFFF" xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="100%" height="100%"
 	xmlns:maps="com.google.maps.*" xmlns:business="com.stc.maps.business.*" xmlns:view="com.stc.maps.view.*" 
 	xmlns:components="com.stc.maps.view.components.*"
 	resize="mapModel.map_resize(event)"
-	initialize="module1_initializeHandler(event)">
+	initialize="module1_initializeHandler(event)" xmlns:mapplugins="com.stc.maps.view.components.map.mapplugins.*">
 	<mx:Script>
 		<![CDATA[
 			import com.stc.maps.model.MapModel;
@@ -34,7 +34,7 @@
 			[Embed(source="com/assets/markers/3/redes_small.png")]
 			private var networkSmall:Class;
 			
-			
+			[Bindable]
 			private var mapModel:MapModel = MapModel.getInstance();
 
 			protected function module1_initializeHandler(event:FlexEvent):void
@@ -60,12 +60,12 @@
 	    width="100%" height="100%" 
 		mapevent_mappreinitialize="mapModel.mainMap_mapevent_mappreinitializeHandler(event)"
 		/>
-      <mx:ToggleButtonBar id="toggleOptons" 
+      <mapplugins:MapToggleButtonBar id="toggleOptons" 
 		itemClick="mapModel.toggleOptons_clickHandler(event);"
       	top="10" right="10" 
 		toggleOnClick="false"
       	visible="{mapModel.toggleVisibility}">
-          <mx:dataProvider>
+          <mapplugins:dataProvider>
               <mx:Array>
                   <mx:Object label="Todos" keyName="all" />
                   <mx:Object label="Cooperantes" keyName="{EntityVO.COOPERANT}" icon="{cooperantSmall}" />
@@ -73,8 +73,8 @@
                   <mx:Object label="ODS" keyName="{EntityVO.ODS}" icon="{odsSmall}" />
                   <mx:Object label="Redes" keyName="network" icon="{networkSmall}" />
               </mx:Array>
-          </mx:dataProvider>
-      </mx:ToggleButtonBar>
+          </mapplugins:dataProvider>
+      </mapplugins:MapToggleButtonBar>
 	  <components:AdvancedSearch 
 	  	id="advancedSearch" 
 	  	visible="{mapModel.searchVisibility}"

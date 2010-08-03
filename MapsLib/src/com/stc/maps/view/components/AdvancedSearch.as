@@ -7,6 +7,8 @@ package com.stc.maps.view.components
 	import com.stc.maps.vo.FilterVO;
 	import com.stc.maps.vo.FilterValueVO;
 	
+	import flash.events.MouseEvent;
+	
 	import mx.collections.ArrayCollection;
 	import mx.containers.HBox;
 	import mx.containers.VBox;
@@ -17,7 +19,6 @@ package com.stc.maps.view.components
 	import mx.controls.TextInput;
 	import mx.core.UIComponent;
 	import mx.events.ResizeEvent;
-	import flash.events.MouseEvent;
 
 	public class AdvancedSearch extends SuperPanel
 	{
@@ -155,7 +156,7 @@ package com.stc.maps.view.components
 			invalidateProperties();
 		}
 		
-		private function advancedSearch_resize(event : ResizeEvent)
+		private function advancedSearch_resize(event : ResizeEvent):void
 		{
 			if(this.isExpanded)
 			{
@@ -210,9 +211,9 @@ package com.stc.maps.view.components
 					return mult;
 				break;
 				default:
-					var txtinpt : TextInput = new TextInput();
-					wraper.addChild(txtinpt);
-					formItems.push(txtinpt);
+					var txtinptx : TextInput = new TextInput();
+					wraper.addChild(txtinptx);
+					formItems.push(txtinptx);
 					return wraper;
 				break;
 			}
@@ -235,8 +236,8 @@ package com.stc.maps.view.components
 					return mult;
 				break;
 				default:
-					var txtinpt : TextInput = TextInput(renderer);
-					return txtinpt.text;
+					var txtinptx : TextInput = TextInput(renderer);
+					return txtinptx.text;
 				break;
 			}
 		}

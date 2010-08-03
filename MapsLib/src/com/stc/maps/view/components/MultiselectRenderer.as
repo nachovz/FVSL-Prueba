@@ -31,7 +31,7 @@ package com.stc.maps.view.components
 		
 		public var titleLabel : String = "label";
 		
-		public function set labelOption(value : String)
+		public function set labelOption(value : String):void
 		{
 			_label.text = value;
 		}

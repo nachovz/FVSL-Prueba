@@ -159,7 +159,6 @@ package com.stc.maps.model
 		
 		private function onMapZoomChanged(event:MapZoomEvent):void
 		{
-			trace("ZOOM");
 			if(clusterer){
 				clusterer.zoom = mainMap.getZoom();
 				setAllMarkersOnTheMap();
@@ -169,10 +168,6 @@ package com.stc.maps.model
 		private function markerAdded(event:MapEvent):void{
 			if(event.feature is Marker){
 				trace("MARKER ADDED");
-				/*var theMarker:Marker;
-				theMarker = event.feature as Marker;
-				var theMarkerOptions:MarkerOptions = theMarker.getOptions();
-				var theMarkerLatLng:LatLng = theMarker.getLatLng();*/
 			}
 		}
 		
@@ -334,7 +329,7 @@ package com.stc.maps.model
 			ev.dispatch();
 		}
 		
-		private function renderNetwork(network:NetworkVO)
+		private function renderNetwork(network:NetworkVO):void
 		{
 			for each(var entity : EntityVO in network.nodes)
 			{
@@ -413,6 +408,7 @@ package com.stc.maps.model
 		{
 			mainMap.clearOverlays();
 			markerEntity = new Dictionary(true);
+			model.allEntities = [];
 		}
 		
 		private function expandNetwork(ev : EntityRendererEvent) : void
@@ -447,9 +443,17 @@ package com.stc.maps.model
 		private function changeLayer(entityesList : Array) : void
 		{
 			clearMap();
+			var pastString:String
+			for each(var entity : String in entityesList){
+				addMapLayer(model.entities[entity]);
+				if(model.entities[entity] && pastString != entity ){
+					pastString = entity;
+					model.allEntities = concatArrays(model.allEntities,model.entities[entity].source);
+					setAllMarkersOnTheMap();
+				}
+			}
 			
-			for each(var entity : String in entityesList)
-			addMapLayer(model.entities[entity]);
+			
 		}
 		
 		private function changeMenuDatasourceTypes(entityesList : Array) : void
@@ -578,7 +582,7 @@ package com.stc.maps.model
 					var latlang : LatLng =myMarker.getLatLng();
 					theGroupMarkers = new GroupMarkers(latlang,markerOption);
 					theGroupMarkers.allMarkers = cluster;
-					for(var i:int =0; i<cluster.length ; i++ ){
+					for(i = 0; i<cluster.length ; i++ ){
 						myMarker =  cluster[i] as Marker;
 						myMarker.visible = false;
 					}

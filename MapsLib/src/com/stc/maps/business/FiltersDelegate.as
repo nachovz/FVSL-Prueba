@@ -54,7 +54,7 @@ package com.stc.maps.business
 			aux.label = "Pais";
 			arrayFilters.addItem(aux);
 			
-			var aux : FilterVO = new FilterVO();
+			aux = new FilterVO();
 			aux.id = 1;
 			aux.type = FilterVO.TEXT;
 			aux.keyName = "name";
@@ -83,21 +83,21 @@ package com.stc.maps.business
 			
 			arrayFilters.addItem(aux); */
 			
-			var aux : FilterVO = new FilterVO();
+			aux = new FilterVO();
 			aux.id = 1;
 			aux.type = FilterVO.COMBO;
 			aux.keyName = FilterOptionVO.ORGANIZATION_TYPE;
 			aux.label = "Tipo de organizacion";
 			arrayFilters.addItem(aux);
 			
-			var aux : FilterVO = new FilterVO();
+			aux = new FilterVO();
 			aux.id = 1;
 			aux.type = FilterVO.COMBO;
 			aux.keyName = FilterOptionVO.FINANCY;
 			aux.label = "Financiamiento a terceros";
 			arrayFilters.addItem(aux);
 			
-			var aux : FilterVO = new FilterVO();
+			aux = new FilterVO();
 			aux.id = 1;
 			aux.type = FilterVO.COMBO;
 			aux.keyName = FilterOptionVO.ENFOQUE_GEOGRAFICO;
@@ -126,7 +126,7 @@ package com.stc.maps.business
 			aux.label = "Pais";
 			arrayFilters.addItem(aux);
 			
-			var aux : FilterVO = new FilterVO();
+			aux = new FilterVO();
 			aux.id = 1;
 			aux.type = FilterVO.TEXT;
 			aux.keyName = "name";
