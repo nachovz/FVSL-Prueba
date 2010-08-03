@@ -191,6 +191,20 @@ public partial class FVSL_LINQDataContext : System.Data.Linq.DataContext
 		IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), tipo_s);
 		return ((ISingleResult<mapa_get_catalogo_premiosResult>)(result.ReturnValue));
 	}
+	
+	[Function(Name="dbo.mapa_get_catalogo_beneficiario")]
+	public ISingleResult<mapa_get_catalogo_beneficiarioResult> mapa_get_catalogo_beneficiario()
+	{
+		IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
+		return ((ISingleResult<mapa_get_catalogo_beneficiarioResult>)(result.ReturnValue));
+	}
+	
+	[Function(Name="dbo.MAPA_GET_CATALOGO_TIPO_ORGANIZACION")]
+	public ISingleResult<MAPA_GET_CATALOGO_TIPO_ORGANIZACIONResult> MAPA_GET_CATALOGO_TIPO_ORGANIZACION()
+	{
+		IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
+		return ((ISingleResult<MAPA_GET_CATALOGO_TIPO_ORGANIZACIONResult>)(result.ReturnValue));
+	}
 }
 
 [Table(Name="dbo.ODS_ODS")]
@@ -4256,6 +4270,94 @@ public partial class mapa_get_catalogo_premiosResult
 			if ((this._id != value))
 			{
 				this._id = value;
+			}
+		}
+	}
+}
+
+public partial class mapa_get_catalogo_beneficiarioResult
+{
+	
+	private string _Nombre;
+	
+	private int _Id;
+	
+	public mapa_get_catalogo_beneficiarioResult()
+	{
+	}
+	
+	[Column(Storage="_Nombre", DbType="VarChar(100)")]
+	public string Nombre
+	{
+		get
+		{
+			return this._Nombre;
+		}
+		set
+		{
+			if ((this._Nombre != value))
+			{
+				this._Nombre = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_Id", DbType="Int NOT NULL")]
+	public int Id
+	{
+		get
+		{
+			return this._Id;
+		}
+		set
+		{
+			if ((this._Id != value))
+			{
+				this._Id = value;
+			}
+		}
+	}
+}
+
+public partial class MAPA_GET_CATALOGO_TIPO_ORGANIZACIONResult
+{
+	
+	private short _id;
+	
+	private string _nombre;
+	
+	public MAPA_GET_CATALOGO_TIPO_ORGANIZACIONResult()
+	{
+	}
+	
+	[Column(Storage="_id", DbType="SmallInt NOT NULL")]
+	public short id
+	{
+		get
+		{
+			return this._id;
+		}
+		set
+		{
+			if ((this._id != value))
+			{
+				this._id = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_nombre", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+	public string nombre
+	{
+		get
+		{
+			return this._nombre;
+		}
+		set
+		{
+			if ((this._nombre != value))
+			{
+				this._nombre = value;
 			}
 		}
 	}

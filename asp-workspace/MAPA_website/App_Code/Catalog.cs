@@ -32,4 +32,3 @@ public class Catalog : System.Web.Services.WebService {
         return CatalogExtractor.create(catalogo).getCatalog(de, p);
     }
 }
-

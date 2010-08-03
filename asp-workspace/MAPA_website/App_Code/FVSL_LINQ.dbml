@@ -256,4 +256,16 @@
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
+  <Function Name="dbo.mapa_get_catalogo_beneficiario" Method="mapa_get_catalogo_beneficiario">
+    <ElementType Name="mapa_get_catalogo_beneficiarioResult">
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.MAPA_GET_CATALOGO_TIPO_ORGANIZACION" Method="MAPA_GET_CATALOGO_TIPO_ORGANIZACION">
+    <ElementType Name="MAPA_GET_CATALOGO_TIPO_ORGANIZACIONResult">
+      <Column Name="id" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
 </Database>

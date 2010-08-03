@@ -15,38 +15,30 @@ using System.Xml.Linq;
 /// </summary>
 public class CatalogExtractor
 {
-    public static String CATALOG_PREMIO { get { return "premios"; } }
-    public static String CATALOG_PAIS { get { return "paises"; } }
-    public static String CATALOG_BENEF { get { return "beneficiarios"; } }
-    public static String CATALOG_TIPO_ORG { get { return "tipos"; } }
-    public static String CATALOG_ENFOQ { get { return "enfoques"; } }
-    public static String CATALOG_ESTADO { get { return "estados"; } }
-
-
 
 	public static ICatalogExtractor create(String type)
 	{
-        if (type == CATALOG_PREMIO)
+        if (type == CataloValueVO.CATALOG_PREMIO)
         {
             return new CatalogPremioExtract();
         }
-        else if (type == CATALOG_PAIS)
+        else if (type == CataloValueVO.CATALOG_PAIS)
         {
             return null;//new CatalogPaisExtract();
         }
-        else if (type == CATALOG_BENEF)
+        else if (type == CataloValueVO.CATALOG_BENEF)
         {
-            return null;//new CatalogBenefExtract();
+            return new CatalogBenefExtract();
         }
-        else if (type == CATALOG_TIPO_ORG)
+        else if (type == CataloValueVO.CATALOG_TIPO_ORG)
         {
-            return null;//new CatalogTipoOrgExtract();
+            return new CatalogTipoOrgExtract();
         }
-        else if (type == CATALOG_ENFOQ)
+        else if (type == CataloValueVO.CATALOG_ENFOQ)
         {
             return null;//new CatalogEnfoqExtract();
         }
-        else if (type == CATALOG_ESTADO)
+        else if (type == CataloValueVO.CATALOG_ESTADO)
         {
             return null;//new CatalogEstadoExtract();
         }
