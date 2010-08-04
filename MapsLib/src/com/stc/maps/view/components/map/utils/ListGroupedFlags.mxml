@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
+				minHeight="200" 
+				layout="absolute"
+				close="closeWindow(event)" 
+				showCloseButton="true"
+				>
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.managers.PopUpManager;
+			private function closeWindow(event : Event) : void
+			{
+				PopUpManager.removePopUp(this);
+			}
+		]]>
+	</mx:Script>
+	<mx:List height="100%" minWidth="300" />
+</mx:TitleWindow>

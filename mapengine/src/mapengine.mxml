@@ -11,6 +11,8 @@
 			import mx.events.FlexEvent;
 			import mx.events.ModuleEvent;
          	private var customLoader:CustomLoader;
+			Security.allowDomain("*");
+			
 			protected function errorHandler(e:ModuleEvent) : void 
 	        {
 	            Alert.show("There was an error loading the module."+e.errorText);

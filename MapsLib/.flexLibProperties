@@ -1,70 +1,72 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<flexLibProperties version="1">
-<includeClasses>
-<classEntry path="com.stc.maps.business.CatalogDelegate"/>
-<classEntry path="com.stc.maps.view.components.map.MapOverlayFunctions"/>
-<classEntry path="com.stc.maps.view.components.LayoutAnimator"/>
-<classEntry path="com.stc.maps.view.components.InputBox"/>
-<classEntry path="com.stc.maps.command.SearchCommand"/>
-<classEntry path="com.stc.maps.event.FiltersEvent"/>
-<classEntry path="com.stc.maps.command.FiltersCommand"/>
-<classEntry path="com.stc.maps.vo.FilterValueVO"/>
-<classEntry path="com.stc.maps.view.components.event.AnimationEvent"/>
-<classEntry path="com.stc.maps.business.Services"/>
-<classEntry path="com.stc.maps.business.FiltersDelegate"/>
-<classEntry path="com.stc.maps.event.EntitiesEvent"/>
-<classEntry path="com.stc.maps.control.MapsController"/>
-<classEntry path="com.stc.maps.view.components.LayoutTarget"/>
-<classEntry path="com.stc.maps.view.components.map.mapplugins.MapToggleButtonBar"/>
-<classEntry path="com.stc.maps.view.CollapsableMenu"/>
-<classEntry path="com.stc.maps.view.components.EntityRendererList"/>
-<classEntry path="com.stc.maps.model.MarkerLocator"/>
-<classEntry path="com.stc.maps.vo.FilterVO"/>
-<classEntry path="com.stc.maps.business.SearchDelegate"/>
-<classEntry path="com.stc.maps.view.components.SuperPanel"/>
-<classEntry path="com.stc.maps.command.EntitiesCommand"/>
-<classEntry path="com.stc.maps.view.components.AdvancedSearch"/>
-<classEntry path="com.stc.maps.vo.EntityVO"/>
-<classEntry path="com.stc.maps.view.components.map.specialmarkers.GroupMarkers"/>
-<classEntry path="com.stc.maps.command.CatalogCommand"/>
-<classEntry path="com.stc.maps.view.components.event.EntityRendererListEvent"/>
-<classEntry path="com.stc.maps.model.ModelLocator"/>
-<classEntry path="com.stc.maps.vo.NetworkVO"/>
-<classEntry path="com.stc.maps.business.EntitiesDelegate"/>
-<classEntry path="com.stc.maps.view.components.map.Clusterer"/>
-<classEntry path="com.stc.maps.event.CatalogEvent"/>
-<classEntry path="com.stc.maps.event.SearchEvent"/>
-<classEntry path="com.stc.maps.view.components.event.AdvancedSearchEvent"/>
-<classEntry path="com.stc.maps.view.components.MultiselectRenderer"/>
-<classEntry path="com.stc.maps.view.components.event.EntityRendererEvent"/>
-<classEntry path="com.stc.maps.model.MapModel"/>
-<classEntry path="com.stc.maps.view.components.EntityRenderer"/>
-<classEntry path="com.stc.maps.managers.CatalogManager"/>
-</includeClasses>
-<includeResources>
-<resourceEntry destPath="com/assets/markers/3/empresas_small.png" sourcePath="com/assets/markers/3/empresas_small.png"/>
-<resourceEntry destPath="com/assets/img/logo.png" sourcePath="com/assets/img/logo.png"/>
-<resourceEntry destPath="com/assets/img/facebook.png" sourcePath="com/assets/img/facebook.png"/>
-<resourceEntry destPath="com/assets/markers/3/otros.png" sourcePath="com/assets/markers/3/otros.png"/>
-<resourceEntry destPath="com/assets/markers/2/ods.png" sourcePath="com/assets/markers/2/ods.png"/>
-<resourceEntry destPath="com/assets/img/twitter.png" sourcePath="com/assets/img/twitter.png"/>
-<resourceEntry destPath="com/assets/markers/2/cooperantes.png" sourcePath="com/assets/markers/2/cooperantes.png"/>
-<resourceEntry destPath="com/assets/markers/3/ods_small.png" sourcePath="com/assets/markers/3/ods_small.png"/>
-<resourceEntry destPath="com/assets/markers/3/ods.png" sourcePath="com/assets/markers/3/ods.png"/>
-<resourceEntry destPath="com/assets/logos/polar.jpg" sourcePath="com/assets/logos/polar.jpg"/>
-<resourceEntry destPath="com/assets/img/tools.png" sourcePath="com/assets/img/tools.png"/>
-<resourceEntry destPath="com/assets/markers/3/otros_small.png" sourcePath="com/assets/markers/3/otros_small.png"/>
-<resourceEntry destPath="com/assets/markers/2/empresas.png" sourcePath="com/assets/markers/2/empresas.png"/>
-<resourceEntry destPath="com/assets/markers/3/cooperantes.png" sourcePath="com/assets/markers/3/cooperantes.png"/>
-<resourceEntry destPath="com/assets/markers/3/redes_small.png" sourcePath="com/assets/markers/3/redes_small.png"/>
-<resourceEntry destPath="com/assets/img/Thumbs.db" sourcePath="com/assets/img/Thumbs.db"/>
-<resourceEntry destPath="com/assets/markers/2/otros.png" sourcePath="com/assets/markers/2/otros.png"/>
-<resourceEntry destPath="com/assets/markers/markers.swf" sourcePath="com/assets/markers/markers.swf"/>
-<resourceEntry destPath="com/assets/markers/3/cooperantes_small.png" sourcePath="com/assets/markers/3/cooperantes_small.png"/>
-<resourceEntry destPath="com/assets/markers/3/empresas.png" sourcePath="com/assets/markers/3/empresas.png"/>
-<resourceEntry destPath="com/assets/img/ur_logo.gif" sourcePath="com/assets/img/ur_logo.gif"/>
-<resourceEntry destPath="com/assets/markers/3/redes.png" sourcePath="com/assets/markers/3/redes.png"/>
-<resourceEntry destPath="com/assets/markers/2/redes.png" sourcePath="com/assets/markers/2/redes.png"/>
-</includeResources>
-<namespaceManifests/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="false" version="1">
+  <includeClasses>
+    <classEntry path="com.stc.maps.business.CatalogDelegate"/>
+    <classEntry path="com.stc.maps.business.EntitiesDelegate"/>
+    <classEntry path="com.stc.maps.business.FiltersDelegate"/>
+    <classEntry path="com.stc.maps.business.SearchDelegate"/>
+    <classEntry path="com.stc.maps.business.Services"/>
+    <classEntry path="com.stc.maps.command.CatalogCommand"/>
+    <classEntry path="com.stc.maps.command.EntitiesCommand"/>
+    <classEntry path="com.stc.maps.command.FiltersCommand"/>
+    <classEntry path="com.stc.maps.command.SearchCommand"/>
+    <classEntry path="com.stc.maps.control.MapsController"/>
+    <classEntry path="com.stc.maps.event.CatalogEvent"/>
+    <classEntry path="com.stc.maps.event.EntitiesEvent"/>
+    <classEntry path="com.stc.maps.event.FiltersEvent"/>
+    <classEntry path="com.stc.maps.event.SearchEvent"/>
+    <classEntry path="com.stc.maps.managers.CatalogManager"/>
+    <classEntry path="com.stc.maps.model.MapModel"/>
+    <classEntry path="com.stc.maps.model.MarkerLocator"/>
+    <classEntry path="com.stc.maps.model.ModelLocator"/>
+    <classEntry path="com.stc.maps.view.CollapsableMenu"/>
+    <classEntry path="com.stc.maps.view.components.AdvancedSearch"/>
+    <classEntry path="com.stc.maps.view.components.EntityRenderer"/>
+    <classEntry path="com.stc.maps.view.components.EntityRendererList"/>
+    <classEntry path="com.stc.maps.view.components.InputBox"/>
+    <classEntry path="com.stc.maps.view.components.LayoutAnimator"/>
+    <classEntry path="com.stc.maps.view.components.LayoutTarget"/>
+    <classEntry path="com.stc.maps.view.components.MultiselectRenderer"/>
+    <classEntry path="com.stc.maps.view.components.SuperPanel"/>
+    <classEntry path="com.stc.maps.view.components.event.AdvancedSearchEvent"/>
+    <classEntry path="com.stc.maps.view.components.event.AnimationEvent"/>
+    <classEntry path="com.stc.maps.view.components.event.EntityRendererEvent"/>
+    <classEntry path="com.stc.maps.view.components.event.EntityRendererListEvent"/>
+    <classEntry path="com.stc.maps.view.components.map.Clusterer"/>
+    <classEntry path="com.stc.maps.view.components.map.MapOverlayFunctions"/>
+    <classEntry path="com.stc.maps.vo.EntityVO"/>
+    <classEntry path="com.stc.maps.vo.FilterOptionVO"/>
+    <classEntry path="com.stc.maps.vo.FilterVO"/>
+    <classEntry path="com.stc.maps.vo.FilterValueVO"/>
+    <classEntry path="com.stc.maps.vo.NetworkVO"/>
+    <classEntry path="com.stc.maps.view.components.map.specialmarkers.GroupMarkers"/>
+    <classEntry path="com.stc.maps.view.components.map.mapplugins.MapToggleButtonBar"/>
+    <classEntry path="com.stc.maps.view.components.map.utils.ListGroupedFlags"/>
+  </includeClasses>
+  <includeResources>
+    <resourceEntry destPath="com/assets/markers/3/cooperantes_small.png" sourcePath="com/assets/markers/3/cooperantes_small.png"/>
+    <resourceEntry destPath="com/assets/img/ur_logo.gif" sourcePath="com/assets/img/ur_logo.gif"/>
+    <resourceEntry destPath="com/assets/markers/3/ods_small.png" sourcePath="com/assets/markers/3/ods_small.png"/>
+    <resourceEntry destPath="com/assets/markers/3/otros.png" sourcePath="com/assets/markers/3/otros.png"/>
+    <resourceEntry destPath="com/assets/markers/3/empresas.png" sourcePath="com/assets/markers/3/empresas.png"/>
+    <resourceEntry destPath="com/assets/img/twitter.png" sourcePath="com/assets/img/twitter.png"/>
+    <resourceEntry destPath="com/assets/markers/3/cooperantes.png" sourcePath="com/assets/markers/3/cooperantes.png"/>
+    <resourceEntry destPath="com/assets/markers/markers.swf" sourcePath="com/assets/markers/markers.swf"/>
+    <resourceEntry destPath="com/assets/markers/3/redes.png" sourcePath="com/assets/markers/3/redes.png"/>
+    <resourceEntry destPath="com/assets/markers/3/otros_small.png" sourcePath="com/assets/markers/3/otros_small.png"/>
+    <resourceEntry destPath="com/assets/img/facebook.png" sourcePath="com/assets/img/facebook.png"/>
+    <resourceEntry destPath="com/assets/markers/2/redes.png" sourcePath="com/assets/markers/2/redes.png"/>
+    <resourceEntry destPath="com/assets/markers/3/redes_small.png" sourcePath="com/assets/markers/3/redes_small.png"/>
+    <resourceEntry destPath="com/assets/markers/2/empresas.png" sourcePath="com/assets/markers/2/empresas.png"/>
+    <resourceEntry destPath="com/assets/logos/polar.jpg" sourcePath="com/assets/logos/polar.jpg"/>
+    <resourceEntry destPath="com/assets/img/logo.png" sourcePath="com/assets/img/logo.png"/>
+    <resourceEntry destPath="com/assets/markers/2/otros.png" sourcePath="com/assets/markers/2/otros.png"/>
+    <resourceEntry destPath="com/assets/markers/2/ods.png" sourcePath="com/assets/markers/2/ods.png"/>
+    <resourceEntry destPath="com/assets/img/tools.png" sourcePath="com/assets/img/tools.png"/>
+    <resourceEntry destPath="com/assets/markers/2/cooperantes.png" sourcePath="com/assets/markers/2/cooperantes.png"/>
+    <resourceEntry destPath="com/assets/img/Thumbs.db" sourcePath="com/assets/img/Thumbs.db"/>
+    <resourceEntry destPath="com/assets/markers/3/ods.png" sourcePath="com/assets/markers/3/ods.png"/>
+    <resourceEntry destPath="com/assets/markers/3/empresas_small.png" sourcePath="com/assets/markers/3/empresas_small.png"/>
+  </includeResources>
+  <namespaceManifests/>
 </flexLibProperties>

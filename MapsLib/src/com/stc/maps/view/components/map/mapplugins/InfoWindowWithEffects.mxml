@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	creationCompleteEffect="{creationCompleteEffect}" 
+	hideEffect="{hideEffect}"
+	creationComplete="panel1_creationCompleteHandler(event)"
+	>
+	<mx:Metadata>
+		[Event(name="ZoomInPlease", type="flash.events.Event")]
+	</mx:Metadata>
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			public static var ZOOM_IN:String = "ZoomInPlease";
+			public static var LIST_GROUPED_FLAGS:String = "ListGroupedFlag";
+			
+			protected function panel1_creationCompleteHandler(event:FlexEvent):void
+			{
+				// TODO Auto-generated method stub
+				trace(this.width);
+				trace(this.height);
+			}
+
+
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				dispatchEvent(new Event(ZOOM_IN,true,true));
+			}
+
+
+			protected function button2_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				dispatchEvent(new Event(LIST_GROUPED_FLAGS,true,true));
+			}
+
+		]]>
+	</mx:Script>
+	<mx:Parallel id="creationCompleteEffect">
+		<mx:Fade duration="500" />
+	</mx:Parallel>
+	<mx:Parallel id="hideEffect">
+		<mx:Fade alphaFrom="1" alphaTo="0" duration="500" />
+	</mx:Parallel>
+	<mx:HBox >
+		<mx:Button label="Zoom In" click="button1_clickHandler(event)" />
+		<mx:Button label="List Flags"  click="button2_clickHandler(event)"/>
+	</mx:HBox>
+</mx:TitleWindow>
