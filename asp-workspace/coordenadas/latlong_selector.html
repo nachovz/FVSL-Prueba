@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="css/styles.css" />
+<script type="text/javascript" src="js/jquery.js"></script>
+<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAzr2EBOXUKnm_jVnk0OJI7xSosDVG8KKPE1-m51RBrvYughuyMxQ-i1QfUnH94QxWIa6N4U6MouMmBA" type="text/javascript"></script>
+</head>
+<body>
+<script type="text/javascript">
+var latitud = "latitud";
+var longitud = "longitud";
+ $(document).ready(function(){
+ 	$('#cargar').click(function(event){
+
+ 		//var pos = $(this).offset();
+ 		//setYPosition("#content",pos.top-100);
+
+		if($('#content').html()=="")
+		{
+			$.ajax({
+			  url: 'getlatlong.html',
+			  dataType: "html",
+			  success: function(data) {
+			    $('#content').html(data);
+			    $('#content').show();
+			    $('#modalBackground').show();
+			   	load();
+				GUnload();
+
+				$('#content').click(function(){
+					return false;
+				});
+				$('#modalBackground,#aceptar-image,#close-image').click(function(){
+				    $('#modalBackground').hide();
+				    $('#content').hide();
+					return false;
+				});
+				$('#search-button').click(function(){
+					alert("asdasd");
+					showAddress($('#address').val());
+					return false;
+				});
+			  }
+			});
+		}
+		else
+		{
+			$('#content').show();
+			$('#modalBackground').show();
+		}
+
+ 		return false;
+ 	});
+
+ 		return false;
+  });
+
+ function load() {
+      if (GBrowserIsCompatible()) {
+        if(!map) var map = new GMap2(document.getElementById("map"));
+        map.setUIToDefault();
+        var center = new GLatLng(6.42375,-66.58973);
+        map.setCenter(center, 5);
+         geocoder = new GClientGeocoder();
+        var marker = new GMarker(center, {draggable: true});
+        map.addOverlay(marker);
+        document.getElementById("lat").innerHTML = center.lat().toFixed(5);
+        document.getElementById("lng").innerHTML = center.lng().toFixed(5);
+        $('#'+latitud).val(center.lat().toFixed(5));
+        $('#'+longitud).val(center.lng().toFixed(5));
+
+	  GEvent.addListener(marker, "dragend", function() {
+       var point = marker.getPoint();
+	      map.panTo(point);
+       document.getElementById("lat").innerHTML = point.lat().toFixed(5);
+       document.getElementById("lng").innerHTML = point.lng().toFixed(5);
+        $('#'+latitud).val(point.lat().toFixed(5));
+        $('#'+longitud).val(point.lng().toFixed(5));
+
+        });
+
+
+	 GEvent.addListener(map, "moveend", function() {
+    	  var center = map.getCenter();
+		  var marker = new GMarker(center, {draggable: true});
+
+		  map.clearOverlays();
+		  map.addOverlay(marker);
+
+	   document.getElementById("lat").innerHTML = center.lat().toFixed(5);
+	   document.getElementById("lng").innerHTML = center.lng().toFixed(5);
+        $('#'+latitud).val(center.lat().toFixed(5));
+        $('#'+longitud).val(center.lng().toFixed(5));
+
+
+	 GEvent.addListener(marker, "dragend", function() {
+      var point =marker.getPoint();
+	     map.panTo(point);
+      document.getElementById("lat").innerHTML = point.lat().toFixed(5);
+	  document.getElementById("lng").innerHTML = point.lng().toFixed(5);
+        $('#'+latitud).val(point.lat().toFixed(5));
+        $('#'+longitud).val(point.lng().toFixed(5));
+
+        });
+
+        });
+      }
+    }
+
+function showAddress(address) {
+	   var map = new GMap2(document.getElementById("map"));
+       map.addControl(new GSmallMapControl());
+       //map.addControl(new GMapTypeControl());
+       if (geocoder) {
+        	geocoder.getLatLng(
+          		address,
+          function(point) {
+            if (!point) {
+              alert(address + " not found");
+            } else {
+		  		document.getElementById("lat").innerHTML = point.lat().toFixed(5);
+			    document.getElementById("lng").innerHTML = point.lng().toFixed(5);
+		        $('#latitud').val(point.lat().toFixed(5));
+		        $('#longitud').val(point.lng().toFixed(5));
+				map.clearOverlays()
+				map.setCenter(point, 14);
+   				var marker = new GMarker(point, {draggable: true});
+		 		map.addOverlay(marker);
+
+				GEvent.addListener(marker, "dragend", function() {
+	      			var pt = marker.getPoint();
+		     		map.panTo(pt);
+	      			document.getElementById("lat").innerHTML = pt.lat().toFixed(5);
+		     		document.getElementById("lng").innerHTML = pt.lng().toFixed(5);
+	        		$('#latitud').val(pt.lat().toFixed(5));
+	        		$('#longitud').val(pt.lng().toFixed(5));
+        		});
+
+
+	 			GEvent.addListener(map, "moveend", function() {
+			  		map.clearOverlays();
+	    			var center = map.getCenter();
+			  		var marker = new GMarker(center, {draggable: true});
+			  		map.addOverlay(marker);
+			  		document.getElementById("lat").innerHTML = center.lat().toFixed(5);
+		   			document.getElementById("lng").innerHTML = center.lng().toFixed(5);
+	        		$('#latitud').val(center.lat().toFixed(5));
+	        		$('#longitud').val(center.lng().toFixed(5));
+
+		 			GEvent.addListener(marker, "dragend", function() {
+		     			var pt = marker.getPoint();
+			   			map.panTo(pt);
+		    			document.getElementById("lat").innerHTML = pt.lat().toFixed(5);
+			   			document.getElementById("lng").innerHTML = pt.lng().toFixed(5);
+		        		$('#latitud').val(pt.lat().toFixed(5));
+		        		$('#longitud').val(pt.lng().toFixed(5));
+	        		});
+        		});
+
+            }
+          }
+        );
+      }
+    }
+</script>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<input type="text" id="latitud" name="latitud">
+<input type="text" id="longitud" name="longitud">
+<a href="#" id="cargar">cargar</a>
+<div id="modalBackground">
+	<div id="content" style="display:none;"></div>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+</html>

@@ -1,0 +1,8 @@
+#content{position: absolute;z-index:2000;border: 2px #26257D solid;top:0px;left:0px;right:0px;bottom:0px;	width:410px;height:420px;margin-top: auto;margin-left: auto; margin-right: auto; margin-bottom: auto; padding: 10px; background: #F1F1F2;}
+#modalBackground { text-align:center; width: 100%; height: 100%; display: none; position: absolute; top: 100px; left: 0; z-index: 2; }
+#map{border: 5px #26257D solid;width: 400px; height: 250px}
+#lat, #lng{background: #26257D; color: white;}
+#aceptar-line{text-align: center; margin: 10px 0px 0px 0px;}
+#header{margin: 10px 0 0 0; padding:0; text-align: left;}
+#close-image{ cursor: pointer;float: right;}
+#search-button{ cursor: pointer;background: url(../images/busqueda.png) no-repeat; margin: 0px;border:0px; height:32px; width:70px; padding:6px;}
