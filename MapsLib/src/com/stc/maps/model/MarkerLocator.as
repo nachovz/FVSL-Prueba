@@ -45,6 +45,8 @@ package com.stc.maps.model
 		
 		public function getMarkerComponent(name:String = "singleFlag",color:uint = 0x0000FF ,withLabel:Boolean = false,theText:String = "0"):Container{
 			var auxContainer:Container = new Container;
+			auxContainer.width = 25;
+			auxContainer.height = 32;
 			auxContainer.rawChildren.addChild(_theSWF['content'].getInstance(name ,color ,1 ));
 			if(withLabel){
 				var auxRawChildren:IChildList = auxContainer.rawChildren;

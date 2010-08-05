@@ -19,6 +19,7 @@ package com.stc.maps.view.components.map.specialmarkers
 	import flash.geom.Point;
 	import flash.utils.Timer;
 	
+	import mx.collections.ArrayCollection;
 	import mx.core.Application;
 	import mx.core.UIComponent;
 	import mx.events.EffectEvent;
@@ -28,6 +29,7 @@ package com.stc.maps.view.components.map.specialmarkers
 	public class GroupMarkers extends Marker
 	{
 		private var _allMakersGrouped:Array;
+		private var _allMakersGroupedEntityVO:Array;
 		private var _visibleAll:Boolean = false;
 		private var _time:Timer = new Timer(800,1);
 		private var _timeInfo:Timer = new Timer(800,1);
@@ -49,6 +51,12 @@ package com.stc.maps.view.components.map.specialmarkers
 		}
 		public function set allMarkers(value:Array):void{
 			_allMakersGrouped = value;
+		}
+		public function get allEntitys():Array{
+			return _allMakersGroupedEntityVO;
+		}
+		public function set allEntitys(value:Array):void{
+			_allMakersGroupedEntityVO = value;
 		}
 		
 		public function set visibleAll(value:Boolean):void{
@@ -149,7 +157,7 @@ package com.stc.maps.view.components.map.specialmarkers
 			event.stopImmediatePropagation();
 			closeKnowInfoPanel();
 			var listGroupedFlags:ListGroupedFlags = new ListGroupedFlags;
-			
+			listGroupedFlags.dataProvider = new ArrayCollection(_allMakersGrouped);
 			PopUpManager.addPopUp(listGroupedFlags,Application.application as DisplayObject);
 			PopUpManager.centerPopUp(listGroupedFlags);
 		}

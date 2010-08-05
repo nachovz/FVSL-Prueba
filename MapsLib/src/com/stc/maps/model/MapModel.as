@@ -152,7 +152,6 @@ package com.stc.maps.model
 			this.addEventListener(EntityRendererEvent.SHOW_ITEM,showMarker);
 			this.addEventListener(EntityRendererEvent.HIDE_NETWORK,hideNetwork);
 			this.addEventListener(EntityRendererEvent.SHOW_NETWORK,showNetwork);
-			mainMap.addEventListener(MapEvent.OVERLAY_ADDED,markerAdded,false,0,true);
 			mainMap.addEventListener(MapZoomEvent.ZOOM_CHANGED,onMapZoomChanged,false,0,true);
 			advancedSearch.addEventListener(AdvancedSearchEvent.SEARCH,advancedSearch_AdvancedSearchEvent,false,0,true);
 		}
@@ -164,12 +163,7 @@ package com.stc.maps.model
 				setAllMarkersOnTheMap();
 			}
 		}
-		
-		private function markerAdded(event:MapEvent):void{
-			if(event.feature is Marker){
-				trace("MARKER ADDED");
-			}
-		}
+	
 		
 		/**
 		 * We center the map to the given EntityVO
@@ -368,7 +362,9 @@ package com.stc.maps.model
 					tooltip:entity.title,  
 					name: entity.title,
 					icon: auxIcon,  
-					hasShadow:true 
+					hasShadow:true,
+					width:25,
+					height:32
 				});
 			
 			var pMarker:Marker = new Marker(latlang,markerOption);

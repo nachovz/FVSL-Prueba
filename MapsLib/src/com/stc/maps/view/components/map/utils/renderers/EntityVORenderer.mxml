@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" height="100%"
+		 verticalScrollPolicy="off" horizontalScrollPolicy="off"
+		 >
+	<mx:Script>
+		<![CDATA[
+			import com.google.maps.overlays.Marker;
+			import com.google.maps.overlays.MarkerOptions;
+			import com.stc.maps.model.MarkerLocator;
+			
+			import mx.core.Container;
+			import mx.core.IChildList;
+			import mx.events.FlexEvent;
+			private var markerLocator:MarkerLocator = MarkerLocator.getInstance();
+[Bindable]	private var _text:String = "";			
+			protected function myImage_creationCompleteHandler(event:FlexEvent):void
+			{
+				if(data is Marker){
+					var auxMarkerOption:MarkerOptions = data.getOptions();
+					myImage.addChild(auxMarkerOption.icon);
+					/* 
+					var auxRawChildren:IChildList = (auxMarkerOption.icon as Container).rawChildren;
+					var auxMC:MovieClip = MovieClip(auxRawChildren.getChildAt(0))
+					var myBitmapData:BitmapData = new BitmapData(80, 20, true, 0x000000);
+					myBitmapData.draw(auxMC);
+					var bmp:Bitmap = new Bitmap(myBitmapData);
+					myImage.source = bmp; 
+					*/
+					
+					if(_text.length<=0){
+						_text = data.getOptions().tooltip
+					}
+					
+					
+				}
+			}
+
+		]]>
+	</mx:Script>
+	<mx:Container width="20" height="28"  creationComplete="myImage_creationCompleteHandler(event)" >
+		<mx:VBox  width="20" height="28" verticalAlign="bottom" horizontalAlign="left" verticalGap="0">
+			<mx:Image id="myImage"  />
+		</mx:VBox>
+	</mx:Container>
+	<mx:VBox verticalScrollPolicy="off" horizontalScrollPolicy="off" height="100%" paddingRight="20">
+		<mx:Text id="myTitle" selectable="false" minWidth="100" maxWidth="400" height="100%" text="{(_text.length==0)?(data.getOptions().tooltip):(_text)}"/>
+	</mx:VBox>
+</mx:HBox>

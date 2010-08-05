@@ -34,14 +34,16 @@
     <classEntry path="com.stc.maps.view.components.event.EntityRendererListEvent"/>
     <classEntry path="com.stc.maps.view.components.map.Clusterer"/>
     <classEntry path="com.stc.maps.view.components.map.MapOverlayFunctions"/>
+    <classEntry path="com.stc.maps.view.components.map.mapplugins.InfoWindowWithEffects"/>
+    <classEntry path="com.stc.maps.view.components.map.mapplugins.MapToggleButtonBar"/>
+    <classEntry path="com.stc.maps.view.components.map.specialmarkers.GroupMarkers"/>
+    <classEntry path="com.stc.maps.view.components.map.specialmarkers.MarkerWithData"/>
+    <classEntry path="com.stc.maps.view.components.map.utils.ListGroupedFlags"/>
+    <classEntry path="com.stc.maps.view.components.map.utils.renderers.EntityVORenderer"/>
     <classEntry path="com.stc.maps.vo.EntityVO"/>
-    <classEntry path="com.stc.maps.vo.FilterOptionVO"/>
     <classEntry path="com.stc.maps.vo.FilterVO"/>
     <classEntry path="com.stc.maps.vo.FilterValueVO"/>
     <classEntry path="com.stc.maps.vo.NetworkVO"/>
-    <classEntry path="com.stc.maps.view.components.map.specialmarkers.GroupMarkers"/>
-    <classEntry path="com.stc.maps.view.components.map.mapplugins.MapToggleButtonBar"/>
-    <classEntry path="com.stc.maps.view.components.map.utils.ListGroupedFlags"/>
   </includeClasses>
   <includeResources>
     <resourceEntry destPath="com/assets/markers/3/cooperantes_small.png" sourcePath="com/assets/markers/3/cooperantes_small.png"/>

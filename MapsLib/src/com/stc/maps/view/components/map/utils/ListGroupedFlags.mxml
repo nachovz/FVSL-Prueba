@@ -8,12 +8,60 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import com.google.maps.Map;
+			import com.google.maps.MapMouseEvent;
+			import com.stc.maps.view.components.map.utils.renderers.EntityVORenderer;
+			
+			import mx.collections.ArrayCollection;
+			import mx.events.FlexEvent;
+			import mx.events.ListEvent;
 			import mx.managers.PopUpManager;
+			
+[Bindable]	private var _dataProvider:ArrayCollection = new ArrayCollection;
+			private var dataProviderChanged:Boolean = false;
+			[Bindable("dataProviderChanged")]
+			public function get dataProvider():ArrayCollection{
+				return _dataProvider;
+			}
+			public function set dataProvider(value:ArrayCollection):void{
+				if(value != _dataProvider){
+					_dataProvider = value;
+					dataProviderChanged = true;
+					invalidateProperties();
+					dispatchEvent(new Event("dataProviderChanged"));
+				}
+			}
+			
+			override protected function commitProperties():void{
+				super.commitProperties();
+				if (dataProviderChanged)
+				{
+					dataProviderChanged = false;
+					myList.dataProvider = _dataProvider;
+				}
+			}
+
+			
+			
+			
 			private function closeWindow(event : Event) : void
 			{
 				PopUpManager.removePopUp(this);
 			}
+
+			protected function myList_initializeHandler(event:FlexEvent):void
+			{
+				myList.itemRenderer=new ClassFactory(EntityVORenderer);
+			}
+
+
+			protected function myList_itemClickHandler(event:ListEvent):void
+			{
+				// TODO Auto-generated method stub
+				event.itemRenderer.data.dispatchEvent(new MapMouseEvent(MapMouseEvent.CLICK,event.itemRenderer.data.pane.map,event.itemRenderer.data.getLatLng()));
+			}
+
 		]]>
 	</mx:Script>
-	<mx:List height="100%" minWidth="300" />
+	<mx:List id="myList" rowHeight="40" height="100%" minHeight="100" maxWidth="500"  itemClick="myList_itemClickHandler(event)" initialize="myList_initializeHandler(event)"/>
 </mx:TitleWindow>
