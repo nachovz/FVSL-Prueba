@@ -18,7 +18,7 @@ package
 		private var t:Label;
 		private var f:DropShadowFilter = new DropShadowFilter(2,45,0x000000,0.5)
 		private var pathfLogo:DisplayObject;
-		private var bar:ProgressBar=new ProgressBar();
+		private var bar:Canvas =new Canvas;
 		private var mainColor:uint=0x00AEEF;
 		
 		private var type:String		= GradientType.LINEAR;
@@ -54,14 +54,17 @@ package
 			im.source= pathfLogo;
 			
 			//craate bar
+			bar.setStyle("trackHeight", 25);
 			bar.x = Application.application.width/2 /*- bar.width/2 */- pathfLogo.width/2 + 15;
-			bar.y = Application.application.height/2 - bar.height + pathfLogo.height/2- 7;
+			bar.y = Application.application.height/2 - bar.height + pathfLogo.height/2- 17;
 			addChild(bar);
 			
 			addChild(im); 
 			t = new Label()
-			t.y = pathfLogo.y +pathfLogo.height -28;
-			t.x = pathfLogo.x + pathfLogo.width/2 -45;
+			t.y = pathfLogo.y +pathfLogo.height -35;
+			t.x = pathfLogo.x + pathfLogo.width/2 -20;
+			t.setStyle("color",0x00AEEF);
+			t.setStyle("fontSize",12);
 			t.filters=[f];
 			addChild(t);
 		}
@@ -69,9 +72,19 @@ package
 		public function draw(fractionLoaded:Number):void
 		{
 			trace(fractionLoaded)
-			
 			t.text = int(fractionLoaded*100).toString()+"%";
-			bar.setProgress(fractionLoaded,1);
+			
+			pathfLogo.x = Application.application.width/2 - pathfLogo.width/2;
+			pathfLogo.y = Application.application.height/2 - pathfLogo.height/2;
+			
+			bar.setStyle("backgroundColor",0x00AEEF);
+			bar.x = Application.application.width/2 /*- bar.width/2 */- pathfLogo.width/2 + 15;
+			bar.y = Application.application.height/2 - bar.height + pathfLogo.height/2- 17;
+			bar.height = 15;
+			bar.width = 257*fractionLoaded;
+				
+			t.y = pathfLogo.y +pathfLogo.height -35;
+			t.x = pathfLogo.x + pathfLogo.width/2 -20;
 		}
 		
 	}

@@ -86,27 +86,27 @@ package
 			
 			//craate bar
 			bar = new Sprite();
-			bar.graphics.drawRoundRectComplex(0,0,280,15,12,12,12,12);
+			bar.graphics.drawRoundRectComplex(0,0,257,15,12,12,12,12);
 			bar.x = stageWidth/2 /*- bar.width/2 */- pathfLogo.width/2 + 15;
-			bar.y = stageHeight/2 - bar.height + pathfLogo.height/2- 7;
+			bar.y = stageHeight/2 - bar.height + pathfLogo.height/2- 16;
 			bar.filters = [f];
 			addChild(bar);
 			
 			//create bar frame
 			barFrame = new Sprite();
 			barFrame.graphics.lineStyle(2,0xFFFFFF,1)
-			barFrame.graphics.drawRoundRectComplex(0,0,280,15,12,12,12,12);
+			barFrame.graphics.drawRoundRectComplex(0,0,257,15,12,12,12,12);
 			barFrame.graphics.endFill();
-			barFrame.x = stageWidth/2 /*- barFrame.width/2 */- pathfLogo.width/2+15;
-			barFrame.y = stageHeight/2 - barFrame.height + pathfLogo.height/2 - 7;
+			barFrame.x = stageWidth/2 /*- barFrame.width/2 */- pathfLogo.width/2+15; 
+			barFrame.y = stageHeight/2 - barFrame.height + pathfLogo.height/2 - 16;
 			barFrame.filters = [f];
 			addChild(barFrame);
 			
 			addChild(pathfLogo); 
 			//create text field to show percentage of loading
 			t = new TextField()
-			t.y = pathfLogo.y +pathfLogo.height -28;
-			t.x = pathfLogo.x + pathfLogo.width/2 -45;
+			t.y = pathfLogo.y +pathfLogo.height -35;
+			t.x = pathfLogo.x + pathfLogo.width/2 -75;
 			t.textColor = 0x00AEEF;
 			t.filters=[f];
 			addChild(t);
