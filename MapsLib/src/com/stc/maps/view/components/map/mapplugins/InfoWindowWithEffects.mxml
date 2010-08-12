@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow 
+<mx:Canvas 
 	xmlns:mx="http://www.adobe.com/2006/mxml" 
 	creationCompleteEffect="{creationCompleteEffect}" 
 	hideEffect="{hideEffect}"
@@ -55,4 +55,4 @@
 		<mx:Image source="{zoomClass}" click="button1_clickHandler(event)" />
 		<mx:Image source="{listaClass}" click="button2_clickHandler(event)"/>
 	</mx:HBox>
-</mx:TitleWindow>
+</mx:Canvas>
