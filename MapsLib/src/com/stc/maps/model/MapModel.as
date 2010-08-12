@@ -110,7 +110,7 @@ package com.stc.maps.model
 		/**
 		 * All the layers are being displayed on runtime in the application.
 		 */
-		private var selectedentityList : Array = [EntityVO.COOPERANT,EntityVO.ODS,EntityVO.NETWORK];
+		private var selectedentityList : Array = [EntityVO.COOPERANT,EntityVO.ODS,EntityVO.COMPANY,EntityVO.NETWORK];
 		
 		
 		/**
@@ -189,6 +189,9 @@ package com.stc.maps.model
 			getCooperantes = new EntitiesEvent(EntitiesEvent.GET_ENTITY_LIST,getEntitiesHandlers);
 			getCooperantes.entityType = EntityVO.NETWORK;
 			getCooperantes.dispatch();
+			getCooperantes = new EntitiesEvent(EntitiesEvent.GET_ENTITY_LIST,getEntitiesHandlers);
+			getCooperantes.entityType = EntityVO.COMPANY;
+			getCooperantes.dispatch();	
 		}
 		
 		/**

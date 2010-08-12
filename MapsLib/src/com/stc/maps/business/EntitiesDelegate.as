@@ -27,7 +27,7 @@ package com.stc.maps.business
 			switch(event.entityType)
 			{
 				case EntityVO.NETWORK:
-					//getAllNetworks();
+					getAllNetworks();
 				break;
 				default:
 					getAllEntities(event.entityType);
@@ -65,9 +65,9 @@ package com.stc.maps.business
 
 		private function getAllNetworks() : void
 		{
-            //_service = ServiceLocator.getInstance().getWebService("networkWS");
-			//var token:AsyncToken = this._service.GetAllNetworks();
-			//token.addResponder(this.responder);
+            _service = ServiceLocator.getInstance().getWebService("networkWS");
+			var token:AsyncToken = this._service.getN("all");
+			token.addResponder(this.responder);
 		}
 
 	}

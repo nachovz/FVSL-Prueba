@@ -8,6 +8,8 @@ package com.stc.maps.command
 	import com.universalmind.cairngorm.commands.Command;
 	
 	import mx.collections.ArrayCollection;
+	import mx.controls.Alert;
+	import mx.rpc.events.FaultEvent;
 	
 	public class CatalogCommand extends Command
 	{
@@ -45,7 +47,7 @@ package com.stc.maps.command
 
 		override public function fault(info : Object):void
 		{
-			//Alert.show("Login service not available. Try again later.");
+			Alert.show("Error obteniendo el catalogo"+info.message);
 		}
 		
 		private function processCatalog(entitiesArray : ArrayCollection) : ArrayCollection

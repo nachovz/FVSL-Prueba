@@ -13,7 +13,7 @@ package com.stc.maps.vo
 		
 		public var id : Number = 0;
 		public var keyName : String = "";
-		public var idDepentency : String = "";
+		public var idDepentency : int = -1;
 		public var label : String = "";
 		public var type : String = "";
 		public var options : ArrayCollection;

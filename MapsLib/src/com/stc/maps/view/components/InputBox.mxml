@@ -179,6 +179,11 @@
 		   	{
 		   		Alert.show("A ocurrido un error trayendo los datos de la entidad.");
 		   	}	
+		   	
+		   	public function myLabelFunc(item:Object) : String 
+		   	{
+            	return item.area; 
+      		}
 		]]>
 	</mx:Script>
 	<mx:Resize id="resizeEffect" target="{this}" heightFrom="190" heightTo="470" duration="500" />
@@ -213,7 +218,7 @@
 			</mx:HBox>
 			<mx:HBox horizontalAlign="left">
 				<mx:Label width="150" text="Areas de intervención:"/>
-				<mx:List width="420" height="50" dataProvider="{areas}" />
+				<mx:List width="420" height="50" dataProvider="{areas}" labelFunction="myLabelFunc" />
 			</mx:HBox>
 			<mx:HBox horizontalAlign="left">
 				<mx:Label width="150" text="Tipo de organizacion:"/>

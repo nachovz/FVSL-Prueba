@@ -82,6 +82,7 @@ package com.stc.maps.view.components
 			addChild(content);
 			
 			content.percentWidth = 100;
+			content.percentHeight = 100;
 			
             showSearch.buttonMode       = true;
             showSearch.useHandCursor = true;
@@ -196,7 +197,7 @@ package com.stc.maps.view.components
 				case FilterVO.COMBO:
 					var cmb : ComboBox = new ComboBox();
 					cmb.percentWidth = 80;
-					cmb.dataProvider = catalogManager.getCatalog(filt.keyName);
+					cmb.dataProvider = catalogManager.getCatalog(filt.keyName,filt.idDepentency);
 					wraper.addChild(cmb);
 					formItems.push(cmb);
 					return wraper;
@@ -212,7 +213,7 @@ package com.stc.maps.view.components
 				case FilterVO.MULTIPLE:
 					var mult : MultiselectRenderer = new MultiselectRenderer();
 					mult.labelOption = filt.label;
-					mult.dataProvider = catalogManager.getCatalog(filt.keyName);
+					mult.dataProvider = catalogManager.getCatalog(filt.keyName,filt.idDepentency);
 					mult.percentWidth = 80;
 					formItems.push(mult);
 					return mult;
@@ -240,7 +241,7 @@ package com.stc.maps.view.components
 				break;
 				case FilterVO.YESNO:
 					var cmb : ComboBox = ComboBox(renderer);
-					return cmb.selectedItem;
+					return cmb.selectedItem.id;
 				break;
 				case FilterVO.MULTIPLE:
 					var mult : MultiselectRenderer = MultiselectRenderer(renderer);

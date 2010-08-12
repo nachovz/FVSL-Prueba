@@ -13,6 +13,7 @@ package com.stc.maps.vo
 		public static const TYPES : String = "types";
 		public static const STATES : String = "states";
 		public static const BENEFICIARIES : String = "beneficiaries";
+		public static const AREAS : String = "areas";
 		
 		public var id : Number = 0;
 		public var label : String = "";
