@@ -11,6 +11,7 @@
 			import mx.core.Container;
 			import mx.core.IChildList;
 			import mx.events.FlexEvent;
+			
 			private var markerLocator:MarkerLocator = MarkerLocator.getInstance();
 [Bindable]	private var _text:String = "";			
 			protected function myImage_creationCompleteHandler(event:FlexEvent):void

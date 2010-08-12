@@ -12,6 +12,13 @@
 	<mx:Script>
 		<![CDATA[
 			import mx.events.FlexEvent;
+			
+			[Bindable]
+			[Embed(source="com/assets/img/zoom.png")]
+			private var zoomClass:Class;
+			[Bindable]
+			[Embed(source="com/assets/img/verlista.png")]
+			private var listaClass:Class;
 			public static var ZOOM_IN:String = "ZoomInPlease";
 			public static var LIST_GROUPED_FLAGS:String = "ListGroupedFlag";
 			
@@ -45,7 +52,7 @@
 		<mx:Fade alphaFrom="1" alphaTo="0" duration="500" />
 	</mx:Parallel>
 	<mx:HBox >
-		<mx:Button label="Zoom In" click="button1_clickHandler(event)" />
-		<mx:Button label="List Flags"  click="button2_clickHandler(event)"/>
+		<mx:Image source="{zoomClass}" click="button1_clickHandler(event)" />
+		<mx:Image source="{listaClass}" click="button2_clickHandler(event)"/>
 	</mx:HBox>
 </mx:TitleWindow>
