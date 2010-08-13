@@ -26,14 +26,11 @@ package com.stc.maps.business
 			token.addResponder(this.responder);
 		}
 		
-		public function searchNetwork(values : ArrayCollection) : void
+		public function searchNetwork(event : SearchEvent, params : ArrayCollection) : void
 		{
-			//var pais : int = Number(getValueByName(values,CatalogValueVO.COUNTRIES).value);
-			//var nombreNetwork : String = "%"+getValueByName(values,"name").value.toString()+"%";
-			
-            //_service = ServiceLocator.getInstance().getWebService("networkWS");
-			//var token:AsyncToken = this._service.searchNetworks(nombreNetwork,pais);
-			//token.addResponder(this.responder);
+            _service = ServiceLocator.getInstance().getWebService("networkWS");
+			var token:AsyncToken = this._service.getSearch("all",params);
+			token.addResponder(this.responder);
 		}
 
 		

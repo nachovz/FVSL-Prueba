@@ -182,7 +182,10 @@
 		   	
 		   	public function myLabelFunc(item:Object) : String 
 		   	{
-            	return item.area; 
+		   		if(item is String)
+            		return item as String; 
+
+        		return item.area; 
       		}
 		]]>
 	</mx:Script>

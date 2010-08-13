@@ -28,7 +28,7 @@ package com.stc.maps.business
 					arrayEntities = cooperantFilters();
 				break;
 				case EntityVO.COMPANY:
-					arrayEntities = null;
+					arrayEntities = companyFilters();
 				break;
 				case EntityVO.ODS:
 					arrayEntities = odsFilters();
@@ -95,6 +95,13 @@ package com.stc.maps.business
 			aux.type = FilterVO.YESNO;
 			aux.keyName = CatalogValueVO.FINANCY;
 			aux.label = "Financiamiento a terceros";
+			arrayFilters.addItem(aux);
+
+			aux = new FilterVO();
+			aux.id = 1;
+			aux.type = FilterVO.COMBO;
+			aux.keyName = CatalogValueVO.APPROACHES;
+			aux.label = "Enfoque geografico";
 			arrayFilters.addItem(aux);
 			
 			return arrayFilters;
@@ -166,21 +173,20 @@ package com.stc.maps.business
 			aux.type = FilterVO.TEXT;
 			aux.keyName = "name";
 			aux.label = "Nombre";
-			arrayFilters.addItem(aux);
-			
+			arrayFilters.addItem(aux);		
+
 			aux = new FilterVO();
 			aux.id = 1;
-			aux.type = FilterVO.MULTIPLE;
-			aux.keyName = CatalogValueVO.AREAS;
-			aux.label = "Areas de intervencion";
-			arrayFilters.addItem(aux);
-			
+			aux.type = FilterVO.YESNO;
+			aux.keyName = CatalogValueVO.FINANCY;
+			aux.label = "Financiamiento a terceros";
+			arrayFilters.addItem(aux);	
+
 			aux = new FilterVO();
 			aux.id = 1;
-			aux.type = FilterVO.MULTIPLE;
-			aux.keyName = CatalogValueVO.AWARDS;
-			aux.idDepentency = 2;
-			aux.label = "Premios";
+			aux.type = FilterVO.COMBO;
+			aux.keyName = CatalogValueVO.APPROACHES;
+			aux.label = "Enfoque geografico";
 			arrayFilters.addItem(aux);
 			
 			return arrayFilters;
@@ -195,6 +201,13 @@ package com.stc.maps.business
 			aux.type = FilterVO.COMBO;
 			aux.keyName = CatalogValueVO.COUNTRIES;
 			aux.label = "Pais";
+			arrayFilters.addItem(aux);
+			
+			var aux : FilterVO = new FilterVO();
+			aux.id = 1;
+			aux.type = FilterVO.COMBO;
+			aux.keyName = CatalogValueVO.STATES;
+			aux.label = "Estado";
 			arrayFilters.addItem(aux);
 			
 			aux = new FilterVO();

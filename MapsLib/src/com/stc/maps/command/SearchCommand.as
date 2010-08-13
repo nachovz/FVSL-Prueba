@@ -26,13 +26,16 @@ package com.stc.maps.command
             switch(SearchEvent(event).entityType)
             {
 				case EntityVO.NETWORK:
-				    searchNetworks(SearchEvent(event));
+				    searchNetwork(SearchEvent(event));
 				break;
 				case EntityVO.COOPERANT:
 				    searchCooperant(SearchEvent(event));
 				break;
 				case EntityVO.ODS:
 				    searchODS(SearchEvent(event));
+				break;
+				case EntityVO.COMPANY:
+				    searchCompany(SearchEvent(event));
 				break;
 				default:
 				break;
@@ -65,6 +68,35 @@ package com.stc.maps.command
 			//array[5] = 1;
 			//financiamiento
 			array[6] = getValueByName(values,CatalogValueVO.FINANCY).value.toString();
+			//array[6] = 0;
+			//enfoque
+			//array[7] = getValueByName(values,CatalogValueVO.FINANCY).value.toString();
+			array[7] = "1";
+			var params : ArrayCollection = new ArrayCollection(array);
+			
+			var delegate : SearchDelegate = new SearchDelegate(this,"ParticipantService");
+			delegate.searchEntity(event,params);
+		}
+
+		private function searchCompany(event : SearchEvent):void
+		{
+			var values : ArrayCollection = event.filterVaues;
+			var array : Array = [];
+			//pais
+			array[0] = getValueByName(values,CatalogValueVO.COUNTRIES).value.toString();
+			//enfoque
+			//array[1] = getValueByName(values,CatalogValueVO.APPROACHES).value) as Number;
+			//array[0] = 3;
+			//estado
+			//array[1] = Number(getValueByName(values,CatalogValueVO.STATES).value);
+			array[1] = "-1";
+			//nombre
+			array[2] = getValueByName(values,"name").value.toString();
+			//array[2] = "is";
+			//financiamiento
+			array[3] = getValueByName(values,CatalogValueVO.FINANCY).value.toString();
+			//enfoque
+			array[4] = getValueByName(values,CatalogValueVO.APPROACHES).value.toString();
 			//array[6] = 0;
 			var params : ArrayCollection = new ArrayCollection(array);
 			
@@ -105,6 +137,27 @@ package com.stc.maps.command
 			delegate.searchEntity(event,params);
 		}
 
+		private function searchNetwork(event : SearchEvent):void
+		{
+			var values : ArrayCollection = event.filterVaues;
+			var array : Array = [];
+			//pais
+			array[0] = getValueByName(values,CatalogValueVO.COUNTRIES).value.toString();
+			//enfoque
+			//array[1] = getValueByName(values,CatalogValueVO.APPROACHES).value) as Number;
+			//array[0] = 3;
+			//estado
+			//array[1] = Number(getValueByName(values,CatalogValueVO.STATES).value);
+			array[1] = "-1";
+			//anombreCoop
+			array[2] = getValueByName(values,"name").value.toString();
+			//array[2] = "is";
+			var params : ArrayCollection = new ArrayCollection(array);
+			
+			var delegate : SearchDelegate = new SearchDelegate(this,"ParticipantService");
+			delegate.searchNetwork(event,params);
+		}
+
 		private function searchTest(event : SearchEvent):void
 		{
 			var values : ArrayCollection = event.filterVaues;
@@ -129,12 +182,6 @@ package com.stc.maps.command
 			
 			var delegate : SearchDelegate = new SearchDelegate(this,"ParticipantService");
 			delegate.searchEntity(event,params);
-		}
-		
-		private function searchNetworks(event : SearchEvent):void
-		{
-			var delegate : SearchDelegate = new SearchDelegate(this,"ParticipantService");
-			delegate.searchNetwork(event.filterVaues);
 		}
 
 		override public function result(data : Object):void
