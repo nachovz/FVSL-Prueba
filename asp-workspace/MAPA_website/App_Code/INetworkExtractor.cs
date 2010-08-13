@@ -9,21 +9,16 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
+using System.Collections.Generic;
+
 
 /// <summary>
-/// Summary description for dynamicLINQ
+/// Summary description for INetworkExtractor
 /// </summary>
-public class dynamicLINQ
+public interface INetworkExtractor
 {
-    public int id_ods { get; set; }
-    public String nombre { get; set; }
-    public String Latitud { get; set; }
-    public String Longitud { get; set; }
+    List<NetworkVO> getN();
+    List<NetworkVO> getSearch(List<String> lista);
+    NetworkVO getDetails(int padre);
 
-	public dynamicLINQ()
-	{
-		//
-		// TODO: Add constructor logic here
-		//
-	}
 }

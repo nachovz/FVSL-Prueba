@@ -11,16 +11,16 @@ using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 
 /// <summary>
-/// Summary description for dynamicLINQ
+/// Summary description for dynamicLINQE
 /// </summary>
-public class dynamicLINQ
+public class dynamicLINQE
 {
-    public int id_ods { get; set; }
+    public int id { get; set; }
     public String nombre { get; set; }
-    public String Latitud { get; set; }
     public String Longitud { get; set; }
+    public String Latitud { get; set; }
 
-	public dynamicLINQ()
+	public dynamicLINQE()
 	{
 		//
 		// TODO: Add constructor logic here

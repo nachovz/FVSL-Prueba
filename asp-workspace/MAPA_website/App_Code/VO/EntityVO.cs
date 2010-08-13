@@ -9,6 +9,7 @@ using System.Xml.Serialization;
 /// </summary>
 [XmlInclude(typeof(ODSVO))]
 [XmlInclude(typeof(CooperantVO))]
+[XmlInclude(typeof(CompanyVO))]
 public class EntityVO 
 {
     public String type = "";

@@ -6,15 +6,15 @@ using System.Collections.Generic;
 /// <summary>
 /// Summary description for EnterpriseVO
 /// </summary>
-public class EnterpriseVO : EntityVO
+public class CompanyVO : EntityVO
 {
     public List<AwardVO> awards;
-    public List<String> areas;
+    public List<AreaVO> areas;
     public List<String> beneficiarios;
     public String enfoque;
     public String tipoOrganizacion;
 
-	public EnterpriseVO()
+	public CompanyVO()
 	{
 		//
 		// TODO: Add constructor logic here

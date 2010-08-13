@@ -23,12 +23,8 @@ public class Catalog : System.Web.Services.WebService {
     }
 
     [WebMethod]
-    public string HelloWorld() {
-        return "Hello World";
-    }
+    public List<CataloValueVO> getCatalog(String catalogo, int p) {
 
-    [WebMethod]
-    public List<CataloValueVO> getCatalog(String catalogo,String de, int p) {
-        return CatalogExtractor.create(catalogo).getCatalog(de, p);
+        return CatalogExtractor.create(catalogo).getCatalog(p);
     }
 }

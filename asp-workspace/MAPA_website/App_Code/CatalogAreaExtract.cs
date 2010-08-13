@@ -12,11 +12,11 @@ using System.Xml.Linq;
 using System.Collections.Generic;
 
 /// <summary>
-/// Summary description for CatalogTipoOrgExtract
+/// Summary description for CatalogAreaExtract
 /// </summary>
-public class CatalogTipoOrgExtract : ICatalogExtractor
+public class CatalogAreaExtract : ICatalogExtractor
 {
-	public CatalogTipoOrgExtract()
+	public CatalogAreaExtract()
 	{
 		//
 		// TODO: Add constructor logic here
@@ -34,14 +34,14 @@ public class CatalogTipoOrgExtract : ICatalogExtractor
         try
         {
 
-            List<MAPA_GET_CATALOGO_TIPO_ORGANIZACIONResult> resultset = dbcon.MAPA_GET_CATALOGO_TIPO_ORGANIZACION().ToList();
+            List<MAPA_GET_CATALOGO_AREAS_INTERVENCIONResult> resultset = dbcon.MAPA_GET_CATALOGO_AREAS_INTERVENCION().ToList();
 
-            foreach (MAPA_GET_CATALOGO_TIPO_ORGANIZACIONResult tiporg in resultset)
+            foreach (MAPA_GET_CATALOGO_AREAS_INTERVENCIONResult benef in resultset)
             {
                 CataloValueVO catalo = new CataloValueVO();
 
-                catalo.id = tiporg.ID_T;
-                catalo.value = tiporg.NOM;
+                catalo.id = benef.Id;
+                catalo.value = benef.Nombre;
 
                 lista.Add(catalo);
             }

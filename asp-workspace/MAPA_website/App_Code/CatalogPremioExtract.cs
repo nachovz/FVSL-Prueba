@@ -25,25 +25,34 @@ public class CatalogPremioExtract : ICatalogExtractor
 
     #region ICatalogExtractor Members
 
-    public List<CataloValueVO> getCatalog(String type, int padre)
+    public List<CataloValueVO> getCatalog(int padre)
     {
         FVSL_LINQDataContext dbcon = new FVSL_LINQDataContext();
 
         List<CataloValueVO> lista = new List<CataloValueVO>();
 
-        List<mapa_get_catalogo_premiosResult> resultset = dbcon.mapa_get_catalogo_premios(type).ToList();
-
-        foreach (mapa_get_catalogo_premiosResult premio in resultset)
+        try
         {
-            CataloValueVO catalo = new CataloValueVO();
 
-            catalo.id = premio.id;
-            catalo.value = premio.nombre;
+            List<mapa_get_catalogo_premiosResult> resultset = dbcon.mapa_get_catalogo_premios(padre).ToList();
 
-            lista.Add(catalo);
+            foreach (mapa_get_catalogo_premiosResult premio in resultset)
+            {
+                CataloValueVO catalo = new CataloValueVO();
+
+                catalo.id = premio.id;
+                catalo.value = premio.nombre;
+
+                lista.Add(catalo);
+            }
+
+            return lista;
         }
-
-        return lista;
+        catch (Exception e)
+        {
+            Logging.WriteError(e.StackTrace.ToString());
+            return null;
+        }
     }
 
     #endregion

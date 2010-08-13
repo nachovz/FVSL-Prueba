@@ -203,24 +203,6 @@
       <Column Name="areaintervencion" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
-  <Function Name="dbo.MAPA_SEARCH_COOP_BY" Method="MAPA_SEARCH_COOP_BY">
-    <Parameter Name="idEstado" Type="System.Int32" DbType="Int" />
-    <Parameter Name="nombre" Type="System.String" DbType="VarChar(8000)" />
-    <Parameter Name="tipoOrg" Type="System.Int32" DbType="Int" />
-    <Parameter Name="fat" Type="System.Int32" DbType="Int" />
-    <Parameter Name="area_intervencion" Type="System.String" DbType="VarChar(8000)" />
-    <Parameter Name="enfoque_geografico" Type="System.Int32" DbType="Int" />
-    <Parameter Name="premios" Type="System.String" DbType="VarChar(8000)" />
-    <Return Type="System.Int32" />
-  </Function>
-  <Function Name="dbo.MAPA_SEARCH_ODS_BY" Method="MAPA_SEARCH_ODS_BY">
-    <Parameter Name="idPais" Type="System.Int32" DbType="Int" />
-    <Parameter Name="idEstado" Type="System.Int32" DbType="Int" />
-    <Parameter Name="nombre" Type="System.String" DbType="VarChar(8000)" />
-    <Parameter Name="area_intervencion" Type="System.String" DbType="VarChar(8000)" />
-    <Parameter Name="premios" Type="System.String" DbType="VarChar(8000)" />
-    <Return Type="System.Int32" />
-  </Function>
   <Function Name="dbo.MAPA_EMP_ALL" Method="MAPA_EMP_ALL">
     <ElementType Name="MAPA_EMP_ALLResult">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
@@ -249,23 +231,151 @@
       <Column Name="Nombre" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
     </ElementType>
   </Function>
-  <Function Name="dbo.mapa_get_catalogo_premios" Method="mapa_get_catalogo_premios">
-    <Parameter Name="tipo_s" Type="System.String" DbType="VarChar(20)" />
-    <ElementType Name="mapa_get_catalogo_premiosResult">
-      <Column Name="nombre" Type="System.String" DbType="NVarChar(250) NOT NULL" CanBeNull="false" />
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-    </ElementType>
-  </Function>
   <Function Name="dbo.mapa_get_catalogo_beneficiario" Method="mapa_get_catalogo_beneficiario">
     <ElementType Name="mapa_get_catalogo_beneficiarioResult">
       <Column Name="Nombre" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
+  <Function Name="dbo.MAPA_GET_CATALOGO_ENFOQUE_GEOGRAFICO" Method="MAPA_GET_CATALOGO_ENFOQUE_GEOGRAFICO">
+    <ElementType Name="MAPA_GET_CATALOGO_ENFOQUE_GEOGRAFICOResult">
+      <Column Name="id" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.mapa_get_catalogo_premios" Method="mapa_get_catalogo_premios">
+    <Parameter Name="tipo_s" Type="System.Int32" DbType="Int" />
+    <ElementType Name="mapa_get_catalogo_premiosResult">
+      <Column Name="nombre" Type="System.String" DbType="NVarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.MAPA_GET_CATALOGO_AREAS_INTERVENCION" Method="MAPA_GET_CATALOGO_AREAS_INTERVENCION">
+    <ElementType Name="MAPA_GET_CATALOGO_AREAS_INTERVENCIONResult">
+      <Column Name="Id" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.mapa_get_catalogo_paises" Method="mapa_get_catalogo_paises">
+    <ElementType Name="mapa_get_catalogo_paisesResult">
+      <Column Name="Id" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.MAPA_GET_CATALOGO_ESTADOS" Method="MAPA_GET_CATALOGO_ESTADOS">
+    <Parameter Name="id_pais" Type="System.Int32" DbType="Int" />
+    <ElementType Name="MAPA_GET_CATALOGO_ESTADOSResult">
+      <Column Name="Id" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.mapa_search_ods_by" Method="mapa_search_ods_by">
+    <Parameter Name="idPais" Type="System.Int32" DbType="Int" />
+    <Parameter Name="idEstado" Type="System.Int32" DbType="Int" />
+    <Parameter Name="nombre" Type="System.String" DbType="VarChar(8000)" />
+    <Parameter Name="area_intervencion" Type="System.String" DbType="VarChar(8000)" />
+    <Parameter Name="premios" Type="System.String" DbType="VarChar(8000)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.mapa_search_empresas_by" Method="mapa_search_empresas_by">
+    <Parameter Name="idPais" Type="System.Int32" DbType="Int" />
+    <Parameter Name="idEstado" Type="System.Int32" DbType="Int" />
+    <Parameter Name="nombre" Type="System.String" DbType="VarChar(8000)" />
+    <Parameter Name="fat" Type="System.Int32" DbType="Int" />
+    <Parameter Name="enfoque_geografico" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.MAPA_SEARCH_COOP_BY" Method="MAPA_SEARCH_COOP_BY">
+    <Parameter Name="idPais" Type="System.Int32" DbType="Int" />
+    <Parameter Name="idEstado" Type="System.Int32" DbType="Int" />
+    <Parameter Name="nombre" Type="System.String" DbType="VarChar(8000)" />
+    <Parameter Name="tipoOrg" Type="System.Int32" DbType="Int" />
+    <Parameter Name="fat" Type="System.Int32" DbType="Int" />
+    <Parameter Name="area_intervencion" Type="System.String" DbType="VarChar(8000)" />
+    <Parameter Name="enfoque_geografico" Type="System.Int32" DbType="Int" />
+    <Parameter Name="premios" Type="System.String" DbType="VarChar(8000)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.MAPA_GET_AREA" Method="MAPA_GET_AREA">
+    <Parameter Name="type" Type="System.Int32" DbType="Int" />
+    <Parameter Name="id_type" Type="System.Int32" DbType="Int" />
+    <ElementType Name="MAPA_GET_AREAResult">
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.mapa_get_network_comp" Method="mapa_get_network_comp">
+    <ElementType Name="mapa_get_network_compResult">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(1024) NOT NULL" CanBeNull="false" />
+      <Column Name="Latitud" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Longitud" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.mapa_get_network_coop" Method="mapa_get_network_coop">
+    <ElementType Name="mapa_get_network_coopResult">
+      <Column Name="id_coperante" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="NVarChar(1024)" CanBeNull="true" />
+      <Column Name="Latitud" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Longitud" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.mapa_get_network_ods" Method="mapa_get_network_ods">
+    <ElementType Name="mapa_get_network_odsResult">
+      <Column Name="id_ods" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="VarChar(1024) NOT NULL" CanBeNull="false" />
+      <Column Name="Latitud" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Longitud" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.mapa_search_network_emp_by" Method="mapa_search_network_emp_by">
+    <Parameter Name="idPais" Type="System.Int32" DbType="Int" />
+    <Parameter Name="estado" Type="System.Int32" DbType="Int" />
+    <Parameter Name="nombre" Type="System.String" DbType="VarChar(8000)" />
+    <ElementType Name="mapa_search_network_emp_byResult">
+      <Column Name="id_anfitriona" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="id_invitada" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="nombre" Type="System.String" DbType="VarChar(1024) NOT NULL" CanBeNull="false" />
+      <Column Name="latitud" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="longitud" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.mapa_search_network_ods_by" Method="mapa_search_network_ods_by">
+    <Parameter Name="idPais" Type="System.Int32" DbType="Int" />
+    <Parameter Name="estado" Type="System.Int32" DbType="Int" />
+    <Parameter Name="nombre" Type="System.String" DbType="VarChar(8000)" />
+    <ElementType Name="mapa_search_network_ods_byResult">
+      <Column Name="id_anfitriona" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="id_invitada" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="nombre" Type="System.String" DbType="VarChar(1024) NOT NULL" CanBeNull="false" />
+      <Column Name="latitud" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="longitud" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.mapa_search_network_cooperantes_by" Method="mapa_search_network_cooperantes_by">
+    <Parameter Name="idPais" Type="System.Int32" DbType="Int" />
+    <Parameter Name="estado" Type="System.Int32" DbType="Int" />
+    <Parameter Name="nombre" Type="System.String" DbType="VarChar(8000)" />
+    <ElementType Name="mapa_search_network_cooperantes_byResult">
+      <Column Name="id_anfitriona" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="nombre" Type="System.String" DbType="NVarChar(1024)" CanBeNull="true" />
+      <Column Name="latitud" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="longitud" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.mapa_get_network_nodes" Method="mapa_get_network_nodes">
+    <Parameter Name="tipo" Type="System.Int32" DbType="Int" />
+    <Parameter Name="id_casa" Type="System.Int32" DbType="Int" />
+    <ElementType Name="mapa_get_network_nodesResult">
+      <Column Name="id_invitada" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="nombre" Type="System.String" DbType="NVarChar(1024)" CanBeNull="true" />
+      <Column Name="latitud" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="longitud" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+    </ElementType>
+  </Function>
   <Function Name="dbo.MAPA_GET_CATALOGO_TIPO_ORGANIZACION" Method="MAPA_GET_CATALOGO_TIPO_ORGANIZACION">
     <ElementType Name="MAPA_GET_CATALOGO_TIPO_ORGANIZACIONResult">
-      <Column Name="id" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
-      <Column Name="nombre" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_T" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOM" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
 </Database>

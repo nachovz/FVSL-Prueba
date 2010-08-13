@@ -34,7 +34,16 @@ public class Entity : System.Web.Services.WebService {
     [WebMethod]
     //public EntityVO getSearch(String type, int idpais, int idestado, string nombre, string area, string premios) {
     public List<EntityVO> getSearch(String type, List<String> datos) {
-        return EntityExtractor.create(type).getSearch(datos);
+
+        if (datos.Count >= 5)
+        {
+            return EntityExtractor.create(type).getSearch(datos);
+        }
+        else
+        {
+            Logging.WriteError("Los datos de entrada fueron insuficientes");
+            return null;
+        } 
         
     }
     /*[WebMethod]

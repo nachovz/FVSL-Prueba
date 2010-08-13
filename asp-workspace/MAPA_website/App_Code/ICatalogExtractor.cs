@@ -16,6 +16,6 @@ using System.Collections.Generic;
 /// </summary>
 public interface ICatalogExtractor
 {
-    List<CataloValueVO> getCatalog(String type, int padre);
+    List<CataloValueVO> getCatalog(int padre);
 
 }

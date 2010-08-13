@@ -28,20 +28,26 @@ public class ODSextract: IEntityExtractor
     public EntityVO getDetails(int inods)
     {
         FVSL_LINQDataContext dbcon = new FVSL_LINQDataContext();                //Create LINQ-SQL connection
-
-        //List<ODS_ODS> resultset = dbcon.MAPA_ODS_DETAILS(inods).ToList();       //Create ODS_ODS List AND assign SPROC result
-        //ISingleResult<ODS_ODS> resultset = dbcon.MAPA_ODS_DETAILS(inods); ;
-        ODSVO result = new ODSVO();                                 //Create Return list
-        List<ODS_ODS> resultset = dbcon.MAPA_ODS_DETAILS(inods).ToList(); 
-
-        //EntityVO ent = new EntityVO();
-            
-        if (resultset.Count == 1){  
-            result = FODS(resultset[0]);
-        }
-
         
-        return (EntityVO)result;
+        ODSVO result = new ODSVO();
+
+        try
+        {
+
+            List<ODS_ODS> resultset = dbcon.MAPA_ODS_DETAILS(inods).ToList();
+
+            if (resultset.Count == 1)
+            {
+                result = FODS(resultset[0]);
+            }
+
+            return (EntityVO)result;
+        }
+        catch (Exception e)
+        {
+            Logging.WriteError(e.StackTrace.ToString());
+            return null;
+        }
     }
 
     public List<EntityVO> getSearch(List<String> datos)                           //getSearch in:List<String> (int idpais, int idestado, string nombre, string area, string premios)
@@ -50,33 +56,30 @@ public class ODSextract: IEntityExtractor
 
         List<EntityVO> lista = new List<EntityVO>();
 
-        ISingleResult<dynamicLINQ> resultset = dbcon.MAPA_SEARCH_ODS_BY(int.Parse(datos[0]), int.Parse(datos[1]), datos[2], datos[3], datos[4]);
-
-        foreach (dynamicLINQ dyn in resultset)
+        try
         {
-        //dynamicLINQ dyn = new dynamicLINQ();
 
-        //if(resultset.Count().Equals(1)){
-            EntityVO EVO = new EntityVO();
+            ISingleResult<dynamicLINQ> resultset = dbcon.MAPA_SEARCH_ODS_BY(int.Parse(datos[0]), int.Parse(datos[1]), datos[2], datos[3], datos[4]);
 
-            /*EVO.id = resultset.ElementAt(0).id_ods.ToString();
-            EVO.name = resultset.ElementAt(0).nombre;
-            EVO.latitude = resultset.ElementAt(0).latitud.ToString();
-            EVO.longitude = resultset.ElementAt(0).longitud.ToString();
-            */
-            EVO.id = dyn.id_ods.ToString();
-            EVO.name = dyn.nombre;
-            EVO.latitude = dyn.latitud.ToString();
-            EVO.longitude = dyn.longitud.ToString();
-            
-            lista.Add(EVO);
-            //return EVO;
+            foreach (dynamicLINQ dyn in resultset)
+            {
+                EntityVO EVO = new EntityVO();
+
+                EVO.id = dyn.id_ods.ToString();
+                EVO.name = dyn.nombre;
+                EVO.latitude = dyn.Latitud;
+                EVO.longitude = dyn.Longitud;
+
+                lista.Add(EVO);
+            }
+
+            return lista;
         }
-
-        return lista;
-        //IEnumerable<dynamicLINQ> result = FVSL_LINQDataContext.ExecuteQuery<dynamicLINQ>("EXEC MAPA_SEARCH_ODS_BY",2,null,"IS",null,NULL);
-
-        
+        catch (Exception e)
+        {
+            Logging.WriteError(e.StackTrace.ToString());
+            return null;
+        }
     }
 
     public List<EntityVO> getAll()
@@ -85,21 +88,31 @@ public class ODSextract: IEntityExtractor
 
         List<EntityVO> lista = new List<EntityVO>();
 
-        List<MAPA_ODS_ALLResult> resultset = dbcon.MAPA_ODS_ALL().ToList();
-
-        foreach (MAPA_ODS_ALLResult odsa in resultset)
+        try
         {
-            EntityVO EVO = new EntityVO();
 
-            EVO.id = odsa.id_ods.ToString();
-            EVO.name = odsa.nombre;
-            EVO.latitude = odsa.Latitud;
-            EVO.longitude = odsa.Longitud;
+            List<MAPA_ODS_ALLResult> resultset = dbcon.MAPA_ODS_ALL().ToList();
 
-            lista.Add(EVO);
+            foreach (MAPA_ODS_ALLResult odsa in resultset)
+            {
+                EntityVO EVO = new EntityVO();
+
+                EVO.id = odsa.id_ods.ToString();
+                EVO.name = odsa.nombre;
+                EVO.latitude = odsa.Latitud;
+                EVO.longitude = odsa.Longitud;
+
+                lista.Add(EVO);
+            }
+
+            return lista;
+
         }
-
-        return lista;
+        catch (Exception e)
+        {
+            Logging.WriteError(e.StackTrace.ToString());
+            return null;
+        }
     }
 
     private ODSVO FODS(ODS_ODS odsin)                                           //FODS receive (ODS_ODS) Return ODSVO object (full)
@@ -133,15 +146,23 @@ public class ODSextract: IEntityExtractor
         List<String> lista = new List<String>();
         FVSL_LINQDataContext dbaux = new FVSL_LINQDataContext();
 
-        List<MAPA_GET_BENFResult> benefs = dbaux.MAPA_GET_BENF(id, 2).ToList();
-
-        foreach (MAPA_GET_BENFResult ben in benefs)
+        try
         {
-            lista.Add(ben.Nombre);
+
+            List<MAPA_GET_BENFResult> benefs = dbaux.MAPA_GET_BENF(id, 2).ToList();
+
+            foreach (MAPA_GET_BENFResult ben in benefs)
+            {
+                lista.Add(ben.Nombre);
+            }
+
+            return lista;
         }
-
-        return lista;
-
+        catch (Exception e)
+        {
+            Logging.WriteError(e.StackTrace.ToString());
+            return null;
+        }
     }
     private List<AwardVO> getODSaward(int id)                                   //getODSaward receive (id_ods) Return List of Award
     {
@@ -149,36 +170,54 @@ public class ODSextract: IEntityExtractor
 
         FVSL_LINQDataContext dbaux = new FVSL_LINQDataContext();
 
-        List<MAPA_GET_AWAResult> awards = dbaux.MAPA_GET_AWA(id,2).ToList();
-
-        foreach (MAPA_GET_AWAResult awa in awards)
+        try
         {
-            AwardVO AVO = new AwardVO();
 
-            AVO.awardName = awa.nombre; 
-            AVO.recibido = awa.Otorgado;
+            List<MAPA_GET_AWAResult> awards = dbaux.MAPA_GET_AWA(id, 2).ToList();
 
-            lista.Add(AVO);
+            foreach (MAPA_GET_AWAResult awa in awards)
+            {
+                AwardVO AVO = new AwardVO();
+
+                AVO.awardName = awa.nombre;
+                AVO.recibido = awa.Otorgado;
+
+                lista.Add(AVO);
+            }
+
+            return lista;
         }
-
-        return lista;
+        catch (Exception e)
+        {
+            Logging.WriteError(e.StackTrace.ToString());
+            return null;
+        }
     }
     private List<AreaVO> getODSarea(int id)                                     //getODSarea receive (id_ods) Return List of Areas
     {
         List<AreaVO> lista = new List<AreaVO>();
         FVSL_LINQDataContext dbaux = new FVSL_LINQDataContext();
 
-        List<p_Select_ODS_PerfilResult> areas = dbaux.p_Select_ODS_Perfil(id).ToList();
-
-
-        foreach (p_Select_ODS_PerfilResult are in areas)
+        try
         {
-            AreaVO A = new AreaVO();
-            A.area = are.AreaIntervencion;
 
-            lista.Add(A);
+            List<p_Select_ODS_PerfilResult> areas = dbaux.p_Select_ODS_Perfil(id).ToList();
+
+
+            foreach (p_Select_ODS_PerfilResult are in areas)
+            {
+                AreaVO A = new AreaVO();
+                A.area = are.AreaIntervencion;
+
+                lista.Add(A);
+            }
+
+            return lista;
         }
-
-        return lista;
+        catch (Exception e)
+        {
+            Logging.WriteError(e.StackTrace.ToString());
+            return null;
+        }
     }
 }

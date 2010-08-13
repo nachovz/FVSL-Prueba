@@ -24,7 +24,7 @@ public class CatalogExtractor
         }
         else if (type == CataloValueVO.CATALOG_PAIS)
         {
-            return null;//new CatalogPaisExtract();
+            return new CatalogPaisExtract();
         }
         else if (type == CataloValueVO.CATALOG_BENEF)
         {
@@ -36,11 +36,15 @@ public class CatalogExtractor
         }
         else if (type == CataloValueVO.CATALOG_ENFOQ)
         {
-            return null;//new CatalogEnfoqExtract();
+            return new CatalogEnfoqExtract();
         }
         else if (type == CataloValueVO.CATALOG_ESTADO)
         {
-            return null;//new CatalogEstadoExtract();
+            return new CatalogEstadoExtract();
+        }
+        else if (type == CataloValueVO.CATALOG_AREA)
+        {
+            return new CatalogAreaExtract();
         }
         return null;
 	}
