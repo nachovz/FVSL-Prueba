@@ -9,7 +9,7 @@ using System.Web;
 public class CooperantVO : EntityVO
 {
     public List<AwardVO> awards;
-    public List<String> areas;
+    public List<AreaVO> areas;
     public List<String> beneficiarios;
     public String enfoque;
     public int financia;

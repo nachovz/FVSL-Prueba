@@ -194,9 +194,9 @@ using System.Data.Linq;
                 return null;
             }
         }
-        private List<String> getCOOParea(int id)                                     //getcooprea receive (id_ods) Return List of Areas
+        private List<AreaVO> getCOOParea(int id)                                     //getcooprea receive (id_ods) Return List of Areas
         {
-            List<String> lista = new List<String>();
+            List<AreaVO> lista = new List<AreaVO>();
 
             FVSL_LINQDataContext dbaux = new FVSL_LINQDataContext();
 
@@ -207,7 +207,11 @@ using System.Data.Linq;
 
                 foreach (MAPA_GET_AREAResult are in areas)
                 {
-                    lista.Add(are.Nombre);
+                    AreaVO area = new AreaVO();
+
+                    area.area = are.Nombre;
+                    
+                    lista.Add(area);
                 }
 
                 return lista;
