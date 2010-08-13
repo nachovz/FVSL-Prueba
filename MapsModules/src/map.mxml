@@ -84,7 +84,7 @@
               <mx:Array>
                   <mx:Object label="Todos" keyName="all" />
                   <mx:Object label="Cooperantes" keyName="{EntityVO.COOPERANT}" icon="{cooperantSmall}" />
-<!--              <mx:Object label="Empresas" keyName="{EntityVO.COMPANY}" />-->
+                  <mx:Object label="Empresas" keyName="{EntityVO.COMPANY}" />
                   <mx:Object label="ODS" keyName="{EntityVO.ODS}" icon="{odsSmall}" />
                   <mx:Object label="Redes" keyName="network" icon="{networkSmall}" />
               </mx:Array>
