@@ -1,0 +1,26 @@
+Empresas: Se llaman sociossociales.
+
+Las ODS tambien tienen una tabla llamada "odsa" que son los registros menos formales. Hay menos informacion de parte de ellas.
+
+Logo: En vez de traerme todo al principio me lo traigo es cuando hacen click en el marker. Al principio solo me traigo lat, long y titulo.
+
+Objetivos: En las ods y cooperantes: "objetivos". Las empresas no tienen objetivo.
+
+Premios otorgados y recibidos: En cooperantes hay una tabla llamada "tb_premios_cooperante" "id_otorgado_recibido".
+
+Areas de intervencion de los cooperantes: "tb_subCategoria_area" tiene todas las areas de intervencion. Y en la tabla "tb_Cooperante_subCategoria_area" esta la N a N.
+
+Enfoque geografico: "tb_alcance" tiene todos los alcances y en la tabla cooperante es un solo campo. (No hay N a N).
+
+Poblacion de interes: la N a N es la tabla Cooperante_Beneficiario, tambien hay una tabla de Beneficiarios.
+
+
+Redes
+
+En la tabla Invitacion hay:
+
+IdAnfitrion: ODS, Empresa, etc. Que te esta invitando.
+IdInvitada: ODS, Empresa, etc.
+Tipo_Anfitriona: Si es ods, empresa, etc.
+
+ODS Areas de intervencion: Esta en la tabla ods_programas.

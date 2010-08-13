@@ -1,0 +1,14 @@
+C:\Users\Nachox\Documents\Visual Studio 2008\Projects\MAPA_website (3)\MAP\bin\MAP.dll
+C:\Users\Nachox\Documents\Visual Studio 2008\Projects\MAPA_website (3)\MAP\bin\MAP.pdb
+C:\Users\Nachox\Documents\Visual Studio 2008\Projects\MAPA_website (3)\MAP\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Nachox\Documents\Visual Studio 2008\Projects\MAPA_website (3)\MAP\obj\Debug\MAP.dll
+C:\Users\Nachox\Documents\Visual Studio 2008\Projects\MAPA_website (3)\MAP\obj\Debug\MAP.pdb
+D:\WORK\mapsvsl\asp-workspace\MAP\bin\MAP.dll
+D:\WORK\mapsvsl\asp-workspace\MAP\bin\MAP.pdb
+D:\WORK\mapsvsl\asp-workspace\MAP\obj\Debug\ResolveAssemblyReference.cache
+D:\WORK\mapsvsl\asp-workspace\MAP\obj\Debug\MAP.dll
+D:\WORK\mapsvsl\asp-workspace\MAP\obj\Debug\MAP.pdb
+D:\WORK\mapsvsl\asp-workspace\MAPA_FVSL\MAP\bin\MAP.pdb
+D:\WORK\mapsvsl\asp-workspace\MAPA_FVSL\MAP\obj\Debug\ResolveAssemblyReference.cache
+D:\WORK\mapsvsl\asp-workspace\MAPA_FVSL\MAP\obj\Debug\MAP.dll
+D:\WORK\mapsvsl\asp-workspace\MAPA_FVSL\MAP\obj\Debug\MAP.pdb
