@@ -31,6 +31,7 @@ package com.stc.maps.model
 	import mx.controls.Alert;
 	import mx.core.Container;
 	import mx.events.ItemClickEvent;
+	import mx.events.ListEvent;
 	import mx.events.ResizeEvent;
 	import mx.managers.PopUpManager;
 	import mx.modules.Module;
@@ -595,6 +596,12 @@ package com.stc.maps.model
 			
 		}
 		
+		
+		public function comboBoxChangeHandler(event:ListEvent):void
+		{
+			// TODO Auto-generated method stub
+			trace("COMBO BOX CHANGE")
+		}
 		
 		
 	}

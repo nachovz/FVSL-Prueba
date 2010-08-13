@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="canvas1_creationCompleteHandler(event)">
+	<mx:Metadata> 
+		[Event(name="change", type="mx.events.ListEvent")] 
+	</mx:Metadata> 
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.controls.List;
+			import mx.events.FlexEvent;
+			import mx.events.ListEvent;
+[Bindable] 	private var _dataProvider:Object = new ArrayCollection([{name:"Name 1"},{name:"Name 2"}]) ;
+[Bindable] 	private var _labelField:String = "name";
+[Bindable] 	private var _label:String = "Button";
+[Bindable] 	private var _labelDefault:String = "Button";
+[Bindable] 	private var _aligment:String = "left";
+			private var aligmentChange:Boolean = false;
+			private var selectedItem:int = 0;
+			
+			public static var COMBOBOX_CHANGE:String = "change";
+			
+			public function get buttonLabel():String{
+				return _label;
+			}
+			public function set buttonLabel(value:String):void{
+				_label = value;
+			}
+			
+			public function get buttonDefaultLabel():String{
+				return _labelDefault;
+			}
+			public function set buttonDefaultLabel(value:String):void{
+				_label = _labelDefault = value;
+			}
+			
+			public function setButtonDefaultLabel():void{
+				_label = _labelDefault;
+			}
+			
+			
+			public function get dataProvider():Object{
+				return _dataProvider;
+			}
+			public function set dataProvider(value:Object):void{
+				if(value != _dataProvider){
+					_dataProvider = value;
+					selectedItem = 0;
+				}
+			}
+			
+			public function get aligment():String{
+				return _aligment;
+			}
+			[Inspectable(category="General",defaultValue="left", enumeration="left,right", description="Coloca el boton a la derecha o izquierda depiendiendo del del ancho del ComboBox")]
+			public function set aligment(value:String):void{
+				if(value != _aligment && (value=="left" || value=="right")){
+					if(myButton){
+							
+						if(value == "left"){
+							myButton.setStyle("right","undefined");
+							myButton.setStyle("left","0");
+						}
+						if(value == "right"){
+							myButton.setStyle("left","undefined");
+							myButton.setStyle("right","0");
+						}
+						
+					}else{
+						aligmentChange = true;
+					}
+					_aligment = value;
+				}
+				
+			}
+			
+
+			protected function myButton_creationCompleteHandler(event:FlexEvent):void
+			{
+				if(aligmentChange){
+					aligmentChange = false;
+					if(_aligment == "left"){
+						myButton.setStyle("right","undefined");
+						myButton.setStyle("left","0");
+					}
+					if(_aligment == "right"){
+						myButton.setStyle("left","undefined");
+						myButton.setStyle("right","0");
+					}
+				}
+			}
+
+
+			private var isOpen:Boolean = false;
+			private var overButton:Boolean = false;
+			private var overCombo:Boolean = false;
+			private var timeToClose:Timer = new Timer(500,1);
+			
+			protected function myButton_mouseOutHandler(event:MouseEvent = null):void
+			{
+				if(!overButton && !overCombo){
+					timeToClose.reset();
+					timeToClose.start();
+				}else{
+					timeToClose.reset();
+					timeToClose.stop();
+				}
+			}
+			
+			protected function tickEvent(event:TimerEvent):void{
+				timeToClose.reset();
+				timeToClose.stop();
+				isOpen = false;
+				comboBox.close();
+			}
+
+
+			protected function canvas1_creationCompleteHandler(event:FlexEvent):void
+			{
+				timeToClose.addEventListener(TimerEvent.TIMER,tickEvent);
+			}
+			
+			protected function dispachChange(event:ListEvent):void{
+				dispatchEvent(event);
+			}
+			
+		]]>
+	</mx:Script>
+	<mx:Button id="myButton" label="{_label}" 
+			   mouseOver="if(!isOpen){comboBox.open(); isOpen = true;} overButton = true;myButton_mouseOutHandler(event);" 
+			   mouseOut="overButton = false; myButton_mouseOutHandler(event);"
+			   creationComplete="myButton_creationCompleteHandler(event)" />
+	<mx:ComboBox id="comboBox" visible="false"
+				 labelField="name"
+				 dataProvider="{_dataProvider}"
+				 itemRollOver="overCombo = true; myButton_mouseOutHandler()"
+				 itemRollOut="overCombo = false; myButton_mouseOutHandler()"
+				 close="isOpen = false;"
+				 change="dispachChange(event)"
+				 selectedIndex="0"
+				 />
+</mx:Canvas>
