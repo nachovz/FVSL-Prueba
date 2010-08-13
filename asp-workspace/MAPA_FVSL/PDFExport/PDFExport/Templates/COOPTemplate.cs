@@ -46,7 +46,7 @@ namespace PDFExport
             this.addContentLine(37, 27, coop.name);
             this.addLeftContent("desarrolla una acción educativa y pastoral de solidaridad y prevención a favor de niños y adolescentes que viven en circunstancias especialmente difíciles debido a su exclusión social.");
             this.addRightContent("Merida, El rincon, Calle Principal, asdasdasdjkasd, asdjahsduahsda, asdouahsdikjuahsdiasd, asdouahsdiuahsdas, asoduhasdad", "www.fdbmerida.org", "fdbmerida@cantv.net", "No tiene cuenta de Facebook", "No tiene cuenta de Twitter");
-            this.addPremios2(60, 27, premios);
+            //this.addPremios2(60, 27, premios);
             this.newPage();
             // this.addAreas(60, 27, premios);
         }

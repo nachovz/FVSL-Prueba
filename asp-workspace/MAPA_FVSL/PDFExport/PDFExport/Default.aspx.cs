@@ -15,7 +15,7 @@ namespace PDFExport
         {
             ODSVO auxOds = new ODSVO();
             //auxOds.name = "Fundacion Clamor en el Barrio";
-            auxOds = (ODSVO)EntityExtractor.create(EntityExtractor.ODS_EXTRACTOR).getDetails(33);
+            auxOds = (ODSVO)EntityExtractor.create(EntityExtractor.ODS_EXTRACTOR).getDetails(124);
             
             ReportManager.Instance.createReport(auxOds, this);
         }

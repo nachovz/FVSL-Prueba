@@ -46,7 +46,7 @@ namespace PDFExport
             this.addContentLine(37, 27, ods.name);
             this.addLeftContent(ods.objective);
             this.addRightContent(ods.direction,ods.website,ods.email,ods.facebook,ods.twitter);
-            this.addPremios2(60,27,premios);
+            this.addPremios2(60,27, ods.awards);
             this.newPage();
            // this.addAreas(60, 27, premios);
         }

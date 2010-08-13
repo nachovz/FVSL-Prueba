@@ -77,7 +77,7 @@ namespace PDFExport.Templates
         public void addContentLine(float x, float y, String text)
         {
             standardFont.color = System.Drawing.Color.DarkRed;
-            standardFont.rSize = 12;
+            standardFont.rSize = 8;
             standardFont.bBold = true;
             this.page.AddLT_MM(x, y, new RepString(standardFont, text));
         }
@@ -136,13 +136,13 @@ namespace PDFExport.Templates
 
         }
 
-        public void addPremios(int x, int y, List<String> premios)
+        public void addPremios(int x, int y, List<AwardVO> premios)
         {
 
             standardFont.rSize = 6;
             standardFont.bBold = true;
             standardFont.color = System.Drawing.Color.Black;
-            //standardFont.fontDef = new FontDef(report, FontDef.StandardFont.Helvetica);
+            standardFont.fontDef = new FontDef(report, FontDef.StandardFont.Helvetica);
             this.page.AddLT_MM(10, 155, new RepString(standardFont, "Premios Otorgados y Recibidos"));
             standardFont.color = System.Drawing.Color.White;
 
@@ -151,9 +151,9 @@ namespace PDFExport.Templates
 
             standardFont.color = System.Drawing.Color.Black;
             int dy = 168, contador = 0;
-            foreach (String premio in premios)
+            foreach (AwardVO premio in premios)
             {
-                this.page.AddLT_MM(12, dy, new RepString(standardFont, premio));
+                this.page.AddLT_MM(12, dy, new RepString(standardFont, premio.awardName));
                 dy = dy + 9;
                 contador++;
 
@@ -164,7 +164,7 @@ namespace PDFExport.Templates
             page.AddMM(10, 174 + (9 * (contador - 1)), new RepImageMM("D:\\WORK\\mapsvsl\\asp-workspace\\MAPA_FVSL\\PDFExport\\PDFExport\\Images\\horizontal.jpg", 110, 0.01));
         }
 
-        public void addPremios2(int x, int y, List<String> premios)
+        public void addPremios2(int x, int y, List<AwardVO> premios)
         {
 
             standardFont.rSize = 6;
@@ -178,9 +178,18 @@ namespace PDFExport.Templates
 
             standardFont.color = System.Drawing.Color.Black;
             int dy = 168, contador = 0;
-            foreach (String premio in premios)
+            foreach (AwardVO premio in premios)
             {
-                this.page.AddLT_MM(12 + 50, dy, new RepString(standardFont, premio));
+                standardFont.bBold = false;
+                this.page.AddLT_MM(12 + 50, dy, new RepString(standardFont, premio.awardName));
+                standardFont.bBold = true;
+                if (premio.recibido == false)
+                {
+                    this.page.AddLT_MM(91 + 50, dy, new RepString(standardFont, "Recibido"));
+                }
+                else {
+                    this.page.AddLT_MM(91 + 50, dy, new RepString(standardFont, "Otorgado"));
+                }
                 dy = dy + 9;
                 contador++;
             }
