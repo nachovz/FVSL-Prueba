@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<publishData>
+  <publishProfile publishUrl="ftp://iis525.ixwebhosting.com/mapasvsl.com/PDFExport/" deleteExistingFiles="False" ftpAnonymousLogin="False" ftpPassiveMode="False" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="PDFExport" publishMethod="FTP" replaceMatchingFiles="True" userName="c291728" savePWD="True" userPWD="AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAApafuoQIvV0mpXevxchkkxAAAAAACAAAAAAADZgAAqAAAABAAAADDIXtr9Jd2A869cTgZlZbyAAAAAASAAACgAAAAEAAAAJirQPVykPOs9oW4H/ZGhSMQAAAAbJ1y1dvowmVEp4Hpt5UjAxQAAADRzLqCQMs2xOywZ1HAF8D8gB2CHg==" SelectedForPublish="True" useFpForLocalhost="0">
+    <file relUrl="bin/PDFExport.pdb" publishTime="08/13/2010 09:37:00" />
+    <file relUrl="bin/PDFExport.dll" publishTime="08/13/2010 09:37:00" />
+    <file relUrl="bin/Reports.dll" publishTime="11/12/2006 21:36:26" />
+    <file relUrl="Web.config" publishTime="08/12/2010 17:12:57" />
+    <file relUrl="Default.aspx" publishTime="07/26/2010 11:32:14" />
+  </publishProfile>
+</publishData>
