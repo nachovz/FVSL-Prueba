@@ -63,14 +63,14 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CatalogAreaExtract.cs" />
-    <Compile Include="CatalogBenefExtract.cs" />
-    <Compile Include="CatalogEnfoqExtract.cs" />
-    <Compile Include="CatalogEstadoExtract.cs" />
+    <Compile Include="Catalogos\CatalogAreaExtract.cs" />
+    <Compile Include="Catalogos\CatalogBenefExtract.cs" />
+    <Compile Include="Catalogos\CatalogEnfoqExtract.cs" />
+    <Compile Include="Catalogos\CatalogEstadoExtract.cs" />
     <Compile Include="CatalogExtractor.cs" />
-    <Compile Include="CatalogPaisExtract.cs" />
-    <Compile Include="CatalogPremioExtract.cs" />
-    <Compile Include="CatalogTipoOrgExtract.cs" />
+    <Compile Include="Catalogos\CatalogPaisExtract.cs" />
+    <Compile Include="Catalogos\CatalogPremioExtract.cs" />
+    <Compile Include="Catalogos\CatalogTipoOrgExtract.cs" />
     <Compile Include="CompanyExtract.cs" />
     <Compile Include="COOPextract.cs" />
     <Compile Include="dynamicLINQ.cs" />
