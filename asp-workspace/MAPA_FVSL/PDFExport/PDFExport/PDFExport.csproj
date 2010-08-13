@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{5621E172-D1F0-4CFC-AEF9-60F205B69631}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
@@ -92,10 +92,11 @@
     </Compile>
     <Compile Include="Templates\BaseTemplate.cs" />
     <Compile Include="Templates\COOPTemplate.cs" />
+    <Compile Include="Templates\EMPTemplate.cs" />
     <Compile Include="Templates\ODSTemplate.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="C:\Users\Nachox\Documents\Visual Studio 2008\Projects\MAPA_website %283%29\MAP\MAP.csproj">
+    <ProjectReference Include="..\..\MAP\MAP.csproj">
       <Project>{FD566E66-8C90-40A5-8706-AE1CCC962656}</Project>
       <Name>MAP</Name>
     </ProjectReference>
@@ -111,11 +112,14 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>2867</DevelopmentServerPort>
+          <DevelopmentServerPort>2911</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>

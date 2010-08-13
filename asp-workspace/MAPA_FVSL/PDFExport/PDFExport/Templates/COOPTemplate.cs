@@ -15,7 +15,7 @@ namespace PDFExport
         private CooperantVO _coop;
         public COOPTemplate(CooperantVO coop)
         {
-            this.Id = BaseTemplate.ODS_TEMPLATE;
+            this.Id = BaseTemplate.COOPERANT_TEMPLATE;
             this._coop = coop;
         }
 
@@ -23,32 +23,18 @@ namespace PDFExport
 
         override public void setContent()
         {
-            List<String> premios = new List<string>();
-            premios.Add("Premio Super Gran Mariscal de Ayacucho");
-            premios.Add("El Premio Gordo");
-            premios.Add("Soy El Crack PDF");
-            premios.Add("Premio Verde");
-            premios.Add("El Premio Gordo");
-            premios.Add("Soy El Crack PDF");
-            premios.Add("Premio Super Gran Mariscal de Ayacucho");
-            premios.Add("El Premio Gordo");
-            premios.Add("Soy El Crack PDF");
-            premios.Add("Premio Verde");
-            premios.Add("El Premio Gordo");
-            premios.Add("Soy El Crack PDF");
-            //premios.Add("Premio Super Gran Mariscal de Ayacucho");
-            //premios.Add("El Premio Gordo");
-            //premios.Add("Soy El Crack PDF");
-            //premios.Add("Premio Verde");
-            //premios.Add("El Premio Gordo");
-            //premios.Add("Soy El Crack PDF");
-            this.addTitle(37, 18, "Informacion de ODS");
+            this.addTitle(37, 18, "Informacion de Cooperante");
             this.addContentLine(37, 27, coop.name);
-            this.addLeftContent("desarrolla una acción educativa y pastoral de solidaridad y prevención a favor de niños y adolescentes que viven en circunstancias especialmente difíciles debido a su exclusión social.");
-            this.addRightContent("Merida, El rincon, Calle Principal, asdasdasdjkasd, asdjahsduahsda, asdouahsdikjuahsdiasd, asdouahsdiuahsdas, asoduhasdad", "www.fdbmerida.org", "fdbmerida@cantv.net", "No tiene cuenta de Facebook", "No tiene cuenta de Twitter");
-            //this.addPremios2(60, 27, premios);
-            this.newPage();
-            // this.addAreas(60, 27, premios);
+            this.addLeftContent(coop.objective);
+            this.addRightContent(coop.direction, coop.website, coop.email, coop.facebook, coop.twitter);
+            if (coop.awards.Count != 0)
+            {
+                this.addPremios2(60, 27, coop.awards);
+            }
+            if (coop.areas.Count != 0)
+            {
+                this.addAreas(60, 27, coop.areas);
+            }
         }
 
     }

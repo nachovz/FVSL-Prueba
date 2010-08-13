@@ -60,8 +60,8 @@ namespace PDFExport.Templates
 
         private void setHeader()
         {
-            page.AddMM(0, 300, new RepImageMM("D:\\WORK\\mapsvsl\\asp-workspace\\MAPA_FVSL\\PDFExport\\PDFExport\\Images\\imagen formato pdf(2).jpg", 210, 300));
-            page.AddMM(105, 152, new RepImageMM("D:\\WORK\\mapsvsl\\asp-workspace\\MAPA_FVSL\\PDFExport\\PDFExport\\Images\\linea.jpg", 0.05, 105));
+            page.AddMM(0, 300, new RepImageMM("C:\\Documents and Settings\\Administrador\\Escritorio\\asp-workspace\\MAPA_FVSL\\PDFExport\\PDFExport\\Images\\imagen formato pdf(2).jpg", 210, 300));
+            page.AddMM(105, 152, new RepImageMM("C:\\Documents and Settings\\Administrador\\Escritorio\\asp-workspace\\MAPA_FVSL\\PDFExport\\PDFExport\\Images\\linea.jpg", 0.05, 105));
         }
 
         public virtual void setContent()
@@ -146,7 +146,7 @@ namespace PDFExport.Templates
             this.page.AddLT_MM(10, 155, new RepString(standardFont, "Premios Otorgados y Recibidos"));
             standardFont.color = System.Drawing.Color.White;
 
-            page.AddMM(10, 165, new RepImageMM("D:\\WORK\\mapsvsl\\asp-workspace\\MAPA_FVSL\\PDFExport\\PDFExport\\Images\\degradez.jpg", 110, 6));
+            page.AddMM(10, 165, new RepImageMM("C:\\Documents and Settings\\Administrador\\Escritorio\\asp-workspace\\MAPA_FVSL\\PDFExport\\PDFExport\\Images\\degradez.jpg", 110, 6));
             this.page.AddLT_MM(12, 161, new RepString(standardFont, "Premio"));
 
             standardFont.color = System.Drawing.Color.Black;
@@ -158,10 +158,10 @@ namespace PDFExport.Templates
                 contador++;
 
             }
-            page.AddMM(10, 174 + (9 * (contador - 1)), new RepImageMM("D:\\WORK\\mapsvsl\\asp-workspace\\MAPA_FVSL\\PDFExport\\PDFExport\\Images\\lineatabla.jpg", 0.05, 9 * contador));
-            page.AddMM(80, 174 + (9 * (contador - 1)), new RepImageMM("D:\\WORK\\mapsvsl\\asp-workspace\\MAPA_FVSL\\PDFExport\\PDFExport\\Images\\lineatabla1.jpg", 0.05, 9 * contador));
-            page.AddMM(120, 174 + (9 * (contador - 1)), new RepImageMM("D:\\WORK\\mapsvsl\\asp-workspace\\MAPA_FVSL\\PDFExport\\PDFExport\\Images\\lineatabla2.jpg", 0.05, 9 * contador));
-            page.AddMM(10, 174 + (9 * (contador - 1)), new RepImageMM("D:\\WORK\\mapsvsl\\asp-workspace\\MAPA_FVSL\\PDFExport\\PDFExport\\Images\\horizontal.jpg", 110, 0.01));
+            page.AddMM(10, 174 + (9 * (contador - 1)), new RepImageMM("C:\\Documents and Settings\\Administrador\\Escritorio\\asp-workspace\\MAPA_FVSL\\PDFExport\\PDFExport\\Images\\lineatabla.jpg", 0.05, 9 * contador));
+            page.AddMM(80, 174 + (9 * (contador - 1)), new RepImageMM("C:\\Documents and Settings\\Administrador\\Escritorio\\asp-workspace\\MAPA_FVSL\\PDFExport\\PDFExport\\Images\\lineatabla1.jpg", 0.05, 9 * contador));
+            page.AddMM(120, 174 + (9 * (contador - 1)), new RepImageMM("C:\\Documents and Settings\\Administrador\\Escritorio\\asp-workspace\\MAPA_FVSL\\PDFExport\\PDFExport\\Images\\lineatabla2.jpg", 0.05, 9 * contador));
+            page.AddMM(10, 174 + (9 * (contador - 1)), new RepImageMM("C:\\Documents and Settings\\Administrador\\Escritorio\\asp-workspace\\MAPA_FVSL\\PDFExport\\PDFExport\\Images\\horizontal.jpg", 110, 0.01));
         }
 
         public void addPremios2(int x, int y, List<AwardVO> premios)
@@ -173,7 +173,7 @@ namespace PDFExport.Templates
             this.page.AddLT_MM(10, 160, new RepString(standardFont, "Premios Otorgados y Recibidos:"));
             standardFont.color = System.Drawing.Color.White;
 
-            page.AddMM(60, 165, new RepImageMM("D:\\WORK\\mapsvsl\\asp-workspace\\MAPA_FVSL\\PDFExport\\PDFExport\\Images\\degradez.jpg", 110, 6));
+            page.AddMM(60, 165, new RepImageMM("C:\\Documents and Settings\\Administrador\\Escritorio\\asp-workspace\\MAPA_FVSL\\PDFExport\\PDFExport\\Images\\degradez.jpg", 110, 6));
             this.page.AddLT_MM(12 + 50, 161, new RepString(standardFont, "Premio"));
 
             standardFont.color = System.Drawing.Color.Black;
@@ -185,21 +185,21 @@ namespace PDFExport.Templates
                 standardFont.bBold = true;
                 if (premio.recibido == false)
                 {
-                    this.page.AddLT_MM(91 + 50, dy, new RepString(standardFont, "Recibido"));
+                    this.page.AddLT_MM(93 + 50, dy, new RepString(standardFont, "Recibido"));
                 }
                 else {
-                    this.page.AddLT_MM(91 + 50, dy, new RepString(standardFont, "Otorgado"));
+                    this.page.AddLT_MM(93 + 50, dy, new RepString(standardFont, "Otorgado"));
                 }
                 dy = dy + 9;
                 contador++;
             }
-            page.AddMM(10 + 50, 174 + (9 * (contador - 1)), new RepImageMM("D:\\WORK\\mapsvsl\\asp-workspace\\MAPA_FVSL\\PDFExport\\PDFExport\\Images\\lineatabla.jpg", 0.05, 9 * contador));
-            page.AddMM(80 + 50, 174 + (9 * (contador - 1)), new RepImageMM("D:\\WORK\\mapsvsl\\asp-workspace\\MAPA_FVSL\\PDFExport\\PDFExport\\Images\\lineatabla1.jpg", 0.05, 9 * contador));
-            page.AddMM(120 + 50, 174 + (9 * (contador - 1)), new RepImageMM("D:\\WORK\\mapsvsl\\asp-workspace\\MAPA_FVSL\\PDFExport\\PDFExport\\Images\\lineatabla2.jpg", 0.05, 9 * contador));
-            page.AddMM(10 + 50, 174 + (9 * (contador - 1)), new RepImageMM("D:\\WORK\\mapsvsl\\asp-workspace\\MAPA_FVSL\\PDFExport\\PDFExport\\Images\\horizontal.jpg", 110, 0.01));
+            page.AddMM(10 + 50, 174 + (9 * (contador - 1)), new RepImageMM("C:\\Documents and Settings\\Administrador\\Escritorio\\asp-workspace\\MAPA_FVSL\\PDFExport\\PDFExport\\Images\\lineatabla.jpg", 0.05, 9 * contador));
+            page.AddMM(80 + 50, 174 + (9 * (contador - 1)), new RepImageMM("C:\\Documents and Settings\\Administrador\\Escritorio\\asp-workspace\\MAPA_FVSL\\PDFExport\\PDFExport\\Images\\lineatabla1.jpg", 0.05, 9 * contador));
+            page.AddMM(120 + 50, 174 + (9 * (contador - 1)), new RepImageMM("C:\\Documents and Settings\\Administrador\\Escritorio\\asp-workspace\\MAPA_FVSL\\PDFExport\\PDFExport\\Images\\lineatabla2.jpg", 0.05, 9 * contador));
+            page.AddMM(10 + 50, 174 + (9 * (contador - 1)), new RepImageMM("C:\\Documents and Settings\\Administrador\\Escritorio\\asp-workspace\\MAPA_FVSL\\PDFExport\\PDFExport\\Images\\horizontal.jpg", 110, 0.01));
         }
 
-        public void addAreas(int x, int y, List<String> premios)
+        public void addAreas(int x, int y, List<AreaVO> areas)
         {
 
             standardFont.rSize = 6;
@@ -208,21 +208,28 @@ namespace PDFExport.Templates
             this.page.AddLT_MM(10, 160+50, new RepString(standardFont, "Areas de Intervencion:"));
             standardFont.color = System.Drawing.Color.White;
 
-            page.AddMM(60, 160 + 50, new RepImageMM("D:\\WORK\\mapsvsl\\asp-workspace\\MAPA_FVSL\\PDFExport\\PDFExport\\Images\\horizontal1.jpg", 110, 0.05));
+            page.AddMM(60, 160 + 50, new RepImageMM("C:\\Documents and Settings\\Administrador\\Escritorio\\asp-workspace\\MAPA_FVSL\\PDFExport\\PDFExport\\Images\\horizontal1.jpg", 110, 0.05));
             this.page.AddLT_MM(12 + 50, 161, new RepString(standardFont, "Area"));
 
             standardFont.color = System.Drawing.Color.Black;
             int dy = 163+53, contador = 0;
-            foreach (String premio in premios)
+            foreach (AreaVO area in areas)
             {
-                this.page.AddLT_MM(12 + 50, dy, new RepString(standardFont, premio));
+                if (area.subcategoria != null)
+                {
+                    this.page.AddLT_MM(12 + 50, dy, new RepString(standardFont, area.area + ", " + area.subcategoria));
+                }
+                else
+                {
+                    this.page.AddLT_MM(12 + 50, dy, new RepString(standardFont, area.area));
+                }
                 dy = dy + 7;
                 contador++;
             }
-            page.AddMM(10 + 50, 169 + 50 + (9 * (contador - 1)), new RepImageMM("D:\\WORK\\mapsvsl\\MAPA_FVSL\\asp-workspace\\PDFExport\\PDFExport\\Images\\lineatablax.jpg", 0.05, 9 * contador));
+            page.AddMM(10 + 50, 169 + 50 + (9 * (contador - 1)), new RepImageMM("C:\\Documents and Settings\\Administrador\\Escritorio\\asp-workspace\\MAPA_FVSL\\PDFExport\\PDFExport\\Images\\lineatablax.jpg", 0.05, 9 * contador));
             /////page.AddMM(80 + 50, 174 + 70 + (9 * (contador - 1)), new RepImageMM("D:\\WORK\\mapsvsl\\asp-workspace\\PDFExport\\PDFExport\\Images\\lineatabla1.jpg", 0.05, 9 * contador));
-            page.AddMM(120 + 50, 169 + 50 + (9 * (contador - 1)), new RepImageMM("D:\\WORK\\mapsvsl\\asp-workspace\\MAPA_FVSL\\PDFExport\\PDFExport\\Images\\lineatablax2.jpg", 0.05, 9 * contador));
-            page.AddMM(10 + 50, 169 + 50 + (9 * (contador - 1)), new RepImageMM("D:\\WORK\\mapsvsl\\asp-workspace\\MAPA_FVSL\\PDFExport\\PDFExport\\Images\\horizontal2.jpg", 110, 0.01));
+            page.AddMM(120 + 50, 169 + 50 + (9 * (contador - 1)), new RepImageMM("C:\\Documents and Settings\\Administrador\\Escritorio\\asp-workspace\\MAPA_FVSL\\PDFExport\\PDFExport\\Images\\lineatablax2.jpg", 0.05, 9 * contador));
+            page.AddMM(10 + 50, 169 + 50 + (9 * (contador - 1)), new RepImageMM("C:\\Documents and Settings\\Administrador\\Escritorio\\asp-workspace\\MAPA_FVSL\\PDFExport\\PDFExport\\Images\\horizontal2.jpg", 110, 0.01));
 
         }
 

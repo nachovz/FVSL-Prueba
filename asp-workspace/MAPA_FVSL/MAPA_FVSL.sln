@@ -1,13 +1,13 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 10
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MAP", "MAP\MAP.csproj", "{FD566E66-8C90-40A5-8706-AE1CCC962656}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PDFExport", "PDFExport\PDFExport\PDFExport.csproj", "{5621E172-D1F0-4CFC-AEF9-60F205B69631}"
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "MAPA_website", "MAPA_website\", "{AC1892AD-B522-439F-9AFD-6DE5289F4069}"
 	ProjectSection(WebsiteProperties) = preProject
-		TargetFramework = "3.5"
+		TargetFrameworkMoniker = ".NETFramework,Version=v3.5"
 		Debug.AspNetCompiler.VirtualPath = "/MAPA_website"
 		Debug.AspNetCompiler.PhysicalPath = "MAPA_website\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\MAPA_website\"

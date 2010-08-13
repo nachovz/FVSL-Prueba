@@ -38,3 +38,12 @@ D:\WORK\mapsvsl\asp-workspace\MAPA_FVSL\PDFExport\PDFExport\obj\Debug\PDFExport.
 D:\WORK\mapsvsl\asp-workspace\MAPA_FVSL\PDFExport\PDFExport\obj\Debug\PDFExport.csproj.GenerateResource.Cache
 D:\WORK\mapsvsl\asp-workspace\MAPA_FVSL\PDFExport\PDFExport\obj\Debug\PDFExport.dll
 D:\WORK\mapsvsl\asp-workspace\MAPA_FVSL\PDFExport\PDFExport\obj\Debug\PDFExport.pdb
+C:\Documents and Settings\Administrador\Escritorio\asp-workspace\MAPA_FVSL\PDFExport\PDFExport\bin\PDFExport.dll
+C:\Documents and Settings\Administrador\Escritorio\asp-workspace\MAPA_FVSL\PDFExport\PDFExport\bin\PDFExport.pdb
+C:\Documents and Settings\Administrador\Escritorio\asp-workspace\MAPA_FVSL\PDFExport\PDFExport\bin\MAP.dll
+C:\Documents and Settings\Administrador\Escritorio\asp-workspace\MAPA_FVSL\PDFExport\PDFExport\bin\MAP.pdb
+C:\Documents and Settings\Administrador\Escritorio\asp-workspace\MAPA_FVSL\PDFExport\PDFExport\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Administrador\Escritorio\asp-workspace\MAPA_FVSL\PDFExport\PDFExport\obj\Debug\PDFExport.Properties.Resources.resources
+C:\Documents and Settings\Administrador\Escritorio\asp-workspace\MAPA_FVSL\PDFExport\PDFExport\obj\Debug\PDFExport.csproj.GenerateResource.Cache
+C:\Documents and Settings\Administrador\Escritorio\asp-workspace\MAPA_FVSL\PDFExport\PDFExport\obj\Debug\PDFExport.dll
+C:\Documents and Settings\Administrador\Escritorio\asp-workspace\MAPA_FVSL\PDFExport\PDFExport\obj\Debug\PDFExport.pdb

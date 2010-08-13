@@ -31,16 +31,30 @@ namespace PDFExport
             }
         }
 
-        public void createReport(EntityVO ods, System.Web.UI.Page website)
+        public void createReport(EntityVO entity, System.Web.UI.Page website, int type)
         {
-            String type = ods.GetType().ToString();
+            //String type = ods.GetType().ToString();
+            BaseTemplate temp;
             switch (type)
             {
-                case "ODSVO":
-                    BaseTemplate temp = new ODSTemplate((ODSVO)ods);
+                case 1:
+                    temp = new EMPTemplate((CompanyVO)entity);
                     temp.setContent();
-                    temp.request(ods.name);
+                    temp.request(entity.name);
                     break;
+                case 2:
+                    temp = new ODSTemplate((ODSVO)entity);
+                    temp.setContent();
+                    temp.request(entity.name);
+                    break;
+                case 3:
+                    temp = new COOPTemplate((CooperantVO)entity);
+                    temp.setContent();
+                    temp.request(entity.name);
+                    break;
+                
+
+                    
             }
         }
     }
