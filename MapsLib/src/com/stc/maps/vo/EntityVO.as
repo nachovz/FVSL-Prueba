@@ -60,7 +60,6 @@ package com.stc.maps.vo
 			this.organizationType = obj.tipoOrganizacion;
 			this.financy = (Number(obj.financia)==0) ? "No" : "Si";
 
-
 			this.awards = obj.awards;
 			this.beneficiaries = obj.beneficiarios;
 			this.interventionAreas = obj.areas;

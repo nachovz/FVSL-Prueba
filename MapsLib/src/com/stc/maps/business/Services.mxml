@@ -11,6 +11,7 @@
 	<mx:WebService id="networkWS" wsdl="http://www.mapasvsl.com/website/MAPA_FVSL/MAPA_Website/Network.asmx?WSDL" >
 		<mx:operation name="getN" resultFormat="object"/>
 		<mx:operation name="getSearch" resultFormat="object"/>
+		<mx:operation name="getDetails" resultFormat="object"/>
 	</mx:WebService>
 	<mx:WebService id="catalogsWS" wsdl="http://www.mapasvsl.com/website/MAPA_FVSL/MAPA_Website/Catalog.asmx?WSDL" >
 		<mx:operation name="getCatalog" resultFormat="object"/>

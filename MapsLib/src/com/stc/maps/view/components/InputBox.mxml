@@ -4,6 +4,7 @@
 	horizontalScrollPolicy="off" verticalScrollPolicy="off">
 	<mx:Script>
 		<![CDATA[
+			import com.stc.maps.vo.NetworkVO;
 			import mx.binding.utils.BindingUtils;
 			import mx.collections.ArrayCollection;
 			import mx.rpc.Responder;
@@ -57,6 +58,7 @@
 			private var selectedIndex : int = 0;
 			
 			public var getEntityDetailsHandlers : mx.rpc.Responder = new mx.rpc.Responder(getEntityDetailsResult, getEntityDetailsFault);
+			public var getNetworkDetailsHandlers : mx.rpc.Responder = new mx.rpc.Responder(getNetworkDetailsResult, getEntityDetailsFault);
 			
 			private function closeWindow(event : Event) : void
 			{
@@ -106,6 +108,12 @@
 					collapsed = true;					
 					collapseButton.label = "Ver ficha";			
 				}
+			}
+			
+			private function getNetworkDetailsResult(event : ResultEvent) : void
+			{
+				var network : NetworkVO = event.result as NetworkVO;
+				
 			}
 			
 			private function getEntityDetailsResult(event : ResultEvent) : void

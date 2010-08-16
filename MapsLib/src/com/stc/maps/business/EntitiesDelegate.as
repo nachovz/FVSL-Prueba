@@ -48,6 +48,15 @@ package com.stc.maps.business
 			//event.callbacks.result(ev);
 		}
 		
+		public function getNetworkEntity(event : EntitiesEvent ):void
+		{
+			var arrayEntities : ArrayCollection;
+			getNetworkDetails(event.entityType, parseInt(event.entityId));
+			
+			//var ev : ResultEvent = new ResultEvent(ResultEvent.RESULT,false,true,arrayEntities);
+			//event.callbacks.result(ev);
+		}
+		
 		
 		private function getAllEntities(type : String) : void
 		{
@@ -59,6 +68,13 @@ package com.stc.maps.business
 		private function getDetails(type : String, id : int) : void
 		{
             _service = ServiceLocator.getInstance().getWebService("EntitiesWS");
+			var token:AsyncToken = this._service.getDetails(type,id);
+			token.addResponder(this.responder);
+		}
+		
+		private function getNetworkDetails(type : String, id : int) : void
+		{
+            _service = ServiceLocator.getInstance().getWebService("networkWS");
 			var token:AsyncToken = this._service.getDetails(type,id);
 			token.addResponder(this.responder);
 		}

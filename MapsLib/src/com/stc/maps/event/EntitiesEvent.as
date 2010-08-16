@@ -9,6 +9,7 @@ package com.stc.maps.event
         // Eventos del ConfigurationService
         public static const GET_ENTITY_LIST:String = "getEntityListEvent";
         public static const GET_ENTITY_DETAILS:String = "getEntityDetailsEvent";
+        public static const GET_NETWORK_DETAILS:String = "getNetworkDetailsEvent";
 
 		public var entityType : String;
 		public var entityId : String;

@@ -1,17 +1,20 @@
 package com.stc.maps.view.components
 {
+	import com.stc.maps.view.components.event.MultiselectSelectionEvent;
+	
 	import mx.collections.ArrayCollection;
 	import mx.containers.HBox;
 	import mx.containers.VBox;
 	import mx.containers.ViewStack;
+	import mx.controls.CheckBox;
 	import mx.controls.Label;
 	import mx.controls.LinkButton;
 	import mx.controls.List;
 	import mx.controls.TextArea;
-/* 	import flash.events.MouseEvent; 
- 	import flash.text.TextFieldAutoSize;*/
- 	import flash.events.MouseEvent; 
- 	import flash.text.TextFieldAutoSize;
+	import mx.core.ClassFactory;
+/* 	IMPORT FLASH.EVENTS.MOUSEEVENT; */
+ 	import flash.events.MouseEvent;
+/*  	import flash.events.MouseEvent; */
 
 	public class MultiselectRenderer extends ViewStack
 	{
@@ -24,7 +27,7 @@ package com.stc.maps.view.components
 		private var showSelected : VBox = new VBox();
 		private var editSelected : VBox = new VBox(); 
 		
-		private var _selectedCriterias : ArrayCollection;
+		private var _selectedCriterias : ArrayCollection = new ArrayCollection();
 		private var _dataProvider : ArrayCollection;
 		private var dataproviderChange : Boolean;
 		private var selectedCriteriasChange : Boolean;
@@ -97,17 +100,19 @@ package com.stc.maps.view.components
  			textArea.setStyle("borderStyle","none");
  			textArea.wordWrap = true;
 			editLink.label = "Seleccionar criterios";
-			doneLink.label = "Guardar";
+			doneLink.label = "Cerrar";
 			textArea.editable = false;
 			textArea.height = 24;
 			textArea.percentWidth = 100;
 			multiSelector.percentWidth = 100;
 			multiSelector.height = 100;
-			multiSelector.allowMultipleSelection = true;
+			multiSelector.itemRenderer = new ClassFactory(com.stc.maps.view.components.MultiselectItemRenderer);
+			//multiSelector.allowMultipleSelection = true;
 			showSelected.setStyle("horizontalAlign","right");
 			editSelected.setStyle("horizontalAlign","right");
 			showSelected.setStyle("verticalGap","0");
 			editSelected.setStyle("verticalGap","0");
+			multiSelector.setStyle("color","0x000000");
 			showSelected.percentWidth = 100;
 			editSelected.percentWidth = 100;
 
@@ -160,6 +165,8 @@ package com.stc.maps.view.components
 			selectedIndex = 1;
 			editLink.removeEventListener(MouseEvent.CLICK,editLink_click);
 			doneLink.addEventListener(MouseEvent.CLICK,doneLink_click);
+			this.addEventListener(MultiselectSelectionEvent.SELECT_ITEM,list_select);
+			this.addEventListener(MultiselectSelectionEvent.DESELECT_ITEM,list_deselect);
 			this.height = multiSelector.height+doneLink.height;
 		}
 
@@ -168,9 +175,29 @@ package com.stc.maps.view.components
 			selectedIndex = 0;
 			editLink.addEventListener(MouseEvent.CLICK,editLink_click);
 			doneLink.removeEventListener(MouseEvent.CLICK,doneLink_click);
-			selectedCriterias = new ArrayCollection(multiSelector.selectedItems);
+			this.removeEventListener(MultiselectSelectionEvent.SELECT_ITEM,list_select);
+			this.removeEventListener(MultiselectSelectionEvent.DESELECT_ITEM,list_deselect);
+			selectedCriterias = selectedCriterias;
 			this.height = showSelected.height;
 		}
+		
+		private function list_select(e:MultiselectSelectionEvent):void
+		{
+           if(selectedCriterias.getItemIndex(e.item)==-1)
+           {
+               selectedCriterias.addItem(e.item);
+           }    
+		   //multiSelector.selectedItems = selectedCriterias;               
+		}	
+		
+		private function list_deselect(e:MultiselectSelectionEvent):void
+		{
+           if(selectedCriterias.getItemIndex(e.item)!=-1)
+           {
+               selectedCriterias.removeItemAt(selectedCriterias.getItemIndex(e.item));
+           }    
+		   //multiSelector.selectedItems = selectedCriterias;               
+		}	
 		
 	}
 }

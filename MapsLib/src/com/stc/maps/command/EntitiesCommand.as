@@ -34,6 +34,11 @@ package com.stc.maps.command
 				    getEntityDetails(EntitiesEvent(event));
 					break;
 				}
+				case EntitiesEvent.GET_NETWORK_DETAILS:
+				{	
+				    getEntityDetails(EntitiesEvent(event));
+					break;
+				}
                 default : break;
             }
 		}
@@ -50,10 +55,19 @@ package com.stc.maps.command
 		private function getEntityDetails(event : EntitiesEvent):void
 		{
 			var delegate : EntitiesDelegate = new EntitiesDelegate(getDetailsHandlers,"ParticipantService");
-			_responder = event.callbacks
+			_responder = event.callbacks;
 			_type = event.entityType;
 			_event = event;
 			delegate.getEntity(event);
+		}
+		
+		private function getNetworkDetails(event : EntitiesEvent):void
+		{
+			var delegate : EntitiesDelegate = new EntitiesDelegate(getDetailsHandlers,"ParticipantService");
+			_responder = event.callbacks;
+			_type = event.entityType;
+			_event = event;
+			delegate.getNetworkEntity(event);
 		}
 
 		private function getDetailsResult(data : Object):void

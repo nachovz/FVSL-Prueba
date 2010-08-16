@@ -392,11 +392,20 @@ package com.stc.maps.model
 			input.data = entity;
 			input.addEventListener(EntityRendererEvent.EXPAND_NETWORK,expandNetwork,false,0,true);
 			
-			var ev : EntitiesEvent = new EntitiesEvent(EntitiesEvent.GET_ENTITY_DETAILS,input.getEntityDetailsHandlers);
-			ev.entityId = entity.id.toString();
-			if(entity.type!="network") ev.entityType = entity.type;
-			else ev.entityType = NetworkVO(entity).parentType;
-			ev.dispatch();
+			if(entity.type!="network") 
+			{
+				var ev : EntitiesEvent = new EntitiesEvent(EntitiesEvent.GET_ENTITY_DETAILS,input.getEntityDetailsHandlers);
+				ev.entityType = entity.type;
+				ev.entityId = entity.id.toString();
+				ev.dispatch();
+			}
+			else
+			{
+				var ev : EntitiesEvent = new EntitiesEvent(EntitiesEvent.GET_NETWORK_DETAILS,input.getNetworkDetailsHandlers);
+				ev.entityType = entity.type;
+				ev.entityId = entity.id.toString();
+				ev.dispatch();
+			}
 			
 			PopUpManager.addPopUp(input,containerThis);
 			PopUpManager.centerPopUp(input);

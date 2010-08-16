@@ -17,5 +17,6 @@ package com.stc.maps.vo
 		
 		public var id : Number = 0;
 		public var label : String = "";
+		public var isSelected : Boolean;
 	}
 }

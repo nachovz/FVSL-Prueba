@@ -16,6 +16,7 @@ package com.stc.maps.view.components.event
 		public var items : ArrayCollection;
 		public var item : Object;
 		public var network : Object;
+		
 		public function EntityRendererEvent(type:String)
 		{
 			super(type, true, true);

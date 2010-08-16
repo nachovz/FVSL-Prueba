@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="25"
+	horizontalScrollPolicy="off" verticalScrollPolicy="off">
+<mx:Script>
+    <![CDATA[
+    	import com.stc.maps.view.components.event.MultiselectSelectionEvent;
+    	import com.stc.maps.vo.NetworkVO;
+    	import com.stc.maps.vo.EntityVO;
+    	import com.stc.maps.view.components.event.EntityRendererEvent;
+    
+    	private var _data : Object = {};
+    
+    	override public function set data(value:Object):void
+    	{
+    		if(value)
+    		{
+	    		_data = value;
+	    		check.label = value.label;
+	    		check.selected = value.isSelected;
+    		}
+    	}
+    	override public function get data():Object
+    	{
+    		return _data;
+    	}
+    
+        private function onChange(evt:Event):void 
+        {
+            data.isSelected = !data.isSelected;
+            if(data.isSelected) addSelection();
+            else removeSelection();
+        }
+        
+        private function addSelection() : void
+        {
+	     	var ev : MultiselectSelectionEvent = new MultiselectSelectionEvent(MultiselectSelectionEvent.SELECT_ITEM);
+			ev.item = data;
+	     	this.dispatchEvent(ev);
+        }
+
+        private function removeSelection() : void
+        {
+	     	var ev : MultiselectSelectionEvent = new MultiselectSelectionEvent(MultiselectSelectionEvent.DESELECT_ITEM);
+			ev.item = data;
+	     	this.dispatchEvent(ev);
+        }
+        
+    ]]>
+</mx:Script>
+	<mx:CheckBox id="check" doubleClickEnabled="false" color="#000000" change="onChange(event);" width="230" fontSize="10" />
+</mx:HBox>
