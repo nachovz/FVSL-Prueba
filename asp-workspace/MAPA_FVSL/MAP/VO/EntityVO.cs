@@ -10,6 +10,7 @@ using System.Xml.Serialization;
 [XmlInclude(typeof(ODSVO))]
 [XmlInclude(typeof(CooperantVO))]
 [XmlInclude(typeof(CompanyVO))]
+[XmlInclude(typeof(NetworkVO))]
 public class EntityVO 
 {
     public String type = "";

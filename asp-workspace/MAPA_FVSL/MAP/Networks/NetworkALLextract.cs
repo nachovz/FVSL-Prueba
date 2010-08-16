@@ -32,15 +32,19 @@ public class NetworkALLextract : INetworkExtractor
 
             foreach (mapa_get_network_compResult net in resultset)
             {
-                NetworkVO netw = new NetworkVO();
                 EntityVO ent = new EntityVO();
 
+                ent.type = 1;
                 ent.id = net.Id.ToString();
                 ent.name = net.Nombre;
                 ent.latitude = net.Latitud.ToString();
                 ent.longitude = net.Longitud.ToString();
+
+                NetworkVO netw = new NetworkVO();
+
+                //netw.parent.type = NetworkVO.EMP_EXTRACTOR;
                 netw.parent = ent;
-                netw.type = NetworkVO.EMP_EXTRACTOR;
+                //netw.type = NetworkVO.EMP_EXTRACTOR;
 
                 lista.Add(netw);
             }
@@ -56,6 +60,7 @@ public class NetworkALLextract : INetworkExtractor
                 ent1.name = net1.nombre;
                 ent1.latitude = net1.Latitud.ToString();
                 ent1.longitude = net1.Longitud.ToString();
+                ent1.type = NetworkVO.ODS_EXTRACTOR;
                 netw1.parent = ent1;
                 netw1.type = NetworkVO.ODS_EXTRACTOR;
 
@@ -73,6 +78,7 @@ public class NetworkALLextract : INetworkExtractor
                 ent2.name = net2.nombre;
                 ent2.latitude = net2.Latitud.ToString();
                 ent2.longitude = net2.Longitud.ToString();
+                ent2.type = NetworkVO.COOP_EXTRACTOR;
                 netw2.parent = ent2;
                 netw2.type = NetworkVO.COOP_EXTRACTOR;
 
@@ -110,6 +116,7 @@ public class NetworkALLextract : INetworkExtractor
                 ent.name = net.nombre;
                 ent.latitude = net.latitud.ToString();
                 ent.longitude = net.longitud.ToString();
+                ent.type = NetworkVO.EMP_EXTRACTOR;
                 netw.parent = ent;
                 netw.type = NetworkVO.ODS_EXTRACTOR;
 
@@ -127,6 +134,7 @@ public class NetworkALLextract : INetworkExtractor
                 ent1.name = net1.nombre;
                 ent1.latitude = net1.latitud.ToString();
                 ent1.longitude = net1.longitud.ToString();
+                ent1.type = NetworkVO.ODS_EXTRACTOR;
                 netw1.parent = ent1;
                 netw1.type = NetworkVO.EMP_EXTRACTOR;
 
@@ -144,6 +152,7 @@ public class NetworkALLextract : INetworkExtractor
                 ent2.name = net2.nombre;
                 ent2.latitude = net2.latitud.ToString();
                 ent2.longitude = net2.longitud.ToString();
+                ent2.type = NetworkVO.COOP_EXTRACTOR;
                 netw2.parent = ent2;
                 netw2.type = NetworkVO.COOP_EXTRACTOR;
 

@@ -129,7 +129,7 @@ public class ODSextract: IEntityExtractor
         aux.twitter = odsin.TwitterODS;
         aux.objective = odsin.objetivos;
         aux.email = odsin.email;
-        aux.type = "ods";
+        aux.type = NetworkVO.ODS_EXTRACTOR;
         aux.beneficiarios = getODSbeneficiario(odsin.id_ods);
         aux.awards = getODSaward(odsin.id_ods);
         aux.areas = getODSarea(odsin.id_ods);

@@ -39,6 +39,7 @@ public class NetworkCOOPextract : INetworkExtractor
                 ent.name = net.nombre;
                 ent.latitude = net.Latitud.ToString();
                 ent.longitude = net.Longitud.ToString();
+                ent.type = NetworkVO.COOP_EXTRACTOR;
                 netw.parent = ent;
                 netw.type = NetworkVO.COOP_EXTRACTOR;
 
@@ -75,6 +76,7 @@ public class NetworkCOOPextract : INetworkExtractor
                 ent.name = snet.nombre;
                 ent.latitude = snet.latitud.ToString();
                 ent.longitude = snet.longitud.ToString();
+                ent.type = NetworkVO.COOP_EXTRACTOR;
                 netw.parent = ent;
                 netw.type = NetworkVO.ODS_EXTRACTOR;
 
@@ -100,14 +102,19 @@ public class NetworkCOOPextract : INetworkExtractor
         EntityVO enti = new EntityVO();
 
         List<EntityVO> nodos = new List<EntityVO>();
-
-        network.type = NetworkVO.COOP_EXTRACTOR;
-        enti = EntityExtractor.create(NetworkVO.COOP_EXTRACTOR).getDetails(padre);
-
-        network.parent = enti;
+        
+        
 
         try
-        {
+        {   
+            enti = EntityExtractor.create(NetworkVO.COOP_EXTRACTOR).getDetails(padre);
+        
+            enti.type = NetworkVO.COOP_EXTRACTOR;
+
+            network.type = NetworkVO.COOP_EXTRACTOR;
+        
+            network.parent = enti;
+
             List<mapa_get_network_nodesResult> resultset = dbcon.mapa_get_network_nodes(3, padre).ToList();
 
             foreach (mapa_get_network_nodesResult res in resultset)
@@ -118,6 +125,7 @@ public class NetworkCOOPextract : INetworkExtractor
                 nodo.name = res.nombre;
                 nodo.latitude = res.latitud;
                 nodo.longitude = res.longitud;
+                nodo.type = NetworkVO.COOP_EXTRACTOR;
 
                 nodos.Add(nodo);
             }

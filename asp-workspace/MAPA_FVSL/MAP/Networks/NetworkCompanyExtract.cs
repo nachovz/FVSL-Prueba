@@ -18,7 +18,7 @@ public class NetworkCompanyExtract : INetworkExtractor
 {
     #region INetworkExtractor Members
 
-    public System.Collections.Generic.List<NetworkVO> getN()
+    public List<NetworkVO> getN()
     {
         FVSL_LINQDataContext dbcon = new FVSL_LINQDataContext();
 
@@ -38,6 +38,7 @@ public class NetworkCompanyExtract : INetworkExtractor
                 ent.name = net.Nombre;
                 ent.latitude = net.Latitud.ToString();
                 ent.longitude = net.Longitud.ToString();
+                ent.type = NetworkVO.EMP_EXTRACTOR;
                 netw.parent = ent;
                 netw.type = NetworkVO.EMP_EXTRACTOR;
 
@@ -53,7 +54,6 @@ public class NetworkCompanyExtract : INetworkExtractor
             return null;
         }
     }
-
 
     public List<NetworkVO> getSearch(List<String> lista)
     {
@@ -75,6 +75,7 @@ public class NetworkCompanyExtract : INetworkExtractor
                 ent.name = snet.nombre;
                 ent.latitude = snet.latitud.ToString();
                 ent.longitude = snet.longitud.ToString();
+                ent.type = NetworkVO.EMP_EXTRACTOR;
                 netw.parent = ent;
                 netw.type = NetworkVO.EMP_EXTRACTOR;
 
@@ -94,20 +95,22 @@ public class NetworkCompanyExtract : INetworkExtractor
     {
         FVSL_LINQDataContext dbcon = new FVSL_LINQDataContext();
 
-        
-
         NetworkVO network = new NetworkVO();
         EntityVO enti = new EntityVO();
 
         List<EntityVO> nodos = new List<EntityVO>();
 
-        network.type = NetworkVO.EMP_EXTRACTOR;
-        enti = EntityExtractor.create(NetworkVO.EMP_EXTRACTOR).getDetails(padre);
-
-        network.parent = enti;
-
         try
         {
+            
+            enti = EntityExtractor.create(NetworkVO.EMP_EXTRACTOR).getDetails(padre);
+
+            network.type = NetworkVO.EMP_EXTRACTOR;
+
+            enti.type = NetworkVO.EMP_EXTRACTOR;
+            
+            network.parent = enti;
+            
             List<mapa_get_network_nodesResult> resultset = dbcon.mapa_get_network_nodes(1, padre).ToList();
 
             foreach (mapa_get_network_nodesResult res in resultset)
@@ -118,6 +121,7 @@ public class NetworkCompanyExtract : INetworkExtractor
                 nodo.name = res.nombre;
                 nodo.latitude = res.latitud;
                 nodo.longitude = res.longitud;
+                nodo.type = NetworkVO.EMP_EXTRACTOR;
 
                 nodos.Add(nodo);
             }

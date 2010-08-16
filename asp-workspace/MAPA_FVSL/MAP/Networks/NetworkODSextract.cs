@@ -39,6 +39,7 @@ public class NetworkODSextract : INetworkExtractor
                 ent.name = net.nombre;
                 ent.latitude = net.Latitud.ToString();
                 ent.longitude = net.Longitud.ToString();
+                ent.type = NetworkVO.ODS_EXTRACTOR;
                 netw.parent = ent;
                 netw.type = NetworkVO.ODS_EXTRACTOR;
 
@@ -102,6 +103,12 @@ public class NetworkODSextract : INetworkExtractor
         {   
             enti = EntityExtractor.create(NetworkVO.ODS_EXTRACTOR).getDetails(padre);
 
+            network.type = NetworkVO.ODS_EXTRACTOR;
+
+            enti.type = NetworkVO.ODS_EXTRACTOR;
+
+            network.parent = enti;
+
             List<mapa_get_network_nodesResult> resultset = dbcon.mapa_get_network_nodes(2, padre).ToList();
 
             foreach (mapa_get_network_nodesResult res in resultset)
@@ -112,13 +119,12 @@ public class NetworkODSextract : INetworkExtractor
                 nodo.name = res.nombre;
                 nodo.latitude = res.latitud;
                 nodo.longitude = res.longitud;
+                nodo.type = NetworkVO.ODS_EXTRACTOR;
 
                 nodos.Add(nodo);
             }
 
-            network.type = NetworkVO.ODS_EXTRACTOR;
-        
-            network.parent = enti;
+            
             
             network.nodes = nodos;
 

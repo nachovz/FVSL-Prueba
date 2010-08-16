@@ -95,7 +95,7 @@ public class CompanyExtract : IEntityExtractor
         aux.twitter = empin.Twitter;
         //aux.objective = empin.o;
         aux.email = empin.Correo;
-        aux.type = "empresa";
+        aux.type = NetworkVO.EMP_EXTRACTOR;
         aux.beneficiarios = getEMPbeneficiario(empin.Id);
         aux.awards = getEMPaward(empin.Id);
         aux.areas = getEMParea(empin.Id);

@@ -129,7 +129,7 @@ using System.Data.Linq;
             aux.twitter = coopin.Twitter;
             aux.objective = coopin.objetivos;
             aux.email = coopin.email;
-            aux.type = "cooperante";
+            aux.type = NetworkVO.COOP_EXTRACTOR;
             aux.beneficiarios = getCOOPbeneficiario(coopin.id_coperante);
             aux.awards = getCOOPaward(coopin.id_coperante);
             aux.areas = getCOOParea(coopin.id_coperante);
