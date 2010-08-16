@@ -44,7 +44,7 @@ package com.stc.maps.view.components.map
 						var marker:Marker = value[i].marker;
 						_positionedMarkers.push(new PositionedMarker(marker));
 					}else{
-						trace("NO MARKER LAT LNG");
+						trace("NO MARKER LAT LONG -> (type,name) - > ("+value[i].type+","+value[i].title+")");
 					}
 				}
 				_invalidated = true;
@@ -56,6 +56,16 @@ package com.stc.maps.view.components.map
 				_zoom = value;
 				_invalidated = true;
 			}
+		}
+		private var _visibilityMode:Boolean = false;
+		public function set visibilityMode(value:Boolean):void{
+			if (value != _visibilityMode) {
+				_visibilityMode = value;
+				_invalidated = true;
+			}
+		}
+		public function get visibilityMode():Boolean{
+			return _visibilityMode;
 		}
 		public function set clusterRadius(value:int):void
 		{
@@ -72,7 +82,13 @@ package com.stc.maps.view.components.map
 			var positionedMarkers:Dictionary = new Dictionary();
 			var positionedMarker:PositionedMarker;
 			for each (positionedMarker in _positionedMarkers) {
-				positionedMarkers[positionedMarker.id] = positionedMarker;
+				if(visibilityMode){
+					if(positionedMarker.marker.visible){
+						positionedMarkers[positionedMarker.id] = positionedMarker;
+					}
+				}else{
+					positionedMarkers[positionedMarker.id] = positionedMarker;
+				}
 			}
 			
 			// Rather than taking a sqaure root and dividing by a power of 2 to calculate every distance we

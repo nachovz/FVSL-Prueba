@@ -4,6 +4,7 @@
 				layout="absolute"
 				close="closeWindow(event)" 
 				showCloseButton="true"
+				title="Organizaciones Agrupadas"
 				>
 	
 	<mx:Script>
@@ -27,6 +28,9 @@
 				if(value != _dataProvider){
 					_dataProvider = value;
 					dataProviderChanged = true;
+					if(myList){
+						myList.rowCount = _dataProvider.length;
+					}
 					invalidateProperties();
 					dispatchEvent(new Event("dataProviderChanged"));
 				}
@@ -61,7 +65,24 @@
 				event.itemRenderer.data.dispatchEvent(new MapMouseEvent(MapMouseEvent.CLICK,event.itemRenderer.data.pane.map,event.itemRenderer.data.getLatLng()));
 			}
 
+
+			protected function myList_creationCompleteHandler(event:FlexEvent):void
+			{
+				// TODO Auto-generated method stub
+				if(_dataProvider){
+					myList.rowCount = _dataProvider.length;
+				}
+			}
+
 		]]>
 	</mx:Script>
-	<mx:List id="myList" rowHeight="40" height="100%" minHeight="100" maxWidth="500"  itemClick="myList_itemClickHandler(event)" initialize="myList_initializeHandler(event)"/>
+	<mx:VBox verticalScrollPolicy="on" maxHeight="300"  >
+		<mx:List id="myList" 
+				 verticalScrollPolicy="off" 
+				 rowHeight="40" 
+				 maxWidth="500" 
+				 itemClick="myList_itemClickHandler(event)" 
+				 initialize="myList_initializeHandler(event)"
+				 creationComplete="myList_creationCompleteHandler(event)"/>
+	</mx:VBox>
 </mx:TitleWindow>

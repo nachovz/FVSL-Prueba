@@ -67,13 +67,11 @@ package com.stc.maps.view.components.map.specialmarkers
 		}
 		
 		protected function mouseOverEventHandler(event:MapMouseEvent):void{
-			trace("Mouse Over Group Marker");
 			_time.reset();
 			_time.start();
 		}
 		private var infoWindowWithEffects:InfoWindowWithEffects = new InfoWindowWithEffects; 
 		protected function timerEventHandler(event:TimerEvent):void{
-			trace("Timer TICK");
 			infoWindowWithEffects = new InfoWindowWithEffects; 
 			var options:InfoWindowOptions=new InfoWindowOptions();
 			options.customContent=infoWindowWithEffects;
@@ -83,8 +81,6 @@ package com.stc.maps.view.components.map.specialmarkers
 			options.width = 151;
 			options.height = 52;
 			options.customOffset = new Point(151/2,80);
-			
-			
 			infoWindow = this.openInfoWindow(options,false);
 			infoWindowWithEffects.addEventListener(MouseEvent.MOUSE_OVER,infoWindowMosueOverHandler,false,0,true);
 			infoWindowWithEffects.addEventListener(MouseEvent.MOUSE_OUT,infoWindowMosueOutHandler,false,0,true);
@@ -100,14 +96,12 @@ package com.stc.maps.view.components.map.specialmarkers
 			
 		}
 		protected function mouseOutEventHandler(event:MapMouseEvent):void{
-			trace("Mouse Out Group Marker");
 			_time.stop();
 			_time.reset();
 			
 		}
 		
 		protected function infoWindowMosueOverHandler(event:MouseEvent):void{
-			trace("1-. Info Window Mouse Over Group Marker");
 			if(_timeStartInfo.running){
 				_timeStartInfo.stop();
 				_timeStartInfo.reset();
@@ -118,13 +112,11 @@ package com.stc.maps.view.components.map.specialmarkers
 		}
 		
 		protected function infoWindowMosueOutHandler(event:MouseEvent):void{
-			trace("2-. Info Window Mouse Out Group Marker");
 			_timeInfo.reset();
 			_timeInfo.start();
 		}
 		private var auxInfoWindowWithEffects:InfoWindowWithEffects;
 		protected function closeInfoWindowEventHandler(event:TimerEvent):void{
-			trace("Timer TICK Close Info Window");
 			if(infoWindowWithEffects){
 				infoWindowWithEffects.removeEventListener(MouseEvent.MOUSE_OVER,infoWindowMosueOverHandler);
 				infoWindowWithEffects.removeEventListener(MouseEvent.MOUSE_OUT,infoWindowMosueOutHandler);
@@ -139,21 +131,23 @@ package com.stc.maps.view.components.map.specialmarkers
 		}
 		
 		protected function closeEventEnded(event:EffectEvent):void{
-			trace("Close Info Window");
-			auxInfoWindowWithEffects.removeEventListener(EffectEvent.EFFECT_END,closeEventEnded);
-			this.closeInfoWindow();
-			auxInfoWindowWithEffects = null;
+			try{
+				auxInfoWindowWithEffects.removeEventListener(EffectEvent.EFFECT_END,closeEventEnded);
+				auxInfoWindowWithEffects = null;
+				this.closeInfoWindow();
+			}catch(e:Error){
+				trace(e);
+			}
+			
 		}
 		
 		protected function zoomInEventHandler(event:Event):void{
-			trace("Zoom In From Group Marker");
 			event.stopImmediatePropagation();
 			closeKnowInfoPanel();
 			var myPanel:IPane = pane;
 			myPanel.map.zoomIn(getLatLng());
 		}
 		protected function showListEventHandler(event:Event):void{
-			trace("Show List From Group Marker");
 			event.stopImmediatePropagation();
 			closeKnowInfoPanel();
 			var listGroupedFlags:ListGroupedFlags = new ListGroupedFlags;

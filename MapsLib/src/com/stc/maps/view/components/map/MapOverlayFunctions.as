@@ -54,7 +54,6 @@ package com.stc.maps.view.components.map
 		}
 		
 		private function map_mouseUpHandler(event:MapMouseEvent):void{
-			trace("Map Mouse up");
 			var auxContainer:Container = markerLocator.getMarkerComponent("groupFlag",0x0000FF,true,(Math.random()*99).toString()); 
 			var latlang : LatLng = event.latLng as LatLng;
 			

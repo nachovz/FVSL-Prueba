@@ -9,13 +9,13 @@
 			import mx.controls.List;
 			import mx.events.FlexEvent;
 			import mx.events.ListEvent;
-[Bindable] 	private var _dataProvider:Object = new ArrayCollection([{name:"Name 1"},{name:"Name 2"}]) ;
-[Bindable] 	private var _labelField:String = "name";
-[Bindable] 	private var _label:String = "Button";
-[Bindable] 	private var _labelDefault:String = "Button";
-[Bindable] 	private var _aligment:String = "left";
-			private var aligmentChange:Boolean = false;
-			private var selectedItem:int = 0;
+[Bindable] 	private var _dataProvider	:Object 	= new ArrayCollection([{name:"Name 1"},{name:"Name 2"}]) ;
+[Bindable] 	private var _labelField		:String 	= "name";
+[Bindable] 	private var _label			:String 	= "Button";
+[Bindable] 	private var _labelDefault	:String 	= "Button";
+[Bindable] 	private var _aligment		:String 	= "left";
+			private var aligmentChange	:Boolean 	= false;
+			private var selectedItem	:int 		= 0;
 			
 			public static var COMBOBOX_CHANGE:String = "change";
 			
@@ -118,15 +118,16 @@
 			{
 				timeToClose.addEventListener(TimerEvent.TIMER,tickEvent);
 			}
-			
+			public var itemSelected:Object = null;
 			protected function dispachChange(event:ListEvent):void{
+				itemSelected = event.target.selectedItem;
 				dispatchEvent(event);
 			}
-			
+		
 		]]>
 	</mx:Script>
 	<mx:Button id="myButton" label="{_label}" 
-			   mouseOver="if(!isOpen){comboBox.open(); isOpen = true;} overButton = true;myButton_mouseOutHandler(event);" 
+			   mouseOver="if(!isOpen){comboBox.open(); isOpen = true;} overButton = true; myButton_mouseOutHandler(event);" 
 			   mouseOut="overButton = false; myButton_mouseOutHandler(event);"
 			   creationComplete="myButton_creationCompleteHandler(event)" />
 	<mx:ComboBox id="comboBox" visible="false"

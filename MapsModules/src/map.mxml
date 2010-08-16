@@ -73,6 +73,7 @@
 		<mapplugins:ButtonComboBox  
 			aligment="right"
 			buttonDefaultLabel="Mas..."
+			buttonLabel="Todos"
 			dataProvider="{dataProvider}"
 			change="mapModel.comboBoxChangeHandler(event)"
 			/>

@@ -19,20 +19,9 @@
 				if(data is Marker){
 					var auxMarkerOption:MarkerOptions = data.getOptions();
 					myImage.addChild(auxMarkerOption.icon);
-					/* 
-					var auxRawChildren:IChildList = (auxMarkerOption.icon as Container).rawChildren;
-					var auxMC:MovieClip = MovieClip(auxRawChildren.getChildAt(0))
-					var myBitmapData:BitmapData = new BitmapData(80, 20, true, 0x000000);
-					myBitmapData.draw(auxMC);
-					var bmp:Bitmap = new Bitmap(myBitmapData);
-					myImage.source = bmp; 
-					*/
-					
 					if(_text.length<=0){
 						_text = data.getOptions().tooltip
 					}
-					
-					
 				}
 			}
 

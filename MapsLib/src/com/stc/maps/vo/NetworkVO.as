@@ -25,5 +25,34 @@ package com.stc.maps.vo
 			this.nodes = results;
 		}	
 
+		override public function clone():Object{
+			var newEntityVO:NetworkVO 		=	new NetworkVO;
+			newEntityVO.type				=	this.type;
+			newEntityVO.title				=	this.title; 
+			newEntityVO.id					=	this.id;
+			newEntityVO.lat					=	this.lat;
+			newEntityVO.long				=	this.long;
+			newEntityVO.direction			=	this.direction;
+			newEntityVO.webURL				=	this.webURL;
+			newEntityVO.objective			=	this.objective;
+			newEntityVO.email				=	this.email;
+			newEntityVO.phone				=	this.phone;
+			newEntityVO.imageData			=	this.imageData;
+			newEntityVO.geograficalFocus	=	this.geograficalFocus;
+			newEntityVO.organizationType	=	this.organizationType;
+			newEntityVO.financy				=	this.financy;
+			
+			newEntityVO.awards				=	this.awards;
+			newEntityVO.beneficiaries		=	this.beneficiaries;
+			newEntityVO.interventionAreas	=	this.interventionAreas;
+			
+			newEntityVO.nodes 				=	this.nodes;
+			newEntityVO.parentType 			=	this.parentType;
+			newEntityVO.entities 			=	this.entities;
+			
+			return newEntityVO;
+		}
+		
+		
 	}
 }

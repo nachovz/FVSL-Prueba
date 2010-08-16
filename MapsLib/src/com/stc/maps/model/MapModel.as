@@ -9,6 +9,9 @@ package com.stc.maps.model
 	import com.google.maps.MapZoomEvent;
 	import com.google.maps.overlays.Marker;
 	import com.google.maps.overlays.MarkerOptions;
+	import com.google.maps.overlays.Polyline;
+	import com.google.maps.overlays.PolylineOptions;
+	import com.google.maps.styles.StrokeStyle;
 	import com.stc.maps.control.MapsController;
 	import com.stc.maps.event.EntitiesEvent;
 	import com.stc.maps.event.FiltersEvent;
@@ -21,6 +24,7 @@ package com.stc.maps.model
 	import com.stc.maps.view.components.event.EntityRendererListEvent;
 	import com.stc.maps.view.components.map.Clusterer;
 	import com.stc.maps.view.components.map.MapOverlayFunctions;
+	import com.stc.maps.view.components.map.mapplugins.ButtonComboBox;
 	import com.stc.maps.view.components.map.specialmarkers.GroupMarkers;
 	import com.stc.maps.vo.EntityVO;
 	import com.stc.maps.vo.NetworkVO;
@@ -131,6 +135,9 @@ package com.stc.maps.model
 		[Bindable]	public var toggleVisibility : Boolean = false;
 		
 		
+		
+		private var clusteringMode:Boolean = true;
+		
 		/**
 		 * Called when the Google Map has been loaded successfully
 		 */
@@ -161,7 +168,9 @@ package com.stc.maps.model
 		{
 			if(clusterer){
 				clusterer.zoom = mainMap.getZoom();
-				setAllMarkersOnTheMap();
+				if(clusteringMode){
+					setAllMarkersOnTheMap();
+				}
 			}
 		}
 	
@@ -175,7 +184,6 @@ package com.stc.maps.model
 			mainMap.setCenter(new LatLng(entity.lat,entity.long));
 			mainMap.openInfoWindow(mainMap.getCenter(), new InfoWindowOptions({title: entity.title}));
 		}
-		
 		/**
 		 * Initial request of all the data layers
 		 */
@@ -209,7 +217,9 @@ package com.stc.maps.model
 					addEntityToMenu(Object(entities.getItemAt(0)).type);
 					addMapLayer(entities);
 					model.allEntities = concatArrays(model.allEntities,entities.source);
-					setAllMarkersOnTheMap();
+					if(clusteringMode){
+						setAllMarkersOnTheMap();
+					}
 				}
 			}
 		}
@@ -268,24 +278,33 @@ package com.stc.maps.model
 		private function hideMarker(ev : EntityRendererEvent) : void
 		{
 			var entity : EntityVO = ev.item as EntityVO;
-			if(entity.marker) Marker(entity.marker).visible = false;
+			if(entity.marker) {
+				Marker(entity.marker).visible = false;
+			}
 			if(entity.type==EntityVO.NETWORK)
 			{
 				var network : NetworkVO = entity as NetworkVO;
-				for each(var entt : EntityVO in network.nodes)
-				if(entt.marker) Marker(entt.marker).visible = false;
+				for each(var entt : EntityVO in network.nodes){
+					if(entt.marker) {
+						Marker(entt.marker).visible = false;
+					}
+				}
 			}
 		}
 		
 		private function showMarker(ev : EntityRendererEvent) : void
 		{
 			var entity : EntityVO = ev.item as EntityVO;
-			if(entity.marker) Marker(entity.marker).visible = true;
+			if(entity.marker) {
+				Marker(entity.marker).visible = true;
+			}
 			if(entity.type==EntityVO.NETWORK)
 			{
 				var network : NetworkVO = entity as NetworkVO;
 				for each(var entt : EntityVO in network.nodes)
-				if(entt.marker) Marker(entt.marker).visible = true;
+				if(entt.marker) {
+					Marker(entt.marker).visible = true;
+				}
 			}
 		}
 		
@@ -296,7 +315,9 @@ package com.stc.maps.model
 			{
 				if(entity.lat && entity.long)
 				{
-					if(entity.type==EntityVO.NETWORK && totalLayers==1) renderNetwork(entity as NetworkVO);
+					if(entity.type==EntityVO.NETWORK && totalLayers==1) {
+						renderNetwork(entity as NetworkVO);
+					}
 					
 					if(model.makersLatLongDictionary[entity.lat] && model.makersLatLongDictionary[entity.lat][entity.long] && totalLayers>1)
 					{
@@ -312,6 +333,8 @@ package com.stc.maps.model
 					}
 					else
 						createMarker( entity, getEntityIcon(entity.type) );
+				}else{
+					trace("HAS NO LAT OR LONG -> (type,Name) -> ("+entity.type +","+entity.title+")");
 				}
 			}
 		}
@@ -357,6 +380,29 @@ package com.stc.maps.model
 			} 
 		}
 		
+		private function createMarkerForNetworkVO( entity:EntityVO , auxIcon : Object) : void 
+		{
+			var latlang : LatLng = new LatLng( entity.lat, entity.long );
+			var markerOption : MarkerOptions = new MarkerOptions(
+				{  
+					label:entity.title,  
+					tooltip:entity.title,  
+					name: entity.title,
+					icon: auxIcon,  
+					hasShadow:true,
+					width:25,
+					height:32
+				});
+			
+			var pMarker:Marker = new Marker(latlang,markerOption);
+			if(entity.marker){
+				entity.marker.removeEventListener(MapMouseEvent.CLICK,marker_click);
+			}
+			entity.marker = pMarker;
+			entity.marker.addEventListener(MapMouseEvent.CLICK,marker_click,false,0,true);
+			mainMap.addOverlay( entity.marker as Marker);  
+		}
+		
 		private function createMarker( entity:EntityVO , auxIcon : Object) : void 
 		{
 			var latlang : LatLng = new LatLng( entity.lat, entity.long );
@@ -380,7 +426,9 @@ package com.stc.maps.model
 			
 			markerEntity[entity.marker] = entity;
 			
-			if(model.makersLatLongDictionary[entity.lat]==null) model.makersLatLongDictionary[entity.lat] = new Dictionary();
+			if(model.makersLatLongDictionary[entity.lat]==null) {
+				model.makersLatLongDictionary[entity.lat] = new Dictionary();
+			}
 			model.makersLatLongDictionary[entity.lat][entity.long] = entity;
 			mainMap.addOverlay( entity.marker as Marker);  
 		}
@@ -420,14 +468,135 @@ package com.stc.maps.model
 			model.allEntities = [];
 		}
 		
+		
+		private var seletedNetworkVO:NetworkVO;
+		private var seletedNetworkVOCloned:NetworkVO;
+		private var networkView:Boolean = false;
 		private function expandNetwork(ev : EntityRendererEvent) : void
 		{
-			clearMap();
 			
-			createMarker(ev.network as EntityVO,getEntityIcon(ev.network.type));
-			renderNetwork(ev.network as NetworkVO);
-			menu.entities = ev.network.nodes;
+			
+			/*CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO*/
+			/*CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO*/
+			/*CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO*/
+			/*CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO*/
+			/*CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO*/
+			/*CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO*/
+			/*CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO*/
+			/*CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO*/
+			/*CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO*/
+			/*CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO*/
+			/*CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO*/
+			/*CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO*/
+			/*CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO*/
+			/*CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO*/
+			/*CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO*/
+			/*CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO*/
+			/*CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO*/
+			/*CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO*/
+			/*CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO*/
+			/*CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO*/
+			/*CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO,CABLEADO*/
+			
+			var auxNetworkVO:NetworkVO = ev.network as NetworkVO;
+			auxNetworkVO.nodes = model.entities["cooperant"];
+			
+			/*FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO*/	
+			/*FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO*/	
+			/*FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO*/	
+			/*FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO*/	
+			/*FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO*/	
+			/*FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO*/	
+			/*FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO*/	
+			/*FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO*/	
+			/*FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO*/	
+			/*FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO*/	
+			/*FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO*/	
+			/*FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO*/	
+			/*FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO*/	
+			/*FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO*/	
+			/*FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO*/	
+			/*FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO*/	
+			/*FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO*/	
+			/*FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO*/	
+			/*FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO*/	
+			/*FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO*/	
+			/*FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO*/	
+			/*FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO,FIN CABLEADO*/
+			
+			
+			if(networkView){
+				networkView = false;
+				closeNetworkVOView();
+			}else{
+				networkView = true;
+				seletedNetworkVO = ev.network as NetworkVO;
+				seletedNetworkVOCloned = seletedNetworkVO.clone() as NetworkVO;
+				clustetingModeChanger(false);
+				menu.entities = ev.network.nodes;
+				hideOrShowAllMarkersForNetworkVO(false);
+				drawLinesForNetworkVO();
+			}
+			
 		}
+		
+		private function closeNetworkVOView():void{
+			networkView = false;
+			if(arrayOfNetworkVO.length>0){
+				for(var i:int = 0 ; i<arrayOfNetworkVO.length; i ++){
+					mainMap.removeOverlay(arrayOfNetworkVO[i]);
+				}
+			}
+			arrayOfNetworkVO = [];
+			seletedNetworkVOCloned = null;
+			seletedNetworkVO = null;
+			hideOrShowAllMarkersForNetworkVO(true);
+			clustetingModeChanger(true);
+			menu.entities = new ArrayCollection(model.allEntities);
+			
+		}
+		
+		private var arrayOfNetworkVO:Array = [];
+		private function drawLinesForNetworkVO():void{
+			createMarkerForNetworkVO(seletedNetworkVOCloned,getEntityIcon(seletedNetworkVO.type));
+			var mainMarker:Marker = seletedNetworkVOCloned.marker as Marker;
+			arrayOfNetworkVO.push(mainMarker);
+			
+			for(var i : int = 0 ; i<seletedNetworkVOCloned.nodes.length ; i++){
+				var auxEntity:EntityVO = seletedNetworkVOCloned.nodes[i] as EntityVO;
+				auxEntity = auxEntity.clone() as EntityVO;
+				createMarkerForNetworkVO(auxEntity,getEntityIcon(auxEntity.type));
+				
+				var auxMarker:Marker = auxEntity.marker as Marker;
+				auxMarker.visible = true;
+				arrayOfNetworkVO.push(auxMarker);
+				
+				var polyShape:Polyline = new Polyline(
+					[mainMarker.getLatLng(), auxMarker.getLatLng()]
+					, 
+					new PolylineOptions(
+						{ strokeStyle: new StrokeStyle({
+					color: 0x000000,
+					thickness: 2,
+					alpha: 0.7})
+				}));
+				arrayOfNetworkVO.push(polyShape);
+				mainMap.addOverlay(polyShape);
+				
+			}
+		}
+		
+		private function hideOrShowAllMarkersForNetworkVO(value:Boolean):void{
+			for(var i:int = 0; i<model.allEntities.length; i++){
+				var auxMarker:Marker = model.allEntities[i].marker as Marker;
+				try{
+					auxMarker.visible = value;
+				}catch(e:Error){
+					trace("Flag Number " + i + " with Type and Name ("+model.allEntities[i].type+","+model.allEntities[i].title+") has no marker.");
+				}
+			}
+		}
+		
 		
 		private function showNetwork(ev : EntityRendererEvent) : void
 		{
@@ -458,7 +627,9 @@ package com.stc.maps.model
 				if(model.entities[entity] && pastString != entity ){
 					pastString = entity;
 					model.allEntities = concatArrays(model.allEntities,model.entities[entity].source);
-					setAllMarkersOnTheMap();
+					if(clusteringMode){
+						setAllMarkersOnTheMap();
+					}
 				}
 			}
 			
@@ -494,8 +665,12 @@ package com.stc.maps.model
 		
 		public function toggleOptons_clickHandler(event:ItemClickEvent):void 
 		{
-			var entityList : Array = [];
+			if(networkView){
+				closeNetworkVOView();
+			}
 			
+			
+			var entityList : Array = [];
 			if(event.item.keyName!="all" && event.item.keyName!="network")
 			{
 				entityList.push(event.item.keyName);
@@ -556,6 +731,7 @@ package com.stc.maps.model
 		
 		private var attachedMarkers:Array = [];
 		private function setAllMarkersOnTheMap():void{
+			var myMarker:Marker;
 			if(!clusterer){
 				clusterer = new Clusterer(model.allEntities, mainMap.getZoom(), 30);
 			}else{
@@ -587,7 +763,7 @@ package com.stc.maps.model
 							hasShadow:true 
 						});
 					;
-					var myMarker:Marker =  cluster[0]  as Marker;
+					myMarker =  cluster[0]  as Marker;
 					var latlang : LatLng =myMarker.getLatLng();
 					theGroupMarkers = new GroupMarkers(latlang,markerOption);
 					theGroupMarkers.allMarkers = cluster;
@@ -610,6 +786,28 @@ package com.stc.maps.model
 		{
 			// TODO Auto-generated method stub
 			trace("COMBO BOX CHANGE")
+			var auxButtonComboBox:ButtonComboBox = (event.target as ButtonComboBox)
+			var auxObj:Object = auxButtonComboBox.itemSelected as Object;
+			auxButtonComboBox.buttonLabel = auxObj.name;
+			
+		}
+		
+		private function clustetingModeChanger(value:Boolean):void{
+			clusteringMode = value;
+			var myMarker:Marker
+			if(clusteringMode){
+				setAllMarkersOnTheMap();
+			}else{
+				for each (var marker:GroupMarkers in attachedMarkers) {
+					mainMap.removeOverlay(marker);
+					var auxArray:Array = marker.allMakers;
+					for(var i:int =0; i<auxArray.length ; i++ ){
+						myMarker =  auxArray[i] as Marker;
+						myMarker.visible = true;
+					}
+				}
+				attachedMarkers = [];
+			}
 		}
 		
 		

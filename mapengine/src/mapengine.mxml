@@ -24,7 +24,6 @@
 
 			protected function loadingHandler(event:Event):void
 			{
-				trace("LOADING");
 				customLoader = new CustomLoader;
 				addChild(customLoader);
 			}
@@ -33,7 +32,6 @@
 			private var _bytesExpected:uint;
 			protected function progressHandler(event:ModuleEvent):void
 			{
-				trace("PROGRESS");
 				_bytesLoaded = event.bytesLoaded;
 				_bytesExpected = event.bytesTotal;
 				customLoader.draw( (Number(_bytesLoaded) / Number(_bytesExpected) ) );
@@ -42,14 +40,12 @@
 
 			protected function readyHandler(event:ModuleEvent):void
 			{
-				trace("READY");
 				progressBar_completeEffect.addEventListener(EffectEvent.EFFECT_END,effectEndEventHandler,false,0,true);
 				progressBar_completeEffect.play([customLoader]);
 				
 			}
 			
 			protected function effectEndEventHandler(event:EffectEvent):void{
-				trace("EFFECT READY");
 				removeChild(customLoader);
 				progressBar_completeEffect.removeEventListener(EffectEvent.EFFECT_END,effectEndEventHandler);
 				customLoader =null;
@@ -58,10 +54,6 @@
 				
 			}
 
-			protected function setupHandler(event:ModuleEvent):void
-			{
-				trace("SETUP");
-			}
 
     	]]>
     </mx:Script>
@@ -74,9 +66,10 @@
 		id="chartModuleLoader" 
 		width="100%" height="100%" 
 		url="map.swf"
-		setup="setupHandler(event)"
 		ready="readyHandler(event)"
 		progress="progressHandler(event)"
 		loading="loadingHandler(event)"
-		error="errorHandler(event)"/>
+		error="errorHandler(event)"
+		
+		/>
 </mx:Application>

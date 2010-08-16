@@ -37,7 +37,6 @@
     <classEntry path="com.stc.maps.view.components.map.mapplugins.InfoWindowWithEffects"/>
     <classEntry path="com.stc.maps.view.components.map.mapplugins.MapToggleButtonBar"/>
     <classEntry path="com.stc.maps.view.components.map.specialmarkers.GroupMarkers"/>
-    <classEntry path="com.stc.maps.view.components.map.specialmarkers.MarkerWithData"/>
     <classEntry path="com.stc.maps.view.components.map.utils.ListGroupedFlags"/>
     <classEntry path="com.stc.maps.view.components.map.utils.renderers.EntityVORenderer"/>
     <classEntry path="com.stc.maps.vo.EntityVO"/>
@@ -47,13 +46,13 @@
     <classEntry path="com.stc.maps.view.components.map.mapplugins.ButtonComboBox"/>
   </includeClasses>
   <includeResources>
-    <resourceEntry destPath="com/assets/img/ur_logo.gif" sourcePath="com/assets/img/ur_logo.gif"/>
     <resourceEntry destPath="com/assets/markers/3/cooperantes_small.png" sourcePath="com/assets/markers/3/cooperantes_small.png"/>
+    <resourceEntry destPath="com/assets/img/ur_logo.gif" sourcePath="com/assets/img/ur_logo.gif"/>
     <resourceEntry destPath="com/assets/markers/3/ods_small.png" sourcePath="com/assets/markers/3/ods_small.png"/>
     <resourceEntry destPath="com/assets/markers/3/otros.png" sourcePath="com/assets/markers/3/otros.png"/>
     <resourceEntry destPath="com/assets/markers/3/empresas.png" sourcePath="com/assets/markers/3/empresas.png"/>
-    <resourceEntry destPath="com/assets/markers/3/cooperantes.png" sourcePath="com/assets/markers/3/cooperantes.png"/>
     <resourceEntry destPath="com/assets/img/twitter.png" sourcePath="com/assets/img/twitter.png"/>
+    <resourceEntry destPath="com/assets/markers/3/cooperantes.png" sourcePath="com/assets/markers/3/cooperantes.png"/>
     <resourceEntry destPath="com/assets/markers/markers.swf" sourcePath="com/assets/markers/markers.swf"/>
     <resourceEntry destPath="com/assets/markers/3/redes.png" sourcePath="com/assets/markers/3/redes.png"/>
     <resourceEntry destPath="com/assets/markers/3/otros_small.png" sourcePath="com/assets/markers/3/otros_small.png"/>

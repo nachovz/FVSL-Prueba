@@ -71,7 +71,6 @@ package
 		
 		public function draw(fractionLoaded:Number):void
 		{
-			trace(fractionLoaded)
 			t.text = int(fractionLoaded*100).toString()+"%";
 			
 			pathfLogo.x = Application.application.width/2 - pathfLogo.width/2;

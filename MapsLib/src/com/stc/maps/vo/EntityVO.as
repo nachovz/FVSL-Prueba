@@ -1,7 +1,8 @@
 package com.stc.maps.vo
 {
-	import mx.collections.ArrayCollection;
 	import flash.utils.ByteArray;
+	
+	import mx.collections.ArrayCollection;
 /* 	import flash.utils.ByteArray; */
 	
 	[Bindable]
@@ -10,7 +11,7 @@ package com.stc.maps.vo
 		public static const COOPERANT : String 	= "cooperant";
 		public static const COMPANY : String	= "company";
 		public static const ODS : String 		= "ods";
-		public static const NETWORK : String 		= "network";
+		public static const NETWORK : String 	= "network";
 		
 		
 		public var id : Number = 0;
@@ -73,6 +74,30 @@ package com.stc.maps.vo
 			}
 			else 
 				return 0;
+		}
+		
+		public function clone():Object{
+			var newEntityVO:EntityVO 		=	new EntityVO;
+			newEntityVO.type				=	this.type;
+			newEntityVO.title				=	this.title; 
+			newEntityVO.id					=	this.id;
+			newEntityVO.lat					=	this.lat;
+			newEntityVO.long				=	this.long;
+			newEntityVO.direction			=	this.direction;
+			newEntityVO.webURL				=	this.webURL;
+			newEntityVO.objective			=	this.objective;
+			newEntityVO.email				=	this.email;
+			newEntityVO.phone				=	this.phone;
+			newEntityVO.imageData			=	this.imageData;
+			newEntityVO.geograficalFocus	=	this.geograficalFocus;
+			newEntityVO.organizationType	=	this.organizationType;
+			newEntityVO.financy				=	this.financy;
+			
+			newEntityVO.awards				=	this.awards;
+			newEntityVO.beneficiaries		=	this.beneficiaries;
+			newEntityVO.interventionAreas	=	this.interventionAreas;
+			
+			return newEntityVO;
 		}
 	}
 }
