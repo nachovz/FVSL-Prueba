@@ -46,7 +46,12 @@ package com.stc.maps.vo
 			newEntityVO.beneficiaries		=	this.beneficiaries;
 			newEntityVO.interventionAreas	=	this.interventionAreas;
 			
-			newEntityVO.nodes 				=	this.nodes;
+			newEntityVO.nodes 				=	new ArrayCollection;
+			for(var i :int=0; i<this.nodes.length; i++){
+				var auxOldEnt:EntityVO = this.nodes[i] as EntityVO;
+				var auxEnt:EntityVO = auxOldEnt.clone() as EntityVO;
+				newEntityVO.nodes.addItem(auxEnt);
+			}
 			newEntityVO.parentType 			=	this.parentType;
 			newEntityVO.entities 			=	this.entities;
 			

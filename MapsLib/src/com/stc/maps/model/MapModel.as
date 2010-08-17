@@ -315,9 +315,11 @@ package com.stc.maps.model
 			{
 				if(entity.lat && entity.long)
 				{
-					if(entity.type==EntityVO.NETWORK && totalLayers==1) {
+					
+					/*ALEJO ESTA ES LA FUNCION QUE DIBUJABA LA RED CON SUS NODOS PERO ES SOLO CUANDO AHI UNA RED*/
+					/*if(entity.type==EntityVO.NETWORK && totalLayers==1) {
 						renderNetwork(entity as NetworkVO);
-					}
+					}*/
 					
 					if(model.makersLatLongDictionary[entity.lat] && model.makersLatLongDictionary[entity.lat][entity.long] && totalLayers>1)
 					{
@@ -531,7 +533,7 @@ package com.stc.maps.model
 			}else{
 				networkView = true;
 				seletedNetworkVO = ev.network as NetworkVO;
-				seletedNetworkVOCloned = seletedNetworkVO.clone() as NetworkVO;
+				seletedNetworkVOCloned = seletedNetworkVO.clone() as NetworkVO; 
 				clustetingModeChanger(false);
 				menu.entities = ev.network.nodes;
 				hideOrShowAllMarkersForNetworkVO(false);
@@ -544,7 +546,15 @@ package com.stc.maps.model
 			networkView = false;
 			if(arrayOfNetworkVO.length>0){
 				for(var i:int = 0 ; i<arrayOfNetworkVO.length; i ++){
-					mainMap.removeOverlay(arrayOfNetworkVO[i]);
+					if(arrayOfNetworkVO[i] is Marker){
+						var auxM:Marker = arrayOfNetworkVO[i] as Marker;
+						mainMap.removeOverlay(auxM);
+					}
+					if(arrayOfNetworkVO[i] is Polyline){
+						var auxP:Polyline = arrayOfNetworkVO[i] as Polyline;
+						mainMap.removeOverlay(auxP);
+						
+					}
 				}
 			}
 			arrayOfNetworkVO = [];
@@ -558,13 +568,12 @@ package com.stc.maps.model
 		
 		private var arrayOfNetworkVO:Array = [];
 		private function drawLinesForNetworkVO():void{
-			createMarkerForNetworkVO(seletedNetworkVOCloned,getEntityIcon(seletedNetworkVO.type));
+			createMarkerForNetworkVO(seletedNetworkVOCloned,getEntityIcon(seletedNetworkVOCloned.type));
 			var mainMarker:Marker = seletedNetworkVOCloned.marker as Marker;
 			arrayOfNetworkVO.push(mainMarker);
 			
 			for(var i : int = 0 ; i<seletedNetworkVOCloned.nodes.length ; i++){
 				var auxEntity:EntityVO = seletedNetworkVOCloned.nodes[i] as EntityVO;
-				auxEntity = auxEntity.clone() as EntityVO;
 				createMarkerForNetworkVO(auxEntity,getEntityIcon(auxEntity.type));
 				
 				var auxMarker:Marker = auxEntity.marker as Marker;
