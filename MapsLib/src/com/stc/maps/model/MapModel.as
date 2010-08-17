@@ -398,10 +398,10 @@ package com.stc.maps.model
 			
 			var pMarker:Marker = new Marker(latlang,markerOption);
 			if(entity.marker){
-				entity.marker.removeEventListener(MapMouseEvent.CLICK,marker_click);
+				entity.marker.removeEventListener(MapMouseEvent.CLICK,marker_click_for_networkVO);
 			}
 			entity.marker = pMarker;
-			entity.marker.addEventListener(MapMouseEvent.CLICK,marker_click,false,0,true);
+			entity.marker.addEventListener(MapMouseEvent.CLICK,marker_click_for_networkVO,false,0,true);
 			mainMap.addOverlay( entity.marker as Marker);  
 		}
 		
@@ -434,7 +434,33 @@ package com.stc.maps.model
 			model.makersLatLongDictionary[entity.lat][entity.long] = entity;
 			mainMap.addOverlay( entity.marker as Marker);  
 		}
-		
+		private function marker_click_for_networkVO(event : MapMouseEvent) : void
+		{
+			var entity : EntityVO = networkVODictionaryView[event.target] as EntityVO;
+			
+			var input : InputBox = new InputBox();
+			input.data = entity;
+			input.addEventListener(EntityRendererEvent.EXPAND_NETWORK,expandNetwork,false,0,true);
+			
+			if(entity.type!="network") 
+			{
+				var ev : EntitiesEvent = new EntitiesEvent(EntitiesEvent.GET_ENTITY_DETAILS,input.getEntityDetailsHandlers);
+				ev.entityType = entity.type;
+				ev.entityId = entity.id.toString();
+				ev.dispatch();
+			}
+			else
+			{
+				var ev : EntitiesEvent = new EntitiesEvent(EntitiesEvent.GET_NETWORK_DETAILS,input.getNetworkDetailsHandlers);
+				ev.entityType = entity.type;
+				ev.entityId = entity.id.toString();
+				ev.dispatch();
+			}
+			
+			PopUpManager.addPopUp(input,containerThis);
+			PopUpManager.centerPopUp(input);
+			input.y = input.y-100;
+		}
 		private function marker_click(event : MapMouseEvent) : void
 		{
 			var entity : EntityVO = markerEntity[event.target] as EntityVO;
@@ -474,6 +500,7 @@ package com.stc.maps.model
 		private var seletedNetworkVO:NetworkVO;
 		private var seletedNetworkVOCloned:NetworkVO;
 		private var networkView:Boolean = false;
+		private var networkVODictionaryView:Dictionary = new Dictionary(true)
 		private function expandNetwork(ev : EntityRendererEvent) : void
 		{
 			
@@ -528,10 +555,10 @@ package com.stc.maps.model
 			
 			
 			if(networkView){
-				networkView = false;
 				closeNetworkVOView();
 			}else{
 				networkView = true;
+				networkVODictionaryView = new Dictionary(true);
 				seletedNetworkVO = ev.network as NetworkVO;
 				seletedNetworkVOCloned = seletedNetworkVO.clone() as NetworkVO; 
 				clustetingModeChanger(false);
@@ -544,10 +571,14 @@ package com.stc.maps.model
 		
 		private function closeNetworkVOView():void{
 			networkView = false;
+			networkVODictionaryView = null;
 			if(arrayOfNetworkVO.length>0){
 				for(var i:int = 0 ; i<arrayOfNetworkVO.length; i ++){
 					if(arrayOfNetworkVO[i] is Marker){
 						var auxM:Marker = arrayOfNetworkVO[i] as Marker;
+						if(auxM.hasEventListener(MapMouseEvent.CLICK)){
+							auxM.removeEventListener(MapMouseEvent.CLICK,marker_click_for_networkVO);
+						}
 						mainMap.removeOverlay(auxM);
 					}
 					if(arrayOfNetworkVO[i] is Polyline){
@@ -571,7 +602,7 @@ package com.stc.maps.model
 			createMarkerForNetworkVO(seletedNetworkVOCloned,getEntityIcon(seletedNetworkVOCloned.type));
 			var mainMarker:Marker = seletedNetworkVOCloned.marker as Marker;
 			arrayOfNetworkVO.push(mainMarker);
-			
+			networkVODictionaryView[mainMarker] = seletedNetworkVOCloned ;
 			for(var i : int = 0 ; i<seletedNetworkVOCloned.nodes.length ; i++){
 				var auxEntity:EntityVO = seletedNetworkVOCloned.nodes[i] as EntityVO;
 				createMarkerForNetworkVO(auxEntity,getEntityIcon(auxEntity.type));
@@ -580,6 +611,7 @@ package com.stc.maps.model
 				auxMarker.visible = true;
 				arrayOfNetworkVO.push(auxMarker);
 				
+				networkVODictionaryView[auxMarker] = auxEntity ;
 				var polyShape:Polyline = new Polyline(
 					[mainMarker.getLatLng(), auxMarker.getLatLng()]
 					, 
