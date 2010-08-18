@@ -97,7 +97,7 @@ package com.stc.maps.model
 		 * From then on the data iretrived from this main applicacion model.
 		 * 
 		 * */
-		[Bindable]
+		//[Bindable]
 		private var model : ModelLocator = ModelLocator.getInstance();
 		
 		/**
@@ -127,12 +127,14 @@ package com.stc.maps.model
 		/**
 		 * If the advanced search panel is visible or not.
 		 */
-		[Bindable]	public var searchVisibility : Boolean = false;
+		//[Bindable]	
+		public var searchVisibility : Boolean = false;
 		
 		/**
 		 * If the toggle button bar for layers is visible or not.
 		 */
-		[Bindable]	public var toggleVisibility : Boolean = false;
+		//[Bindable]	
+		public var toggleVisibility : Boolean = false;
 		
 		
 		
@@ -451,7 +453,7 @@ package com.stc.maps.model
 			}
 			else
 			{
-				var ev : EntitiesEvent = new EntitiesEvent(EntitiesEvent.GET_NETWORK_DETAILS,input.getNetworkDetailsHandlers);
+				ev = new EntitiesEvent(EntitiesEvent.GET_NETWORK_DETAILS,input.getNetworkDetailsHandlers);
 				ev.entityType = entity.type;
 				ev.entityId = entity.id.toString();
 				ev.dispatch();
@@ -477,7 +479,7 @@ package com.stc.maps.model
 			}
 			else
 			{
-				var ev : EntitiesEvent = new EntitiesEvent(EntitiesEvent.GET_NETWORK_DETAILS,input.getNetworkDetailsHandlers);
+				ev = new EntitiesEvent(EntitiesEvent.GET_NETWORK_DETAILS,input.getNetworkDetailsHandlers);
 				ev.entityType = entity.type;
 				ev.entityId = entity.id.toString();
 				ev.dispatch();

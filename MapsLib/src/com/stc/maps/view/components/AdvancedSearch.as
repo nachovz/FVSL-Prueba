@@ -203,7 +203,7 @@ package com.stc.maps.view.components
 					return wraper;
 				break;
 				case FilterVO.YESNO:
-					var cmb : ComboBox = new ComboBox();
+					cmb = new ComboBox();
 					cmb.percentWidth = 80;
 					cmb.dataProvider = new ArrayCollection([{ id: "0", label: "No" },{ id: "1", label: "Si" }]);
 					wraper.addChild(cmb);
@@ -219,7 +219,7 @@ package com.stc.maps.view.components
 					return mult;
 				break;
 				default:
-					var txtinpt : TextInput = new TextInput();
+					txtinpt = new TextInput();
 					wraper.addChild(txtinpt);
 					formItems.push(txtinpt);
 					return wraper;
@@ -240,7 +240,7 @@ package com.stc.maps.view.components
 					return cmb.selectedItem;
 				break;
 				case FilterVO.YESNO:
-					var cmb : ComboBox = ComboBox(renderer);
+					cmb = ComboBox(renderer);
 					return cmb.selectedItem.id;
 				break;
 				case FilterVO.MULTIPLE:
@@ -248,7 +248,7 @@ package com.stc.maps.view.components
 					return mult.getSelectedValuesByComa();
 				break;
 				default:
-					var txtinpt : TextInput = TextInput(renderer);
+					txtinpt = TextInput(renderer);
 					return txtinpt.text;
 				break;
 			}

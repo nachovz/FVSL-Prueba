@@ -54,7 +54,7 @@ package com.stc.maps.business
 			aux.label = "Pais";
 			arrayFilters.addItem(aux);
 			
-			var aux : FilterVO = new FilterVO();
+			aux = new FilterVO();
 			aux.id = 1;
 			aux.type = FilterVO.COMBO;
 			aux.keyName = CatalogValueVO.STATES;
@@ -118,7 +118,7 @@ package com.stc.maps.business
 			aux.label = "Pais";
 			arrayFilters.addItem(aux);
 			
-			var aux : FilterVO = new FilterVO();
+			aux = new FilterVO();
 			aux.id = 1;
 			aux.type = FilterVO.COMBO;
 			aux.keyName = CatalogValueVO.STATES;
@@ -161,7 +161,7 @@ package com.stc.maps.business
 			aux.label = "Pais";
 			arrayFilters.addItem(aux);
 			
-			var aux : FilterVO = new FilterVO();
+			aux = new FilterVO();
 			aux.id = 1;
 			aux.type = FilterVO.COMBO;
 			aux.keyName = CatalogValueVO.STATES;
@@ -203,7 +203,7 @@ package com.stc.maps.business
 			aux.label = "Pais";
 			arrayFilters.addItem(aux);
 			
-			var aux : FilterVO = new FilterVO();
+			aux = new FilterVO();
 			aux.id = 1;
 			aux.type = FilterVO.COMBO;
 			aux.keyName = CatalogValueVO.STATES;
