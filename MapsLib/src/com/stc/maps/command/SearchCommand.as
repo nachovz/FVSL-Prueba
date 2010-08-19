@@ -11,18 +11,24 @@ package com.stc.maps.command
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
+	import mx.rpc.Responder;
 	import mx.rpc.events.ResultEvent;
 	
 	public class SearchCommand extends Command
 	{
+		private var multipleOrgSearchHandlers : mx.rpc.Responder = new mx.rpc.Responder(multipleOrgResult, fault);
 		private var _event : CairngormEvent;
 		private var _type : String;
+		private var orgList : Array; 
+		private var tempEntities : ArrayCollection = new ArrayCollection();
+		private var params : ArrayCollection;
 		
 		override public function execute(event:CairngormEvent) : void
 		{
 			super.execute(event);
 
 			_event = event;
+			orgList = SearchEvent(event).entityOrgList;
             switch(SearchEvent(event).entityType)
             {
 				case EntityVO.NETWORK:
@@ -72,10 +78,18 @@ package com.stc.maps.command
 			//enfoque
 			//array[7] = getValueByName(values,CatalogValueVO.FINANCY).value.toString();
 			array[7] = "1";
-			var params : ArrayCollection = new ArrayCollection(array);
+			params = new ArrayCollection(array);
 			
-			var delegate : SearchDelegate = new SearchDelegate(this,"ParticipantService");
-			delegate.searchEntity(event,params);
+			if(orgList.length==1)
+			{
+				var delegate : SearchDelegate = new SearchDelegate(this,"ParticipantService");
+				delegate.searchEntity(event,params,orgList[0]);
+			}
+			else
+			{
+				var delegate : SearchDelegate = new SearchDelegate(multipleOrgSearchHandlers,"ParticipantService");
+				delegate.searchEntity(event,params,orgList[1]);
+			}
 		}
 
 		private function searchCompany(event : SearchEvent):void
@@ -98,10 +112,18 @@ package com.stc.maps.command
 			//enfoque
 			array[4] = getValueByName(values,CatalogValueVO.APPROACHES).value.toString();
 			//array[6] = 0;
-			var params : ArrayCollection = new ArrayCollection(array);
+			params = new ArrayCollection(array);
 			
-			var delegate : SearchDelegate = new SearchDelegate(this,"ParticipantService");
-			delegate.searchEntity(event,params);
+			if(orgList.length==1)
+			{
+				var delegate : SearchDelegate = new SearchDelegate(this,"ParticipantService");
+				delegate.searchEntity(event,params,orgList[0]);
+			}
+			else
+			{
+				var delegate : SearchDelegate = new SearchDelegate(multipleOrgSearchHandlers,"ParticipantService");
+				delegate.searchEntity(event,params,orgList[1]);
+			}
 		}
 
 		private function searchODS(event : SearchEvent):void
@@ -131,10 +153,18 @@ package com.stc.maps.command
 			//financiamiento
 			//array[6] = Number(getValueByName(values,CatalogValueVO.FINANCY).value);
 			//array[6] = 0;
-			var params : ArrayCollection = new ArrayCollection(array);
+			params = new ArrayCollection(array);
 			
-			var delegate : SearchDelegate = new SearchDelegate(this,"ParticipantService");
-			delegate.searchEntity(event,params);
+			if(orgList.length==1)
+			{
+				var delegate : SearchDelegate = new SearchDelegate(this,"ParticipantService");
+				delegate.searchEntity(event,params,orgList[0]);
+			}
+			else
+			{
+				var delegate : SearchDelegate = new SearchDelegate(multipleOrgSearchHandlers,"ParticipantService");
+				delegate.searchEntity(event,params,orgList[1]);
+			}
 		}
 
 		private function searchNetwork(event : SearchEvent):void
@@ -152,10 +182,18 @@ package com.stc.maps.command
 			//anombreCoop
 			array[2] = getValueByName(values,"name").value.toString();
 			//array[2] = "is";
-			var params : ArrayCollection = new ArrayCollection(array);
+			params = new ArrayCollection(array);
 			
-			var delegate : SearchDelegate = new SearchDelegate(this,"ParticipantService");
-			delegate.searchNetwork(event,params);
+			if(orgList.length==1)
+			{
+				var delegate : SearchDelegate = new SearchDelegate(this,"ParticipantService");
+				delegate.searchEntity(event,params,orgList[0]);
+			}
+			else
+			{
+				var delegate : SearchDelegate = new SearchDelegate(multipleOrgSearchHandlers,"ParticipantService");
+				delegate.searchEntity(event,params,orgList[1]);
+			}
 		}
 
 		private function searchTest(event : SearchEvent):void
@@ -178,31 +216,51 @@ package com.stc.maps.command
 			array[5] = 1;
 			//financiamiento
 			array[6] = 0;
-			var params : ArrayCollection = new ArrayCollection(array);
+			params = new ArrayCollection(array);
 			
 			var delegate : SearchDelegate = new SearchDelegate(this,"ParticipantService");
-			delegate.searchEntity(event,params);
+			delegate.searchEntity(event,params,orgList[0]);
 		}
 
-		override public function result(data : Object):void
+		private function multipleOrgResult(data : Object):void
 		{
-			var results : ArrayCollection;
 			var entitiesArray : ArrayCollection;
 			switch(SearchEvent(_event).entityType)
 			{
 				case EntityVO.NETWORK:
 					 entitiesArray = data.result;
 					 _type = SearchEvent(_event).entityType;
-					 results = processNetworks(entitiesArray);
+					 tempEntities = processNetworks(entitiesArray,orgList[1]);
 				break;
 				default:
 					 entitiesArray = data.result;
 					 _type = SearchEvent(_event).entityType;
-					 results = processEntities(entitiesArray);
+					 tempEntities = processEntities(entitiesArray,orgList[1]);
 				break;
 			}
 		
-			
+			var delegate : SearchDelegate = new SearchDelegate(this,"ParticipantService");
+			delegate.searchEntity(_event as SearchEvent,params,orgList[0]);
+		}
+
+		override public function result(data : Object):void
+		{
+			var results : ArrayCollection = tempEntities;
+			var entitiesArray : ArrayCollection;
+			switch(SearchEvent(_event).entityType)
+			{
+				case EntityVO.NETWORK:
+					 entitiesArray = data.result;
+					 _type = SearchEvent(_event).entityType;
+					 results = new ArrayCollection(results.source.concat(processNetworks(entitiesArray,orgList[0]).source));
+				break;
+				default:
+					 entitiesArray = data.result;
+					 _type = SearchEvent(_event).entityType;
+					 results = new ArrayCollection(results.source.concat(processEntities(entitiesArray,orgList[0]).source));
+				break;
+			}
+		
 			var ev : ResultEvent = new ResultEvent(ResultEvent.RESULT,false,true,results);
 			SearchEvent(_event).callbacks.result(ev);
 		}
@@ -212,9 +270,9 @@ package com.stc.maps.command
 			Alert.show("Error en la busqueda.");
 		}
 		
-		private function processEntities(entitiesArray : ArrayCollection) : ArrayCollection
+		private function processEntities(entitiesArray : ArrayCollection, orgType : String) : ArrayCollection
 		{
-			var results : ArrayCollection = null;
+			var results : ArrayCollection = new ArrayCollection();
 			if(entitiesArray && entitiesArray.length>0)
 			{
 				results = new ArrayCollection();
@@ -227,6 +285,7 @@ package com.stc.maps.command
 						var entity : EntityVO = new EntityVO();
 						entity.data = obj;
 						entity.type = _type;
+						entity.org = orgType;
 						
 						results.addItem(entity);
 					}
@@ -237,9 +296,9 @@ package com.stc.maps.command
 			return results;
 		}
 		
-		private function processNetworks(entitiesArray : ArrayCollection) : ArrayCollection
+		private function processNetworks(entitiesArray : ArrayCollection, orgType : String) : ArrayCollection
 		{
-			var results : ArrayCollection = null;
+			var results : ArrayCollection = new ArrayCollection();
 			if(entitiesArray && entitiesArray.length>0)
 			{
 				results = new ArrayCollection();
@@ -252,6 +311,7 @@ package com.stc.maps.command
 						var entity : NetworkVO = new NetworkVO();
 						entity.data = obj.parent;
 						entity.type = EntityVO.NETWORK;
+						entity.org = orgType;
 						entity.parentType = obj.parent.type;
 						entity.setNodesObjects(obj.nodes);
 						

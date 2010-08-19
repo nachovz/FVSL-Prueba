@@ -59,7 +59,7 @@ package com.stc.maps.business
 			aux.type = FilterVO.COMBO;
 			aux.keyName = CatalogValueVO.STATES;
 			aux.label = "Estado";
-			arrayFilters.addItem(aux);
+			//arrayFilters.addItem(aux);
 			
 			aux = new FilterVO();
 			aux.id = 1;
@@ -123,7 +123,7 @@ package com.stc.maps.business
 			aux.type = FilterVO.COMBO;
 			aux.keyName = CatalogValueVO.STATES;
 			aux.label = "Estado";
-			arrayFilters.addItem(aux);
+			//arrayFilters.addItem(aux);
 			
 			aux = new FilterVO();
 			aux.id = 1;
@@ -166,7 +166,7 @@ package com.stc.maps.business
 			aux.type = FilterVO.COMBO;
 			aux.keyName = CatalogValueVO.STATES;
 			aux.label = "Estado";
-			arrayFilters.addItem(aux);
+			//arrayFilters.addItem(aux);
 			
 			aux = new FilterVO();
 			aux.id = 1;
@@ -208,7 +208,7 @@ package com.stc.maps.business
 			aux.type = FilterVO.COMBO;
 			aux.keyName = CatalogValueVO.STATES;
 			aux.label = "Estado";
-			arrayFilters.addItem(aux);
+			//arrayFilters.addItem(aux);
 			
 			aux = new FilterVO();
 			aux.id = 1;

@@ -28,10 +28,10 @@ package com.stc.maps.view.components.map
 		
 		public function get clusters():Array
 		{
-			if (_invalidated) {
+			//if (_invalidated) {
 				_clusters = calculateClusters();
 				_invalidated = false;
-			}
+			//}
 			return _clusters;
 		}
 		public function set markers(value:Array):void
@@ -57,7 +57,7 @@ package com.stc.maps.view.components.map
 				_invalidated = true;
 			}
 		}
-		private var _visibilityMode:Boolean = false;
+		private var _visibilityMode:Boolean = true;
 		public function set visibilityMode(value:Boolean):void{
 			if (value != _visibilityMode) {
 				_visibilityMode = value;
@@ -85,6 +85,8 @@ package com.stc.maps.view.components.map
 				if(visibilityMode){
 					if(positionedMarker.marker.visible){
 						positionedMarkers[positionedMarker.id] = positionedMarker;
+					}else{
+						trace("VISIBLE IS FALSE");
 					}
 				}else{
 					positionedMarkers[positionedMarker.id] = positionedMarker;

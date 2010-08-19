@@ -55,6 +55,9 @@
 			private var esRed : Boolean;
 			
 			[Bindable]
+			private var nodes : ArrayCollection;
+			
+			[Bindable]
 			private var selectedIndex : int = 0;
 			
 			public var getEntityDetailsHandlers : mx.rpc.Responder = new mx.rpc.Responder(getEntityDetailsResult, getEntityDetailsFault);
@@ -69,7 +72,7 @@
 			{
 				if(value && value is EntityVO)
 				{
-					var entity : EntityVO = value as EntityVO;
+					var entity : Object = value;
 					_data = value;
 					esRed = (entity.type==EntityVO.NETWORK);
 				}
@@ -86,6 +89,7 @@
 				{
 					var ev : EntityRendererEvent = new EntityRendererEvent(EntityRendererEvent.EXPAND_NETWORK);
 					ev.network = _data;
+					ev.network.nodes = nodes;
 					dispatchEvent(ev);
 				}
 				else
@@ -113,12 +117,19 @@
 			private function getNetworkDetailsResult(event : ResultEvent) : void
 			{
 				var network : NetworkVO = event.result as NetworkVO;
+				setEntity(network as EntityVO);
 				
+				nodes = network.nodes;
 			}
 			
 			private function getEntityDetailsResult(event : ResultEvent) : void
 			{
 				var entity : EntityVO = event.result as EntityVO;
+				setEntity(entity);
+			}
+			
+			private function setEntity(entity : EntityVO) : void
+			{
 				logoURL = entity.logoURL;
 				objective = entity.objective;
 				direction = entity.direction;
@@ -155,6 +166,7 @@
 				}
 				
 				if(entity.type==EntityVO.ODS) selectedIndex = 1;
+				
 			}
 			
 			private function loaderCompleteHandler(event:Event) : void
@@ -223,7 +235,7 @@
 				<mx:DataGrid width="420" height="100" dataProvider="{awards}">
 		            <mx:columns>
 		                <mx:DataGridColumn dataField="awardName" headerText="Premio"/>
-		                <mx:DataGridColumn dataField="awardType" headerText="Estatus" labelFunction="getAwardStatus" width="120"/>
+		                <mx:DataGridColumn dataField="awardType" headerText="" labelFunction="getAwardStatus" width="120"/>
 		            </mx:columns>
 				</mx:DataGrid>
 			</mx:HBox>

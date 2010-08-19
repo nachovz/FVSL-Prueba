@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="40"
-	horizontalScrollPolicy="off" verticalScrollPolicy="off">
+	horizontalScrollPolicy="off" verticalScrollPolicy="off" doubleClickEnabled="false">
 <mx:Script>
     <![CDATA[
     	import com.stc.maps.vo.NetworkVO;
@@ -32,16 +32,18 @@
         
         private function addLayers() : void
         {
-	     	var ev : EntityRendererEvent = (_data is NetworkVO) ? new EntityRendererEvent(EntityRendererEvent.SHOW_NETWORK) : new EntityRendererEvent(EntityRendererEvent.SHOW_ITEM);
+	     	var ev : EntityRendererEvent = (_data is NetworkVO) ? new EntityRendererEvent(EntityRendererEvent.SHOW_ITEM) : new EntityRendererEvent(EntityRendererEvent.SHOW_ITEM);
 			ev.item = _data;
 	     	this.dispatchEvent(ev);
+	     	this.dispatchEvent(new Event("finishHideOrShow",true));
         }
 
         private function removeLayers() : void
         {
-	     	var ev : EntityRendererEvent = (_data is NetworkVO) ? new EntityRendererEvent(EntityRendererEvent.HIDE_NETWORK) : new EntityRendererEvent(EntityRendererEvent.HIDE_ITEM);
+	     	var ev : EntityRendererEvent = (_data is NetworkVO) ? new EntityRendererEvent(EntityRendererEvent.HIDE_ITEM) : new EntityRendererEvent(EntityRendererEvent.HIDE_ITEM);
 			ev.item = _data;
 	     	this.dispatchEvent(ev);
+	     	this.dispatchEvent(new Event("finishHideOrShow",true));
         }
         
         private function getImageSource(type : String) : String

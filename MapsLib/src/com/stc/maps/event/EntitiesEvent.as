@@ -11,8 +11,9 @@ package com.stc.maps.event
         public static const GET_ENTITY_DETAILS:String = "getEntityDetailsEvent";
         public static const GET_NETWORK_DETAILS:String = "getNetworkDetailsEvent";
 
-		public var entityType : String;
-		public var entityId : String;
+		public var entityType 	: String;
+		public var entityId  	: String;
+		public var entityOrg 	: String;
 		public function EntitiesEvent(type:String,
 		                          handlers:IResponder=null,
 		                          bubbles:Boolean=true,cancelable:Boolean=false,

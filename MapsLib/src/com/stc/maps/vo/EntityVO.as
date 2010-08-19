@@ -1,8 +1,7 @@
 package com.stc.maps.vo
 {
-	import flash.utils.ByteArray;
-	
 	import mx.collections.ArrayCollection;
+ 	import flash.utils.ByteArray; 
 /* 	import flash.utils.ByteArray; */
 	
 	[Bindable]
@@ -38,6 +37,11 @@ package com.stc.maps.vo
 		public var geograficalFocus : String = "";
 		public var organizationType : String = "";
 		public var financy : String = "";
+		
+		[Transient]
+		public var visibilityByCheckBox:Boolean = true;
+		[Transient]
+		public var org:String;
 
 		[Transient]
 		public var marker : Object;
@@ -87,6 +91,8 @@ package com.stc.maps.vo
 			newEntityVO.webURL				=	this.webURL;
 			newEntityVO.objective			=	this.objective;
 			newEntityVO.email				=	this.email;
+			newEntityVO.visibilityByCheckBox				=	this.visibilityByCheckBox;
+			newEntityVO.org				=	this.org;
 			newEntityVO.phone				=	this.phone;
 			newEntityVO.imageData			=	this.imageData;
 			newEntityVO.geograficalFocus	=	this.geograficalFocus;

@@ -1,7 +1,7 @@
 package com.stc.maps.business
 {
 	import com.stc.maps.event.SearchEvent;
-	import com.stc.maps.vo.CatalogValueVO;
+	import com.stc.maps.model.MapModel;
 	import com.universalmind.cairngorm.business.Delegate;
 	import com.universalmind.cairngorm.business.ServiceLocator;
 	
@@ -19,9 +19,13 @@ package com.stc.maps.business
             super(commandHandlers, serviceName);
         }
 		
-		public function searchEntity(event : SearchEvent, params : ArrayCollection) : void
+		public function searchEntity(event : SearchEvent, params : ArrayCollection, entityOrg : String) : void
 		{
-            _service = ServiceLocator.getInstance().getWebService("EntitiesWS");
+			if(entityOrg==MapModel.FVSL)
+	            _service = ServiceLocator.getInstance().getWebService("EntitiesWS");
+			if(entityOrg==MapModel.UR)
+	            _service = ServiceLocator.getInstance().getWebService("EntitiesWSUR");
+
 			var token:AsyncToken = this._service.getSearch(event.entityType,params);
 			token.addResponder(this.responder);
 		}

@@ -18,6 +18,7 @@
 		import flash.events.MouseEvent;
 		import flash.events.FocusEvent;
 		import flash.events.Event;
+		
 /* 		import flash.events.Event; */
 /* 		import flash.events.FocusEvent; */
 /* 		import flash.events.MouseEvent; */
@@ -34,7 +35,7 @@
 				this._entities = value;
 				filterActive = false;
 				addListeners();
-				showAllMarkers();
+				//showAllMarkers();
 			}
 		}
 		
@@ -104,6 +105,7 @@
 		     		entity.isSelected = true;
 		     	}
 	     	}
+	     	this.dispatchEvent(new Event("finishHideOrShow",true));
 	    }
 
 	    private function hideAllMarkers() : void
@@ -115,6 +117,8 @@
 		     	this.dispatchEvent(ev);
 	     		entity.isSelected = false;
 	     	}
+	     
+	     	this.dispatchEvent(new Event("finishHideOrShow",true));
 	    }
 	    
 	    private function filterInput_setFocus(event : FocusEvent) : void
@@ -167,7 +171,7 @@
             y="60"
             height="100%" borderColor="#FFFFFF"
             itemRenderer="com.stc.maps.view.components.EntityRenderer"
-            doubleClickEnabled="true"
+            doubleClickEnabled="false"
             backgroundColor="#FFFFFF"
             itemDoubleClick="list_itemDoubleClicked(event)">
     </mx:List>	

@@ -35,6 +35,8 @@ package com.stc.maps.vo
 			newEntityVO.direction			=	this.direction;
 			newEntityVO.webURL				=	this.webURL;
 			newEntityVO.objective			=	this.objective;
+			newEntityVO.visibilityByCheckBox				=	this.visibilityByCheckBox;
+			newEntityVO.org				=	this.org;
 			newEntityVO.email				=	this.email;
 			newEntityVO.phone				=	this.phone;
 			newEntityVO.imageData			=	this.imageData;
@@ -56,6 +58,39 @@ package com.stc.maps.vo
 			newEntityVO.entities 			=	this.entities;
 			
 			return newEntityVO;
+		}
+
+		public function set dataa( obj : Object):void{
+
+			this.type				=	obj.type;
+			this.title				=	obj.parent.title; 
+			this.id					=	obj.parent.id;
+			this.lat				=	obj.parent.latitude;
+			this.long				=	obj.parent.longitude;
+			this.direction			=	obj.parent.direction;
+			this.webURL				=	obj.parent.webURL;
+			this.objective			=	obj.parent.objective;
+			this.email				=	obj.parent.email;
+			this.phone				=	obj.parent.phone;
+			this.imageData			=	obj.parent.imageDatobjt
+			this.geograficalFocus	=	obj.parent.geograficalFocus;
+			this.organizationType	=	obj.parent.organizationType;
+			this.financy			=	obj.parent.financy;
+			this.awards				=	obj.parent.awards;
+			this.beneficiaries		=	obj.parent.beneficiaries;
+			this.interventionAreas	=	obj.parent.interventionAreas;
+
+			this.nodes 				=	new ArrayCollection();
+			for(var i :int=0; i<obj.nodes.length; i++){
+				var auxOldEnt:EntityVO = new EntityVO();
+				auxOldEnt.data = obj.nodes[i];
+				
+				this.nodes.addItem(auxOldEnt);
+			}
+
+			this.parentType 		=	obj.type;
+			this.entities 			=	obj.entities;
+			
 		}
 		
 		

@@ -124,12 +124,16 @@
 				dispatchEvent(event);
 			}
 		
+			[Bindable]
+			[Embed(source="com/assets/markers/arrow.png")]
+			private var odsSmall:Class;
+			
 		]]>
 	</mx:Script>
 	<mx:Button id="myButton" label="{_label}" 
 			   mouseOver="if(!isOpen){comboBox.open(); isOpen = true;} overButton = true; myButton_mouseOutHandler(event);" 
 			   mouseOut="overButton = false; myButton_mouseOutHandler(event);"
-			   creationComplete="myButton_creationCompleteHandler(event)" />
+			   creationComplete="myButton_creationCompleteHandler(event)" icon="{odsSmall}"  labelPlacement="left" />
 	<mx:ComboBox id="comboBox" visible="false"
 				 labelField="name"
 				 dataProvider="{_dataProvider}"

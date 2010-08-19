@@ -17,6 +17,7 @@ package com.stc.maps.command
 		private var _type : String;
 		private var _event : EntitiesEvent;
 		private var getDetailsHandlers : mx.rpc.Responder = new mx.rpc.Responder(getDetailsResult, getDetailsFault);
+		private var getNetworkDetailsHandlers : mx.rpc.Responder = new mx.rpc.Responder(getNetworkDetailsResult, getDetailsFault);
 		
 		override public function execute(event:CairngormEvent) : void
 		{
@@ -36,7 +37,7 @@ package com.stc.maps.command
 				}
 				case EntitiesEvent.GET_NETWORK_DETAILS:
 				{	
-				    getEntityDetails(EntitiesEvent(event));
+				    getNetworkDetails(EntitiesEvent(event));
 					break;
 				}
                 default : break;
@@ -63,7 +64,7 @@ package com.stc.maps.command
 		
 		private function getNetworkDetails(event : EntitiesEvent):void
 		{
-			var delegate : EntitiesDelegate = new EntitiesDelegate(getDetailsHandlers,"ParticipantService");
+			var delegate : EntitiesDelegate = new EntitiesDelegate(getNetworkDetailsHandlers,"ParticipantService");
 			_responder = event.callbacks;
 			_type = event.entityType;
 			_event = event;
@@ -74,6 +75,15 @@ package com.stc.maps.command
 		{
 			var result : EntityVO = new EntityVO();
 			result.data = data.result;
+			
+			var ev : ResultEvent = new ResultEvent(ResultEvent.RESULT,false,true,result);
+			_event.callbacks.result(ev);
+		}
+		
+		private function getNetworkDetailsResult(data : Object):void
+		{
+			var result : NetworkVO = new NetworkVO();
+			result.dataa = data.result;
 			
 			var ev : ResultEvent = new ResultEvent(ResultEvent.RESULT,false,true,result);
 			_event.callbacks.result(ev);
@@ -124,6 +134,7 @@ package com.stc.maps.command
 						var entity : EntityVO = new EntityVO()
 						entity.data = obj;
 						entity.type = _type;
+						entity.org = _event.entityOrg;
 						if(entity.id!=0) results.addItem(entity);
 					}
 				}
@@ -150,7 +161,7 @@ package com.stc.maps.command
 						entity.type = _type;
 						entity.parentType = obj.parent.type;
 						entity.setNodesObjects(obj.nodes);
-						
+						entity.org = _event.entityOrg;
 						results.addItem(entity);
 					}
 				}

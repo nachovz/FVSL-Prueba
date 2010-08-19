@@ -13,6 +13,8 @@ package com.stc.maps.event
 
 		public var filterVaues : ArrayCollection;
 		public var entityType : String;
+		public var entityOrgList : Array;
+		
 		public function SearchEvent(type:String,
 		                          handlers:IResponder=null,
 		                          bubbles:Boolean=true,cancelable:Boolean=false,

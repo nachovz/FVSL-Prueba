@@ -27,6 +27,7 @@ package com.stc.maps.control
 		{
 			addCommand( EntitiesEvent.GET_ENTITY_LIST, EntitiesCommand );
 			addCommand( EntitiesEvent.GET_ENTITY_DETAILS, EntitiesCommand );
+			addCommand( EntitiesEvent.GET_NETWORK_DETAILS, EntitiesCommand );
 			addCommand( FiltersEvent.GET_FILTERS_LIST, FiltersCommand );
 			addCommand( SearchEvent.SEARCH_ENTITY, SearchCommand );
 			addCommand( CatalogEvent.GET_CATALOG, CatalogCommand );
