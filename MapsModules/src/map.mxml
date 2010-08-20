@@ -6,7 +6,9 @@
 	initialize="module1_initializeHandler(event)" xmlns:mapplugins="com.stc.maps.view.components.map.mapplugins.*">
 	<mx:Script>
 		<![CDATA[
+			import com.google.maps.LatLng;
 			import com.stc.maps.model.MapModel;
+			import com.stc.maps.view.components.event.EntityRendererEvent;
 			import com.stc.maps.vo.EntityVO;
 			
 			import mx.collections.ArrayCollection;
@@ -50,7 +52,29 @@
 				mapModel.mainMap = mainMap;
 				mapModel.menu = menu;
 				mapModel.containerThis = this;
+				
+				//menu.addEventListener(EntityRendererEvent.ZOOM_SEARCH,zoomSearchHandler);
 			}
+			
+			/* protected function zoomSearchHandler(event:EntityRendererEvent):void{
+				trace("LLEGO");
+				var zoomLevel:int = mainMap.getZoom();
+				if(zoomLevel<8)
+					zoomLevel = 8;	
+				mainMap.setCenter(new LatLng(event.item.lat,event.item.long),zoomLevel);
+			} */
+			
+			protected function linktoSTC(event:MouseEvent):void{
+				navigateToURL(
+					new URLRequest
+					(
+						(
+							"http://stcsolutions.com.ve/"
+						).toString()
+					), '_blank'
+				)
+			}
+			
 //MI CLAVE DE MAP
 //ABQIAAAAssXQm8mCsuDbHXTVDzUbABTPK7DoDRCvKRyAt-uHrA5m1ZoR5hRJ4IeA14U3X6epSvuQXgXqdvvvlQ		
 //MAP KEY DE ALEJANDRO
@@ -85,9 +109,9 @@
               <mx:Array>
                   <mx:Object label="Todos" keyName="all" />
                   <mx:Object label="Cooperantes" keyName="{EntityVO.COOPERANT}" icon="{cooperantSmall}" />
-                  <mx:Object label="Empresas" keyName="{EntityVO.COMPANY}" />
+                  <mx:Object label="Empresas" keyName="{EntityVO.COMPANY}" icon="{companySmall}" />
                   <mx:Object label="ODS" keyName="{EntityVO.ODS}" icon="{odsSmall}" />
-                  <mx:Object label="Redes" keyName="network" icon="{networkSmall}" />
+                  <mx:Object label="Redes" keyNacme="network" icon="{networkSmall}" />
               </mx:Array>
           </mapplugins:dataProvider>
       </mapplugins:MapToggleButtonBar>
@@ -100,10 +124,30 @@
 	  	width="350"
 	  	backgroundColor="#FFFFFF"
 	  	  />
-	  <view:CollapsableMenu id="menu" x="0" y="0" width="0" expandedWidth="300" />
-	<mx:HBox right="0" bottom="0" verticalGap="-2" horizontalAlign="right">
-	  <mx:Image source="com/assets/img/logo.png"    maintainAspectRatio="true" height="60" />
-	  <mx:Image source="com/assets/img/ur_logo.gif" maintainAspectRatio="true" height="60" />
-	</mx:HBox>
+	  <view:CollapsableMenu id="menu" x="0" y="0" width="0" expandedWidth="315" />
+	<mx:VBox right="0" bottom="0" horizontalAlign="right">
+		<mx:HBox id="myHbox" verticalGap="-2" >
+		  <mx:Image source="com/assets/img/logo.png"    maintainAspectRatio="true" height="60" />
+		  <mx:Image source="com/assets/img/ur_logo.gif" maintainAspectRatio="true" height="60" />
+		</mx:HBox>
+		<mx:Canvas width="{myHbox.width + 80}" backgroundColor="0xFFFFFF" >
+			<mx:HBox horizontalAlign="center" verticalAlign="middle" width="100%">
+				<mx:Label id="myLink" text="Desarrolado por" 
+						  buttonMode="true"
+						  mouseChildren="false"
+						  useHandCursor="true"
+						  click="linktoSTC(event)"
+						  />
+				<mx:Label id="myLink2" text="http://stcsolutions.com.ve/" 
+						  buttonMode="true"
+						  mouseChildren="false"
+						  useHandCursor="true"
+						  click="linktoSTC(event)"
+						  creationComplete="myLink2.setStyle('textDecoration','underline')"
+						  color="0x0000FF"	
+						  />
+			</mx:HBox>
+		</mx:Canvas>
+	</mx:VBox>
     <business:Services id="services" />
 </mx:Module>

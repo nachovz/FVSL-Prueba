@@ -4,20 +4,21 @@
 <mx:Script>
 	<![CDATA[
 		import com.stc.maps.view.components.event.EntityRendererEvent;
-		import com.stc.maps.vo.NetworkVO;
-		import mx.controls.Alert;
-		import com.stc.maps.vo.EntityVO;
 		import com.stc.maps.view.components.event.EntityRendererListEvent;
+		import com.stc.maps.vo.EntityVO;
+		import com.stc.maps.vo.NetworkVO;
+		
+		import flash.events.Event;
+		import flash.events.FocusEvent;
+		import flash.events.MouseEvent;
+		
+		import mx.collections.ArrayCollection;
+		import mx.collections.Sort;
+		import mx.collections.SortField;
+		import mx.controls.Alert;
+		import mx.events.FlexEvent;
 		import mx.events.ItemClickEvent;
 		import mx.events.ListEvent;
-		import mx.collections.SortField;
-		import mx.collections.Sort;
-		import mx.events.FlexEvent;
-		import mx.collections.ArrayCollection;
-		
-		import flash.events.MouseEvent;
-		import flash.events.FocusEvent;
-		import flash.events.Event;
 		
 /* 		import flash.events.Event; */
 /* 		import flash.events.FocusEvent; */
@@ -47,6 +48,7 @@
 		private function entityRendererList_creationComplete(event : FlexEvent) : void
 		{
 			addListeners();
+			//list.addEventListener(EntityRendererListEvent.ZOOM_SEARCH,list_itemDoubleClicked);
 		}
 		
 		private function setEntitiesFilter() : void
@@ -76,12 +78,10 @@
 	     		_entities.refresh();
 	    }	
 	    
-	    private function list_itemDoubleClicked(event : ListEvent) : void
+	   /*  private function list_itemDoubleClicked(event : EntityRendererListEvent) : void
 	    {
-	     	var ev : EntityRendererListEvent = new EntityRendererListEvent(EntityRendererListEvent.FOCUS_MAP_ITEM);
-	     	ev.item = list.selectedItem;
-	     	this.dispatchEvent(ev);
-	    }
+	     	this.dispatchEvent(event);
+	    } */
 	    
 	    private function showAllLinkButton_click(event : MouseEvent) : void
 	    {
@@ -173,6 +173,6 @@
             itemRenderer="com.stc.maps.view.components.EntityRenderer"
             doubleClickEnabled="false"
             backgroundColor="#FFFFFF"
-            itemDoubleClick="list_itemDoubleClicked(event)">
+            >
     </mx:List>	
 </mx:VBox>

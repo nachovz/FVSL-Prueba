@@ -9,6 +9,7 @@
 			import com.stc.maps.vo.NetworkVO;
 			
 			import flash.display.Loader;
+			import flash.net.navigateToURL;
 			
 			import mx.binding.utils.BindingUtils;
 			import mx.collections.ArrayCollection;
@@ -170,7 +171,7 @@
 							
 						loader.loadBytes(entity.imageData);
 					}catch(e:Error){
-						imgCanvas.source = "com/assets/img/noimage.png";
+						imgCanvas.source = "com/assets/img/noimage.jpg";
 					}
 				}
 				
@@ -219,6 +220,38 @@
 
         		return item.area; 
       		}
+			
+			
+			protected function printEventHandler(event:MouseEvent):void{
+				if( _data && _data is EntityVO){
+					
+					var myEntity:EntityVO = _data as EntityVO
+					var myType:String = myEntity.type;
+					var myId:String = myEntity.id.toString();
+					var myOrg:String = myEntity.org;
+					
+					
+					var URLDir:String = "";
+					if(myOrg == "ur"){
+						URLDir = "MAPA_FVSLUR";
+					}else{
+						URLDir = "MAPA_FVSL";
+					}
+					
+					navigateToURL(
+						
+							new URLRequest
+							(
+								(
+									"http://10.20.20.171:9092/asp-workspace/"+URLDir+"/PDFExport/Default.aspx?type="+myType+"&id="+myId
+								).toString()
+							), '_blank'
+						
+					)
+					
+					
+				}
+			}
 		]]>
 	</mx:Script>
 	<mx:Resize id="resizeEffect" target="{this}" heightFrom="190" heightTo="470" duration="500" />
@@ -238,8 +271,9 @@
 	<mx:Label x="118" y="109" text="Correo:" width="50" fontWeight="bold"/>
 	<mx:Label x="194" y="132" text="{phone}" width="254"/>
 	<mx:Label x="118" y="131" text="Teléfono:" width="86" fontWeight="bold"/>
-	<mx:Button x="456" y="132" id="collapseButton" label="Ver ficha" width="132" click="verficha_clickHander(event)"/>
-	<mx:Button id="verRed" x="320" y="132" visible="{esRed}" click="verRed_clickHander(event)" label="Ver Red" width="132"/>
+	<mx:Button id="verRed" x="364" y="132" visible="{esRed}" click="verRed_clickHander(event)" label="Ver Red" width="70"/>
+	<mx:Button x="440" y="132" id="collapseButton" label="Ver ficha" width="70" click="verficha_clickHander(event)"/>
+	<mx:Button x="516" y="132" id="printButton" label="Imprimir" width="70" click="printEventHandler(event)"/>
 	<mx:ViewStack selectedIndex="{selectedIndex}" x="10" y="162">
 		<mx:VBox verticalAlign="top">
 			<mx:HBox horizontalAlign="left">

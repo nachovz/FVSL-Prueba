@@ -31,8 +31,8 @@ package com.stc.maps.view.components.map.specialmarkers
 		private var _allMakersGrouped:Array;
 		private var _allMakersGroupedEntityVO:Array;
 		private var _visibleAll:Boolean = false;
-		private var _time:Timer = new Timer(800,1);
-		private var _timeInfo:Timer = new Timer(800,1);
+		private var _time:Timer = new Timer(300,1);
+		private var _timeInfo:Timer = new Timer(300,1);
 		private var _timeStartInfo:Timer = new Timer(2000,1);
 		private var infoWindow:IInfoWindow = null;
 		

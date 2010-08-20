@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="40"
-	horizontalScrollPolicy="off" verticalScrollPolicy="off" doubleClickEnabled="false">
+	horizontalScrollPolicy="off" verticalScrollPolicy="off" verticalAlign="middle" doubleClickEnabled="false">
 <mx:Script>
     <![CDATA[
-    	import com.stc.maps.vo.NetworkVO;
-    	import com.stc.maps.vo.EntityVO;
-    	import com.stc.maps.view.components.event.EntityRendererEvent;
+		import com.stc.maps.view.components.event.EntityRendererEvent;
+		import com.stc.maps.view.components.event.EntityRendererListEvent;
+		import com.stc.maps.vo.EntityVO;
+		import com.stc.maps.vo.NetworkVO;
     
     	private var _data : Object = {};
     
@@ -69,8 +70,20 @@
         	
         	return "";
         }
+		protected function searchZoomHandler(event:MouseEvent):void{
+			var ev : EntityRendererListEvent = (_data is NetworkVO) ? new EntityRendererListEvent(EntityRendererListEvent.ZOOM_SEARCH) : new EntityRendererListEvent(EntityRendererListEvent.ZOOM_SEARCH);
+			ev.item = _data;
+			
+			dispatchEvent(ev);	
+		}
     ]]>
 </mx:Script>
 	<mx:CheckBox id="check" doubleClickEnabled="false" color="#000000" change="onChange(event);" width="230" fontSize="12" />
 	<mx:Image id="image" />
+	<mx:Image id="searchImage" source="com/assets/img/lupa.gif"
+			  buttonMode="true"
+			  mouseChildren="false"
+			  useHandCursor="true"
+			  click="searchZoomHandler(event)"
+			  />
 </mx:HBox>

@@ -29,6 +29,9 @@ package com.stc.maps.model
 	import com.stc.maps.vo.EntityVO;
 	import com.stc.maps.vo.NetworkVO;
 	
+	import flash.geom.Point;
+	import flash.utils.Dictionary;
+	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
 	import mx.core.Container;
@@ -39,8 +42,7 @@ package com.stc.maps.model
 	import mx.modules.Module;
 	import mx.rpc.Responder;
 	import mx.rpc.events.FaultEvent;
-	import mx.rpc.events.ResultEvent; 
- 	import flash.utils.Dictionary;  
+	import mx.rpc.events.ResultEvent;
 	
 	
 /* 	import flash.utils.Dictionary;  */
@@ -163,7 +165,7 @@ package com.stc.maps.model
 		 */
 		private function addEventListeners() : void
 		{
-			containerThis.addEventListener(EntityRendererListEvent.FOCUS_MAP_ITEM,focusMap);
+			containerThis.addEventListener(EntityRendererListEvent.ZOOM_SEARCH,focusMap);
 			containerThis.addEventListener(EntityRendererEvent.HIDE_ITEM,hideMarker);
 			containerThis.addEventListener(EntityRendererEvent.SHOW_ITEM,showMarker);
 			containerThis.addEventListener("finishHideOrShow",finishhandler);
@@ -194,7 +196,9 @@ package com.stc.maps.model
 		{
 			var entity : EntityVO = ev.item as EntityVO;
 			mainMap.setCenter(new LatLng(entity.lat,entity.long));
-			mainMap.openInfoWindow(mainMap.getCenter(), new InfoWindowOptions({title: entity.title}));
+			mainMap.openInfoWindow(mainMap.getCenter(), new InfoWindowOptions({
+				title: entity.title
+			}));
 		}
 		/**
 		 * Initial request of all the data layers
@@ -812,7 +816,7 @@ package com.stc.maps.model
 					// there is only a single marker in this cluster
 					//marker = cluster[0];
 				} else {
-					var auxIcon:Container = markerLocator.getMarkerComponent("groupFlag",0x0F1E79,true,cluster.length.toString());
+					var auxIcon:Container = markerLocator.getMarkerComponent("groupFlag",0x0CCFF,true,cluster.length.toString());
 					var markerOption : MarkerOptions = new MarkerOptions(
 						{  
 							icon: auxIcon,  

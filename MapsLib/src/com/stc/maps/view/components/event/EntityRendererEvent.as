@@ -13,6 +13,7 @@ package com.stc.maps.view.components.event
 		public static const EXPAND_NETWORK : String = "expandNetworkOnMap";
 		public static const COLLAPSE_NETWORK : String = "collapseNetworkOnMap";
 		
+		
 		public var items : ArrayCollection;
 		public var item : Object;
 		public var network : Object;

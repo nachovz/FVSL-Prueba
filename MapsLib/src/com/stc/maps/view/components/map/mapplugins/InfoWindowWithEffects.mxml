@@ -30,10 +30,10 @@
 		]]>
 	</mx:Script>
 	<mx:Parallel id="creationCompleteEffect">
-		<mx:Fade duration="500" />
+		<mx:Fade duration="300" />
 	</mx:Parallel>
 	<mx:Parallel id="hideEffect">
-		<mx:Fade alphaFrom="1" alphaTo="0" duration="500" />
+		<mx:Fade alphaFrom="1" alphaTo="0" duration="300" />
 	</mx:Parallel>
 	<mx:HBox >
 		<mx:Image source="{zoomClass}" click="button1_clickHandler(event)" />

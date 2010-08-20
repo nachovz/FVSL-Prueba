@@ -106,7 +106,7 @@ package com.stc.maps.view.components
 			{
 				searchFiltersChange = false;
 				
-				content.removeAllChildren();
+				content.removeAllChildren(); 
 				content.addChild(textAreaInstructions);
 	
 				renderSearchForm(searchFilters);
