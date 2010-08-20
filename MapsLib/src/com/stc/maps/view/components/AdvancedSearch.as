@@ -108,7 +108,7 @@ package com.stc.maps.view.components
 				
 				content.removeAllChildren();
 				content.addChild(textAreaInstructions);
-				
+	
 				renderSearchForm(searchFilters);
 				
 				var hbx : HBox = new HBox();
