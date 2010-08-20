@@ -87,7 +87,7 @@ package com.stc.maps.command
 			}
 			else
 			{
-				var delegate : SearchDelegate = new SearchDelegate(multipleOrgSearchHandlers,"ParticipantService");
+				delegate  = new SearchDelegate(multipleOrgSearchHandlers,"ParticipantService");
 				delegate.searchEntity(event,params,orgList[1]);
 			}
 		}

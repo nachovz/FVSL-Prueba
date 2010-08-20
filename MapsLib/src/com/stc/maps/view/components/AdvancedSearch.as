@@ -79,7 +79,6 @@ package com.stc.maps.view.components
 			
 			cancelSearchButton.addEventListener(MouseEvent.CLICK, cancelSearchButton_click, false, 0, true);
 			showSearch.addEventListener(MouseEvent.CLICK, addAllItems, false, 0, true);
-			addChild(content);
 			
 			content.percentWidth = 100;
 			content.percentHeight = 100;
@@ -90,6 +89,8 @@ package com.stc.maps.view.components
             showSearch.height = 22;
             showSearch.x = this.unscaledWidth - showSearch.width;
             showSearch.y = 0;	
+			addChild(content);
+			//this.explicitHeight = 100;
 		}
 		
 		private function cancelSearchButton_click(event : MouseEvent) : void
@@ -117,17 +118,25 @@ package com.stc.maps.view.components
 				hbx.setStyle("horizontalAlign","center");
 				hbx.setStyle("horizontalGap","10");
 				content.addChild(hbx);
-				
 				this.setStyle("padding-left","10");
 				this.setStyle("padding-right","10");
 				this.setStyle("padding-top","10");
 				this.setStyle("padding-bottom","10");
-				
-				this.addEventListener(ResizeEvent.RESIZE, advancedSearch_resize, false, 0, true);
-				searchButton.addEventListener(MouseEvent.CLICK,searchButton_clickHandler);
+				if(!this.hasEventListener(ResizeEvent.RESIZE))
+					this.addEventListener(ResizeEvent.RESIZE, advancedSearch_resize, false, 0, true);
+				if(!searchButton.hasEventListener(MouseEvent.CLICK))
+					searchButton.addEventListener(MouseEvent.CLICK,searchButton_clickHandler);
 			}
 		}
-		
+		/*override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void{
+			trace("Advanced Search - Update DisplayList");
+		super.updateDisplayList(unscaledWidth,content.height);
+			
+		}*/
+		/*override protected function measure():void{
+			trace("Advanced Search - Measure");
+			super.measure();
+		}*/
 		private function searchButton_clickHandler(ev : MouseEvent) : void
 		{
 			var filters : ArrayCollection = new ArrayCollection();
@@ -253,5 +262,6 @@ package com.stc.maps.view.components
 				break;
 			}
 		}
+		
 	}
 }

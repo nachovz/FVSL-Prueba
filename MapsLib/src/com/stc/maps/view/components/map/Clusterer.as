@@ -43,8 +43,6 @@ package com.stc.maps.view.components.map
 					if(value[i].marker){
 						var marker:Marker = value[i].marker;
 						_positionedMarkers.push(new PositionedMarker(marker));
-					}else{
-						trace("NO MARKER LAT LONG -> (type,name) - > ("+value[i].type+","+value[i].title+")");
 					}
 				}
 				_invalidated = true;
@@ -85,8 +83,6 @@ package com.stc.maps.view.components.map
 				if(visibilityMode){
 					if(positionedMarker.marker.visible){
 						positionedMarkers[positionedMarker.id] = positionedMarker;
-					}else{
-						trace("VISIBLE IS FALSE");
 					}
 				}else{
 					positionedMarkers[positionedMarker.id] = positionedMarker;

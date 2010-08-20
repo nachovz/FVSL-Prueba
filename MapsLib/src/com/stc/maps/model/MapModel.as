@@ -173,7 +173,6 @@ package com.stc.maps.model
 			advancedSearch.addEventListener(AdvancedSearchEvent.SEARCH,advancedSearch_AdvancedSearchEvent,false,0,true);
 		}
 		private function finishhandler(event:Event):void{
-			trace("Finish");
 			setAllMarkersOnTheMap()
 			
 		}
@@ -393,8 +392,6 @@ package com.stc.maps.model
 					}
 					else
 						createMarker( entity, getEntityIcon(entity.type) );
-				}else{
-					trace("HAS NO LAT OR LONG -> (type,Name) -> ("+entity.type +","+entity.title+")");
 				}
 			}
 		}
@@ -647,7 +644,6 @@ package com.stc.maps.model
 				try{
 					auxMarker.visible = value;
 				}catch(e:Error){
-					trace("Flag Number " + i + " with Type and Name ("+model.allEntities[i].type+","+model.allEntities[i].title+") has no marker.");
 				}
 			}
 		}
@@ -699,9 +695,9 @@ package com.stc.maps.model
 			var menuData : ArrayCollection = new ArrayCollection();
 			
 			for each(var org : String in orgList)
-			for each(var entity : String in entityesList)
-			if(model.entities[entity+org])
-				menuData.source = menuData.source.concat(model.entities[entity+org].source);
+				for each(var entity : String in entityesList)
+					if(model.entities[entity+org])
+						menuData.source = menuData.source.concat(model.entities[entity+org].source);
 			
 			menu.entities = menuData;
 			
@@ -790,7 +786,6 @@ package com.stc.maps.model
 		
 		private var attachedMarkers:Array = [];
 		private function setAllMarkersOnTheMap():void{
-			trace("setAllMarkersOnTheMap");
 			var myMarker:Marker;
 			if(!clusterer){
 				clusterer = new Clusterer(model.allEntities, mainMap.getZoom(), 30);
@@ -845,8 +840,6 @@ package com.stc.maps.model
 		
 		public function comboBoxChangeHandler(event:ListEvent):void
 		{
-			// TODO Auto-generated method stub
-			trace("COMBO BOX CHANGE")
 			var auxButtonComboBox:ButtonComboBox = (event.target as ButtonComboBox)
 			var auxObj:Object = auxButtonComboBox.itemSelected as Object;
 			auxButtonComboBox.buttonLabel = auxObj.name;

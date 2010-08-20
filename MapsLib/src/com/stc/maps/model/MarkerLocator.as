@@ -37,10 +37,8 @@ package com.stc.maps.model
 		}
 		
 		private static function loadCompleteEvent(event:Event):void{
-			trace("SWF READY");
 		}
 		private static function ioErrorEvent(event:IOErrorEvent):void{
-			trace("Error Loading SWF");
 		}
 		
 		public function getMarkerComponent(name:String = "singleFlag",color:uint = 0x0000FF ,withLabel:Boolean = false,theText:String = "0"):Container{

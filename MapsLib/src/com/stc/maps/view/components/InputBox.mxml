@@ -4,17 +4,19 @@
 	horizontalScrollPolicy="off" verticalScrollPolicy="off">
 	<mx:Script>
 		<![CDATA[
+			import com.stc.maps.view.components.event.EntityRendererEvent;
+			import com.stc.maps.vo.EntityVO;
 			import com.stc.maps.vo.NetworkVO;
+			
+			import flash.display.Loader;
+			
 			import mx.binding.utils.BindingUtils;
 			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			import mx.managers.PopUpManager;
 			import mx.rpc.Responder;
 			import mx.rpc.events.FaultEvent;
 			import mx.rpc.events.ResultEvent;
-			import mx.controls.Alert;
-			import com.stc.maps.view.components.event.EntityRendererEvent;
-			import com.stc.maps.vo.EntityVO;
-			import mx.managers.PopUpManager;
-			import flash.display.Loader;
 			
 			private var _data : Object;
 			private var collapsed : Boolean = true;
@@ -160,15 +162,25 @@
 				
 				if(entity.imageData)
 				{
-					var loader:Loader = new Loader();
-					loader.loadBytes(entity.imageData);
-					loader.contentLoaderInfo.addEventListener(Event.COMPLETE,loaderCompleteHandler);
+					try{ 
+						var loader:Loader = new Loader();
+						loader.contentLoaderInfo.addEventListener(Event.COMPLETE,loaderCompleteHandler);
+						loader.addEventListener(IOErrorEvent.IO_ERROR, onIOError, false, 0, true);
+						loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onIOError, false, 0, true);
+							
+						loader.loadBytes(entity.imageData);
+					}catch(e:Error){
+						imgCanvas.source = "com/assets/img/noimage.png";
+					}
 				}
 				
 				if(entity.type==EntityVO.ODS) selectedIndex = 1;
 				
 			}
 			
+			private function onIOError(event:IOErrorEvent):void{
+				imgCanvas.source = "com/assets/img/noimage.png";
+			}
 			private function loaderCompleteHandler(event:Event) : void
 			{
 				var loader:Loader = LoaderInfo(event.target).loader;

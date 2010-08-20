@@ -5,7 +5,7 @@
 	preloader="PathfinderCustomPreloader"
 	backgroundGradientColors="[0xFFFFFF,0x999999]"
 	>
-    <mx:Script>
+    <mx:Script> 
     	<![CDATA[
 			import mx.controls.Alert;
 			import mx.effects.Effect;

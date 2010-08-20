@@ -38,7 +38,7 @@
 			
 			
 			[Bindable]
-			private var dataProvider:ArrayCollection = new ArrayCollection([{name:'Todos'},{name:'Unidos en Red'},{name:'Venezuela Sin Limites'}]);
+			private var dataProvider:ArrayCollection = new ArrayCollection([{name:'Todas las Fundaciones',org:[MapModel.FVSL,MapModel.UR]},{name:'Unidos en Red',org:[MapModel.UR]},{name:'Venezuela Sin Limites',org:[MapModel.FVSL]}]);
 			
 			[Bindable]
 			private var mapModel:MapModel = MapModel.getInstance();
@@ -72,8 +72,8 @@
 	<mx:HBox top="10" right="10">
 		<mapplugins:ButtonComboBox  
 			aligment="right"
-			buttonDefaultLabel="Mas..."
-			buttonLabel="Todos"
+			buttonDefaultLabel="Todas las Fundaciones"
+			buttonLabel="Todas las Fundaciones"
 			dataProvider="{dataProvider}"
 			change="mapModel.comboBoxChangeHandler(event)"
 			/>
@@ -101,6 +101,9 @@
 	  	backgroundColor="#FFFFFF"
 	  	  />
 	  <view:CollapsableMenu id="menu" x="0" y="0" width="0" expandedWidth="300" />
-	  <mx:Image source="com/assets/img/ur_logo.gif" right="2" bottom="2" />
+	<mx:HBox right="0" bottom="0" verticalGap="-2" horizontalAlign="right">
+	  <mx:Image source="com/assets/img/logo.png"    maintainAspectRatio="true" height="60" />
+	  <mx:Image source="com/assets/img/ur_logo.gif" maintainAspectRatio="true" height="60" />
+	</mx:HBox>
     <business:Services id="services" />
 </mx:Module>
