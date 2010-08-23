@@ -35,8 +35,8 @@ package com.stc.maps.vo
 			newEntityVO.direction			=	this.direction;
 			newEntityVO.webURL				=	this.webURL;
 			newEntityVO.objective			=	this.objective;
-			newEntityVO.visibilityByCheckBox				=	this.visibilityByCheckBox;
-			newEntityVO.org				=	this.org;
+			newEntityVO.visibilityByCheckBox=	this.visibilityByCheckBox;
+			newEntityVO.org					=	this.org;
 			newEntityVO.email				=	this.email;
 			newEntityVO.phone				=	this.phone;
 			newEntityVO.imageData			=	this.imageData;
@@ -49,10 +49,13 @@ package com.stc.maps.vo
 			newEntityVO.interventionAreas	=	this.interventionAreas;
 			
 			newEntityVO.nodes 				=	new ArrayCollection;
-			for(var i :int=0; i<this.nodes.length; i++){
-				var auxOldEnt:EntityVO = this.nodes[i] as EntityVO;
-				var auxEnt:EntityVO = auxOldEnt.clone() as EntityVO;
-				newEntityVO.nodes.addItem(auxEnt);
+			if(this.nodes){
+				for(var i :int=0; i<this.nodes.length; i++){
+					var auxOldEnt:EntityVO = this.nodes[i] as EntityVO;
+					var auxEnt:EntityVO = auxOldEnt.clone() as EntityVO;
+					auxOldEnt.org = auxEnt.org = newEntityVO.org;
+					newEntityVO.nodes.addItem(auxEnt);
+				}
 			}
 			newEntityVO.parentType 			=	this.parentType;
 			newEntityVO.entities 			=	this.entities;
@@ -84,7 +87,7 @@ package com.stc.maps.vo
 			for(var i :int=0; i<obj.nodes.length; i++){
 				var auxOldEnt:EntityVO = new EntityVO();
 				auxOldEnt.data = obj.nodes[i];
-				
+				auxOldEnt.org = this.org;
 				this.nodes.addItem(auxOldEnt);
 			}
 

@@ -38,6 +38,7 @@ package com.stc.maps.model
 	import mx.events.ItemClickEvent;
 	import mx.events.ListEvent;
 	import mx.events.ResizeEvent;
+	import mx.managers.CursorManager;
 	import mx.managers.PopUpManager;
 	import mx.modules.Module;
 	import mx.rpc.Responder;
@@ -496,8 +497,8 @@ package com.stc.maps.model
 		}
 		private function marker_click_for_networkVO(event : MapMouseEvent) : void
 		{
+			CursorManager.setBusyCursor();
 			var entity : EntityVO = networkVODictionaryView[event.target] as EntityVO;
-			
 			var input : InputBox = new InputBox();
 			input.data = entity;
 			input.addEventListener(EntityRendererEvent.EXPAND_NETWORK,expandNetwork,false,0,true);
@@ -507,6 +508,7 @@ package com.stc.maps.model
 				var ev : EntitiesEvent = new EntitiesEvent(EntitiesEvent.GET_ENTITY_DETAILS,input.getEntityDetailsHandlers);
 				ev.entityType = entity.type;
 				ev.entityId = entity.id.toString();
+				ev.entityOrg = entity.org;
 				ev.dispatch();
 			}
 			else
@@ -514,6 +516,7 @@ package com.stc.maps.model
 				ev = new EntitiesEvent(EntitiesEvent.GET_NETWORK_DETAILS,input.getNetworkDetailsHandlers);
 				ev.entityType = entity.type;
 				ev.entityId = entity.id.toString();
+				ev.entityOrg = entity.org;
 				ev.dispatch();
 			}
 			
@@ -523,6 +526,7 @@ package com.stc.maps.model
 		}
 		private function marker_click(event : MapMouseEvent) : void
 		{
+			CursorManager.setBusyCursor();
 			var entity : EntityVO = markerEntity[event.target] as EntityVO;
 			var input : InputBox = new InputBox();
 			input.data = entity;
@@ -633,7 +637,7 @@ package com.stc.maps.model
 					new PolylineOptions(
 						{ strokeStyle: new StrokeStyle({
 					color: 0x000000,
-					thickness: 2,
+					thickness:0.6,
 					alpha: 0.7})
 				}));
 				arrayOfNetworkVO.push(polyShape);

@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="598" height="190"
-	title="{_title}" close="closeWindow(event)" showCloseButton="true"
-	horizontalScrollPolicy="off" verticalScrollPolicy="off">
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" 
+				layout="absolute" 
+				width="598" height="190"
+				title="{_title}" 
+				close="closeWindow(event)" 
+				showCloseButton="true"
+				horizontalScrollPolicy="off" verticalScrollPolicy="off">
 	<mx:Script>
 		<![CDATA[
 			import com.stc.maps.view.components.event.EntityRendererEvent;
@@ -14,6 +18,7 @@
 			import mx.binding.utils.BindingUtils;
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
+			import mx.managers.CursorManager;
 			import mx.managers.PopUpManager;
 			import mx.rpc.Responder;
 			import mx.rpc.events.FaultEvent;
@@ -65,6 +70,9 @@
 			
 			public var getEntityDetailsHandlers : mx.rpc.Responder = new mx.rpc.Responder(getEntityDetailsResult, getEntityDetailsFault);
 			public var getNetworkDetailsHandlers : mx.rpc.Responder = new mx.rpc.Responder(getNetworkDetailsResult, getEntityDetailsFault);
+			
+			[Bindable]
+			public var verRedes:Boolean = false;
 			
 			private function closeWindow(event : Event) : void
 			{
@@ -121,14 +129,17 @@
 			{
 				var network : NetworkVO = event.result as NetworkVO;
 				setEntity(network as EntityVO);
-				
 				nodes = network.nodes;
+				verRedes = true;
+				CursorManager.removeBusyCursor();
 			}
 			
 			private function getEntityDetailsResult(event : ResultEvent) : void
 			{
 				var entity : EntityVO = event.result as EntityVO;
 				setEntity(entity);
+				verRedes = true;
+				CursorManager.removeBusyCursor();
 			}
 			
 			private function setEntity(entity : EntityVO) : void
@@ -139,19 +150,21 @@
 				webURL = entity.webURL;
 				phone = entity.phone;
 				email = entity.email;
-				if(entity.facebookLink!="") facebookLink = entity.facebookLink;
+				if(entity.facebookLink!="") 
+					facebookLink = entity.facebookLink;
 				_title = entity.title;
-				if(entity.twitterLink!="") twitterLink = entity.twitterLink;
-				
-				if(entity.awards) awards.source = entity.awards.source;
+				if(entity.twitterLink!="") 
+					twitterLink = entity.twitterLink;
+				if(entity.awards) 
+					awards.source = entity.awards.source;
 				awards.refresh();
 
-				if(entity.interventionAreas) areas.source = entity.interventionAreas.source;
+				if(entity.interventionAreas) 
+					areas.source = entity.interventionAreas.source;
 				areas.refresh();
-
-				if(entity.beneficiaries) beneficiarios.source = entity.beneficiaries.source;
+				if(entity.beneficiaries) 
+					beneficiarios.source = entity.beneficiaries.source;
 				beneficiarios.refresh();
-				
 				focus = entity.geograficalFocus;
 				orgType = entity.organizationType;
 				financy = entity.financy;
@@ -160,7 +173,6 @@
 					poblacionCooperate.visible = false;
 					poblacionCooperate.includeInLayout = false;
 				}
-				
 				if(entity.imageData)
 				{
 					try{ 
@@ -174,28 +186,28 @@
 						imgCanvas.source = "com/assets/img/noimage.jpg";
 					}
 				}
-				
-				if(entity.type==EntityVO.ODS) selectedIndex = 1;
+				if(entity.type==EntityVO.ODS) 
+					selectedIndex = 1;
 				
 			}
 			
 			private function onIOError(event:IOErrorEvent):void{
-				imgCanvas.source = "com/assets/img/noimage.png";
+				imgCanvas.source = "com/assets/img/noimage.jpg";
 			}
 			private function loaderCompleteHandler(event:Event) : void
 			{
 				var loader:Loader = LoaderInfo(event.target).loader;
 				loader.removeEventListener(Event.COMPLETE,loaderCompleteHandler);
-				
-				
 				var bmp:Bitmap = Bitmap(loader.content);
 				imgCanvas.source = bmp;
 			}
 			
 			private function getAwardStatus(item:Object, column:DataGridColumn):String
 			{
-				if(item.recibido==1) return "Recibido";
-				else return "Otorgado";
+				if(item.recibido==1) 
+					return "Recibido";
+				else 
+					return "Otorgado";
 			}
 			
 			private function twitter_click(event : MouseEvent) : void
@@ -224,13 +236,15 @@
 			
 			protected function printEventHandler(event:MouseEvent):void{
 				if( _data && _data is EntityVO){
-					
 					var myEntity:EntityVO = _data as EntityVO
-					var myType:String = myEntity.type;
 					var myId:String = myEntity.id.toString();
 					var myOrg:String = myEntity.org;
-					
-					
+					var myType:String = ""
+					if(_data is NetworkVO){
+						myType = _data.parentType;
+					}else{
+						myType = myEntity.type;
+					}					
 					var URLDir:String = "";
 					var URLDir2:String = "";
 					if(myOrg == "ur"){
@@ -240,19 +254,14 @@
 						URLDir = "MAPA_FVSL";
 						URLDir2 = "pdfe";
 					}
-					
 					navigateToURL(
-						
-							new URLRequest
+						new URLRequest
+						(
 							(
-								(
-									"http://10.20.20.171:9092/asp-workspace/"+URLDir+"/PDFExport/"+URLDir2+"/Default.aspx?type="+myType+"&id="+myId
-								).toString()
-							), '_blank'
-						
+								"http://10.20.20.171:9092/asp-workspace/"+URLDir+"/PDFExport/"+URLDir2+"/Default.aspx?type="+myType+"&id="+myId
+							).toString()
+						), '_blank'
 					)
-					
-					
 				}
 			}
 		]]>
@@ -274,7 +283,7 @@
 	<mx:Label x="118" y="109" text="Correo:" width="50" fontWeight="bold"/>
 	<mx:Label x="194" y="132" text="{phone}" width="254"/>
 	<mx:Label x="118" y="131" text="Teléfono:" width="86" fontWeight="bold"/>
-	<mx:Button id="verRed" x="364" y="132" visible="{esRed}" click="verRed_clickHander(event)" label="Ver Red" width="70"/>
+	<mx:Button id="verRed" x="364" y="132" visible="{esRed}" enabled="{verRedes}" click="verRed_clickHander(event)" label="Ver Red" width="70"/>
 	<mx:Button x="440" y="132" id="collapseButton" label="Ver ficha" width="70" click="verficha_clickHander(event)"/>
 	<mx:Button x="516" y="132" id="printButton" label="Imprimir" width="70" click="printEventHandler(event)"/>
 	<mx:ViewStack selectedIndex="{selectedIndex}" x="10" y="162">

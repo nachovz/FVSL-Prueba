@@ -91,8 +91,8 @@ package com.stc.maps.vo
 			newEntityVO.webURL				=	this.webURL;
 			newEntityVO.objective			=	this.objective;
 			newEntityVO.email				=	this.email;
-			newEntityVO.visibilityByCheckBox				=	this.visibilityByCheckBox;
-			newEntityVO.org				=	this.org;
+			newEntityVO.visibilityByCheckBox=	this.visibilityByCheckBox;
+			newEntityVO.org					=	this.org;
 			newEntityVO.phone				=	this.phone;
 			newEntityVO.imageData			=	this.imageData;
 			newEntityVO.geograficalFocus	=	this.geograficalFocus;

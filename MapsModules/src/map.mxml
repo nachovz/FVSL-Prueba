@@ -111,7 +111,7 @@
                   <mx:Object label="Cooperantes" keyName="{EntityVO.COOPERANT}" icon="{cooperantSmall}" />
                   <mx:Object label="Empresas" keyName="{EntityVO.COMPANY}" icon="{companySmall}" />
                   <mx:Object label="ODS" keyName="{EntityVO.ODS}" icon="{odsSmall}" />
-                  <mx:Object label="Redes" keyNacme="network" icon="{networkSmall}" />
+                  <mx:Object label="Redes" keyName="network" icon="{networkSmall}" />
               </mx:Array>
           </mapplugins:dataProvider>
       </mapplugins:MapToggleButtonBar>
