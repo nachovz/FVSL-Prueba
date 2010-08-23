@@ -232,10 +232,13 @@
 					
 					
 					var URLDir:String = "";
+					var URLDir2:String = "";
 					if(myOrg == "ur"){
-						URLDir = "MAPA_FVSLUR";
+						URLDir = "MAPA_UR";
+						URLDir2 = "pdfeu";
 					}else{
 						URLDir = "MAPA_FVSL";
+						URLDir2 = "pdfe";
 					}
 					
 					navigateToURL(
@@ -243,7 +246,7 @@
 							new URLRequest
 							(
 								(
-									"http://10.20.20.171:9092/asp-workspace/"+URLDir+"/PDFExport/Default.aspx?type="+myType+"&id="+myId
+									"http://10.20.20.171:9092/asp-workspace/"+URLDir+"/PDFExport/"+URLDir2+"/Default.aspx?type="+myType+"&id="+myId
 								).toString()
 							), '_blank'
 						
@@ -290,7 +293,7 @@
 				<mx:List width="420" height="50" dataProvider="{areas}" labelFunction="myLabelFunc" />
 			</mx:HBox>
 			<mx:HBox horizontalAlign="left">
-				<mx:Label width="150" text="Tipo de organizacion:"/>
+				<mx:Label width="150" text="Tipo de organización:"/>
 				<mx:Label width="420" text="{orgType}"/>
 			</mx:HBox>
 			<mx:HBox horizontalAlign="left">
@@ -312,7 +315,7 @@
 				<mx:DataGrid width="420" height="100" dataProvider="{awards}">
 		            <mx:columns>
 		                <mx:DataGridColumn dataField="awardName" headerText="Premio"/>
-		                <mx:DataGridColumn dataField="awardType" headerText="Estatus" labelFunction="getAwardStatus" width="120"/>
+		                <mx:DataGridColumn dataField="awardType" headerText="" labelFunction="getAwardStatus" width="120"/>
 		            </mx:columns>		
 				</mx:DataGrid>
 			</mx:HBox>

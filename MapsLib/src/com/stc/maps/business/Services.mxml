@@ -3,34 +3,34 @@
 	xmlns:adobe="http://www.adobe.com/2006/cairngorm"
 	xmlns:mx="http://www.adobe.com/2006/mxml"
 	xmlns:cairngorm="com.adobe.cairngorm.business.*">
-	<mx:WebService id="EntitiesWS" wsdl="http://10.20.20.171:9092/asp-workspace/MAPA_FVSL/MAPA_Website/wsmap/Entity.asmx?WSDL" >
+	<mx:WebService id="EntitiesWS" wsdl="http://localhost:9092/asp-workspace/MAPA_FVSL/MAPA_Website/wsmap/Entity.asmx?WSDL" >
 		<mx:operation name="getAll" resultFormat="object"/>
 		<mx:operation name="getDetails" resultFormat="object"/>
 		<mx:operation name="getSearch" resultFormat="object"/>
 	</mx:WebService>
-	<mx:WebService id="networkWS" wsdl="http://10.20.20.171:9092/asp-workspace/MAPA_FVSL/MAPA_Website/wsmap/Network.asmx?WSDL" >
+	<mx:WebService id="networkWS" wsdl="http://localhost:9092/asp-workspace/MAPA_FVSL/MAPA_Website/wsmap/Network.asmx?WSDL" >
 		<mx:operation name="getN" resultFormat="object"/>
 		<mx:operation name="getSearch" resultFormat="object"/>
 		<mx:operation name="getDetails" resultFormat="object"/>
 	</mx:WebService>
-	<mx:WebService id="catalogsWS" wsdl="http://10.20.20.171:9092/asp-workspace/MAPA_FVSL/MAPA_Website/wsmap/Catalog.asmx?WSDL" >
+	<mx:WebService id="catalogsWS" wsdl="http://localhost:9092/asp-workspace/MAPA_FVSL/MAPA_Website/wsmap/Catalog.asmx?WSDL" >
 		<mx:operation name="getCatalog" resultFormat="object"/>
 	</mx:WebService>
 	
 	
 	
 	
-	<mx:WebService id="EntitiesWSUR" wsdl="http://10.20.20.171:9092/asp-workspace/MAPA_UR/MAPA_Website/wsmapu/Entity.asmx?WSDL" >
+	<mx:WebService id="EntitiesWSUR" wsdl="http://localhost:9092/asp-workspace/MAPA_UR/MAPA_Website/wsmapu/Entity.asmx?WSDL" >
 		<mx:operation name="getAll" resultFormat="object"/>
 		<mx:operation name="getDetails" resultFormat="object"/>
 		<mx:operation name="getSearch" resultFormat="object"/>
 	</mx:WebService>
-	<mx:WebService id="networkWSUR" wsdl="http://10.20.20.171:9092/asp-workspace/MAPA_UR/MAPA_Website/wsmapu/Network.asmx?WSDL" >
+	<mx:WebService id="networkWSUR" wsdl="http://localhost:9092/asp-workspace/MAPA_UR/MAPA_Website/wsmapu/Network.asmx?WSDL" >
 		<mx:operation name="getN" resultFormat="object"/>
 		<mx:operation name="getSearch" resultFormat="object"/>
 		<mx:operation name="getDetails" resultFormat="object"/>
 	</mx:WebService>
-	<mx:WebService id="catalogsWSUR" wsdl="http://10.20.20.171:9092/asp-workspace/MAPA_UR/MAPA_Website/wsmapu/Catalog.asmx?WSDL" >
+	<mx:WebService id="catalogsWSUR" wsdl="http://localhost:9092/asp-workspace/MAPA_UR/MAPA_Website/wsmapu/Catalog.asmx?WSDL" >
 		<mx:operation name="getCatalog" resultFormat="object"/>
 	</mx:WebService>
 </cairngorm:ServiceLocator>
