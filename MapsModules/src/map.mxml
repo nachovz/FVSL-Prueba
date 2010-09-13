@@ -53,16 +53,8 @@
 				mapModel.menu = menu;
 				mapModel.containerThis = this;
 				
-				//menu.addEventListener(EntityRendererEvent.ZOOM_SEARCH,zoomSearchHandler);
 			}
 			
-			/* protected function zoomSearchHandler(event:EntityRendererEvent):void{
-				trace("LLEGO");
-				var zoomLevel:int = mainMap.getZoom();
-				if(zoomLevel<8)
-					zoomLevel = 8;	
-				mainMap.setCenter(new LatLng(event.item.lat,event.item.long),zoomLevel);
-			} */
 			
 			protected function linktoSTC(event:MouseEvent):void{
 				navigateToURL(

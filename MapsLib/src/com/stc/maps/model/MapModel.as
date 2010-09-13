@@ -7,6 +7,9 @@ package com.stc.maps.model
 	import com.google.maps.MapEvent;
 	import com.google.maps.MapMouseEvent;
 	import com.google.maps.MapZoomEvent;
+	import com.google.maps.controls.ControlPosition;
+	import com.google.maps.controls.ZoomControl;
+	import com.google.maps.controls.ZoomControlOptions;
 	import com.google.maps.overlays.Marker;
 	import com.google.maps.overlays.MarkerOptions;
 	import com.google.maps.overlays.Polyline;
@@ -29,8 +32,11 @@ package com.stc.maps.model
 	import com.stc.maps.vo.EntityVO;
 	import com.stc.maps.vo.NetworkVO;
 	
+	import flash.events.Event;
 	import flash.geom.Point;
 	import flash.utils.Dictionary;
+	import flash.utils.getQualifiedClassName;
+	import flash.utils.getQualifiedSuperclassName;
 	
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
@@ -152,13 +158,26 @@ package com.stc.maps.model
 		/**
 		 * Called when the Google Map has been loaded successfully
 		 */
-		public function mapready_handler(e : Event) : void
+		private var zoomControlObject:Object = null;
+		public function mapready_handler(event : Event) : void
 		{
+			var bottomRight:ControlPosition = new ControlPosition(ControlPosition.ANCHOR_BOTTOM_RIGHT, 16, 10);
 			
+			var myZoomControl:ZoomControl = new ZoomControl(new ZoomControlOptions({position: bottomRight}));
+			var num:int = mainMap.numChildren;
+			var obj:Object;
+			for(var i :int = 0 ; i<num ; i ++){
+				obj = mainMap.getChildAt(i);
+				if(obj.toString().toLowerCase().indexOf(("controlsmc").toString().toLowerCase() ) >= 0 ){
+					zoomControlObject=obj;
+					break;
+				}
+			}
+			//event.target.addControl(myZoomControl);
 			getEntityies();
 			addEventListeners();
 			toggleVisibility = true;
-			
+			mapResizeHandler();
 		}
 		
 		/**
@@ -170,12 +189,25 @@ package com.stc.maps.model
 			containerThis.addEventListener(EntityRendererEvent.HIDE_ITEM,hideMarker);
 			containerThis.addEventListener(EntityRendererEvent.SHOW_ITEM,showMarker);
 			containerThis.addEventListener("finishHideOrShow",finishhandler);
+			containerThis.addEventListener("finishHideAllMarquers",finishHideAllMarkers);
 			containerThis.addEventListener(EntityRendererEvent.HIDE_NETWORK,hideNetwork);
 			containerThis.addEventListener(EntityRendererEvent.SHOW_NETWORK,showNetwork);
 			mainMap.addEventListener(MapZoomEvent.ZOOM_CHANGED,onMapZoomChanged,false,0,true);
+			mainMap.addEventListener(Event.RESIZE,mapResizeHandler);
 			advancedSearch.addEventListener(AdvancedSearchEvent.SEARCH,advancedSearch_AdvancedSearchEvent,false,0,true);
 		}
+		
+		protected function mapResizeHandler(event:Event = null):void{
+			trace("Map Resize");
+			zoomControlObject.x = mainMap.width-90;
+			zoomControlObject.y = mainMap.height -370;
+		}
+		
 		private function finishhandler(event:Event):void{
+			setAllMarkersOnTheMap()
+			
+		}
+		private function finishHideAllMarkers(event:Event):void{
 			setAllMarkersOnTheMap()
 			
 		}
@@ -314,7 +346,26 @@ package com.stc.maps.model
 			
 			menu.entities = auxArray;
 		}
-		
+		private function hideNetwork(ev : EntityRendererEvent) : void
+		{
+			ev.item.marker.visible = false;
+			try{
+				markerEntity[ev.item.marker].visibilityByCheckBox = false; //fix
+			}catch(e:Error){
+				trace(e);
+			}
+			//if(selectedentityList[0]==EntityVO.NETWORK)
+			if(selectedentityList[0]==EntityVO.NETWORK)
+				for each(var node : EntityVO in ev.item.nodes)
+			{
+				if(node.marker) node.marker.visible = false;
+				try{
+					markerEntity[node.marker].visibilityByCheckBox = false; //fix
+				}catch(e:Error){
+					trace(e);
+				}
+			}
+		}
 		private function hideMarker(ev : EntityRendererEvent) : void
 		{
 			var entity : EntityVO = ev.item as EntityVO;
@@ -323,7 +374,7 @@ package com.stc.maps.model
 				try{
 				markerEntity[entity.marker].visibilityByCheckBox = false; //fix
 				}catch(e:Error){
-					
+					trace(e);
 				}
 			}
 			if(entity.type==EntityVO.NETWORK)
@@ -335,24 +386,45 @@ package com.stc.maps.model
 						try{
 					markerEntity[entity.marker].visibilityByCheckBox = false; //fix
 					}catch(e:Error){
+					trace(e);
 					
 				}
 					}
 				}
 			}
 		}
-		
+		private function showNetwork(ev : EntityRendererEvent) : void
+		{
+			ev.item.marker.visible = true;
+			try{
+				markerEntity[ev.item.marker].visibilityByCheckBox = true; //fix
+			}catch(e:Error){
+				trace(e);
+			}
+			if(selectedentityList[0]==EntityVO.NETWORK)
+				for each(var node : EntityVO in ev.item.nodes)
+				{
+					if(node.marker){ 
+						node.marker.visible = true;
+						try{
+							markerEntity[node.marker].visibilityByCheckBox = true; //fix
+						}catch(e:Error){
+							trace(e);
+						}
+					}
+				}
+		}
 		private function showMarker(ev : EntityRendererEvent) : void
 		{
 			
-			var entity : EntityVO = ev.item as EntityVO;
+			var entity : EntityVO = ev.item as EntityVO; 
 			if(entity.marker) {
 				Marker(entity.marker).visible = true;
 				try{
 					markerEntity[entity.marker].visibilityByCheckBox = true; //fix
 				}catch(e:Error){
-					
-				}
+					trace(e);
+				} 
 			}
 			if(entity.type==EntityVO.NETWORK)
 			{
@@ -363,7 +435,7 @@ package com.stc.maps.model
 					try{
 					markerEntity[entt.marker].visibilityByCheckBox = true; // fix
 					}catch(e:Error){
-					
+						trace(e);
 				}
 				}
 			}
@@ -377,26 +449,7 @@ package com.stc.maps.model
 			{
 				if(entity.lat && entity.long)
 				{
-					
-					/*ALEJO ESTA ES LA FUNCION QUE DIBUJABA LA RED CON SUS NODOS PERO ES SOLO CUANDO AHI UNA RED*/
-					/*if(entity.type==EntityVO.NETWORK && totalLayers==1) {
-						renderNetwork(entity as NetworkVO);
-					}*/
-					
-					if(model.makersLatLongDictionary[entity.lat] && model.makersLatLongDictionary[entity.lat][entity.long] && totalLayers>1)
-					{
-						var ent : EntityVO = model.makersLatLongDictionary[entity.lat][entity.long];
-						if(entity.type==EntityVO.NETWORK)
-						{
-							//Marker(ent.marker).visible = false;
-							createMarker( entity, getEntityIcon(entity.type) )
-						}
-						else if(ent.type!=EntityVO.NETWORK) {
-							createMarker( entity, getEntityIcon(entity.type) );
-						}
-					}
-					else
-						createMarker( entity, getEntityIcon(entity.type) );
+					createMarker( entity, getEntityIcon(entity.type) );
 				}
 			}
 		}
@@ -489,10 +542,6 @@ package com.stc.maps.model
 			
 			markerEntity[entity.marker] = entity;
 			
-			if(model.makersLatLongDictionary[entity.lat]==null) {
-				model.makersLatLongDictionary[entity.lat] = new Dictionary();
-			}
-			model.makersLatLongDictionary[entity.lat][entity.long] = entity;
 			mainMap.addOverlay( entity.marker as Marker);  
 		}
 		private function marker_click_for_networkVO(event : MapMouseEvent) : void
@@ -657,25 +706,9 @@ package com.stc.maps.model
 		}
 		
 		
-		private function showNetwork(ev : EntityRendererEvent) : void
-		{
-			EntityVO(ev.item).marker.visible = true;
-			if(selectedentityList[0]==EntityVO.NETWORK)
-				for each(var node : EntityVO in ev.item.nodes)
-			{
-				if(node.marker) node.marker.visible = true;
-			}
-		}
 		
-		private function hideNetwork(ev : EntityRendererEvent) : void
-		{
-			EntityVO(ev.item).marker.visible = false;
-			if(selectedentityList[0]==EntityVO.NETWORK)
-				for each(var node : EntityVO in ev.item.nodes)
-			{
-				if(node.marker) node.marker.visible = false;
-			}
-		}
+		
+		
 		
 		private function changeLayer(entityesList : Array, orgList:Array) : void
 		{
@@ -785,6 +818,7 @@ package com.stc.maps.model
 			overlayFunctions.map = event.target as Map;
 		}
 		
+		
 		private function concatArrays(theArray:Array,theThingToAdd:Array):Array{
 			var auxArray : Array = [];
 			auxArray = auxArray.concat(theArray,theThingToAdd);
@@ -794,54 +828,54 @@ package com.stc.maps.model
 		
 		private var attachedMarkers:Array = [];
 		private function setAllMarkersOnTheMap():void{
-			var myMarker:Marker;
-			if(!clusterer){
-				clusterer = new Clusterer(model.allEntities, mainMap.getZoom(), 30);
-			}else{
-				clusterer.markers = model.allEntities;
-			}
-			
-			for each (var marker:GroupMarkers in attachedMarkers) {
-				mainMap.removeOverlay(marker);
-				var auxArray:Array = marker.allMakers;
-				for(var i:int =0; i<auxArray.length ; i++ ){
-					myMarker =  auxArray[i] as Marker;
-					if(markerEntity[myMarker].visibilityByCheckBox)
-						myMarker.visible = true;
+				var myMarker:Marker;
+				if(!clusterer){
+					clusterer = new Clusterer(model.allEntities, mainMap.getZoom(), 30);
+				}else{
+					clusterer.markers = model.allEntities;
 				}
-			}
-			attachedMarkers = [];
-			var clusteredMarkers:Array = clusterer.clusters;
-			
-			for each (var cluster:Array in clusteredMarkers) {
-				marker = null;
-				var theGroupMarkers:GroupMarkers = null
-				if (cluster.length == 1) {
-					// there is only a single marker in this cluster
-					//marker = cluster[0];
-				} else {
-					var auxIcon:Container = markerLocator.getMarkerComponent("groupFlag",0x0CCFF,true,cluster.length.toString());
-					var markerOption : MarkerOptions = new MarkerOptions(
-						{  
-							icon: auxIcon,  
-							hasShadow:true 
-						});
-					;
-					myMarker =  cluster[0]  as Marker;
-					var latlang : LatLng =myMarker.getLatLng();
-					theGroupMarkers = new GroupMarkers(latlang,markerOption);
-					theGroupMarkers.allMarkers = cluster;
-					for(i = 0; i<cluster.length ; i++ ){
-						myMarker =  cluster[i] as Marker;
-						myMarker.visible = false;
+				
+				for each (var marker:GroupMarkers in attachedMarkers) {
+					mainMap.removeOverlay(marker);
+					var auxArray:Array = marker.allMakers;
+					for(var i:int =0; i<auxArray.length ; i++ ){
+						myMarker =  auxArray[i] as Marker;
+						if(markerEntity[myMarker].visibilityByCheckBox)
+							myMarker.visible = true;
 					}
-					
 				}
-				if(theGroupMarkers){
-					mainMap.addOverlay(theGroupMarkers);
-					attachedMarkers.push(theGroupMarkers);
+				attachedMarkers = [];
+				var clusteredMarkers:Array = clusterer.clusters;
+				
+				for each (var cluster:Array in clusteredMarkers) {
+					marker = null;
+					var theGroupMarkers:GroupMarkers = null
+					if (cluster.length == 1) {
+						// there is only a single marker in this cluster
+						//marker = cluster[0];
+					} else {
+						var auxIcon:Container = markerLocator.getMarkerComponent("groupFlag",0x8c0791,true,cluster.length.toString());
+						var markerOption : MarkerOptions = new MarkerOptions(
+							{  
+								icon: auxIcon,  
+								hasShadow:true 
+							});
+						;
+						myMarker =  cluster[0]  as Marker;
+						var latlang : LatLng =myMarker.getLatLng();
+						theGroupMarkers = new GroupMarkers(latlang,markerOption);
+						theGroupMarkers.allMarkers = cluster;
+						for(i = 0; i<cluster.length ; i++ ){
+							myMarker =  cluster[i] as Marker;
+							myMarker.visible = false;
+						}
+						
+					}
+					if(theGroupMarkers){
+						mainMap.addOverlay(theGroupMarkers);
+						attachedMarkers.push(theGroupMarkers);
+					}
 				}
-			}
 			
 		}
 		

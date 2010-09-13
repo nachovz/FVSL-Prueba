@@ -129,7 +129,7 @@ package com.stc.maps.command
 				{
 					var lat : String = obj.latitude.toString();
 					var long : String = obj.longitude.toString();
-					if(lat!="" && long !="")
+					if(lat!="" && long !="" && lat!="0" && long!="0")
 					{
 						var entity : EntityVO = new EntityVO()
 						entity.data = obj;

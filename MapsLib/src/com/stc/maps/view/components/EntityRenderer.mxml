@@ -71,7 +71,11 @@
         	return "";
         }
 		protected function searchZoomHandler(event:MouseEvent):void{
-			var ev : EntityRendererListEvent = (_data is NetworkVO) ? new EntityRendererListEvent(EntityRendererListEvent.ZOOM_SEARCH) : new EntityRendererListEvent(EntityRendererListEvent.ZOOM_SEARCH);
+			var ev : EntityRendererListEvent = (_data is NetworkVO) 
+				? 
+				new EntityRendererListEvent(EntityRendererListEvent.ZOOM_SEARCH) 
+				: 
+				new EntityRendererListEvent(EntityRendererListEvent.ZOOM_SEARCH);
 			ev.item = _data;
 			
 			dispatchEvent(ev);	

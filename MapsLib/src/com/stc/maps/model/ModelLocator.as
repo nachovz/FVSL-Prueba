@@ -30,7 +30,6 @@ package com.stc.maps.model
 		public var entities 				:Dictionary = new Dictionary();
 		public var filterOptions			:Dictionary = new Dictionary();
 		public var searchFilters 			:Dictionary = new Dictionary();
-		public var makersLatLongDictionary	:Dictionary = new Dictionary();
 		
 	}	
 }
