@@ -128,15 +128,7 @@ package com.stc.maps.view.components
 					searchButton.addEventListener(MouseEvent.CLICK,searchButton_clickHandler);
 			}
 		}
-		/*override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void{
-			trace("Advanced Search - Update DisplayList");
-		super.updateDisplayList(unscaledWidth,content.height);
-			
-		}*/
-		/*override protected function measure():void{
-			trace("Advanced Search - Measure");
-			super.measure();
-		}*/
+		
 		private function searchButton_clickHandler(ev : MouseEvent) : void
 		{
 			var filters : ArrayCollection = new ArrayCollection();
@@ -190,9 +182,9 @@ package com.stc.maps.view.components
 			labelField.text = filt.label;
 			labelField.setStyle("fontWeight","bold");
 			var wraper : HBox = new HBox();
+			wraper.percentWidth = 100;
 			wraper.setStyle("horizontalAlign","left");
 			wraper.addChild(labelField);
-			wraper.percentWidth = 100;
 			
 			switch(filt.type)
 			{
