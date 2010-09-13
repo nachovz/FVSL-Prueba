@@ -113,7 +113,7 @@
 	  	visible="{mapModel.searchVisibility}"
 	  	title="Puedes realizar una busqueda avanzada:"
 	  	right="10" top="40"
-	  	width="350"
+	  	width="400"
 	  	backgroundColor="#FFFFFF"
 	  	  />
 	  <view:CollapsableMenu id="menu" x="0" y="0" width="0" expandedWidth="315" />
