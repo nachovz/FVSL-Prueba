@@ -1,23 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 13.625" name="FVSL_LINQ">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 13.375" name="FVSL_LINQ">
   <DataContextMoniker Name="/FVSL_LINQDataContext" />
   <nestedChildShapes>
-    <classShape Id="57c6ba08-9a8f-4024-8b39-301306e8de58" absoluteBounds="0.5, 0.5, 2, 12.9243798828125">
+    <classShape Id="57c6ba08-9a8f-4024-8b39-301306e8de58" absoluteBounds="0.5, 0.5, 2, 12.644630064666272">
       <DataClassMoniker Name="/FVSL_LINQDataContext/ODS_ODS" />
       <nestedChildShapes>
-        <elementListCompartment Id="265d87e1-1dae-4128-b9d5-715cda5fb455" absoluteBounds="0.515, 0.96, 1.9700000000000002, 12.3643798828125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="265d87e1-1dae-4128-b9d5-715cda5fb455" absoluteBounds="0.515, 0.96, 1.9700000000000002, 12.084630064666271" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="c8fa1c1e-10bc-4127-b5e5-2995044409f8" absoluteBounds="2.75, 3.75, 2, 9.0783512369791648">
+    <classShape Id="c8fa1c1e-10bc-4127-b5e5-2995044409f8" absoluteBounds="2.625, 0.5, 2, 8.8853455484906814">
       <DataClassMoniker Name="/FVSL_LINQDataContext/tb_Coperante" />
       <nestedChildShapes>
-        <elementListCompartment Id="993605a0-c30d-43a3-9494-b7ad6f872c0f" absoluteBounds="2.765, 4.21, 1.9700000000000002, 8.5183512369791661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="993605a0-c30d-43a3-9494-b7ad6f872c0f" absoluteBounds="2.64, 0.96, 1.9700000000000002, 8.3253455484906826" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="39a28440-7b1d-4ef6-9da8-185c0ec1f08b" absoluteBounds="7, 0.5, 2, 7.3476383463541657">
+    <classShape Id="39a28440-7b1d-4ef6-9da8-185c0ec1f08b" absoluteBounds="4.75, 0.5, 2, 7.1936675162116677">
       <DataClassMoniker Name="/FVSL_LINQDataContext/EMP_Empresa" />
       <nestedChildShapes>
-        <elementListCompartment Id="c6bf0bcf-49a6-401c-8ad9-36bcdf7c19d5" absoluteBounds="7.015, 0.96, 1.9700000000000002, 6.7876383463541661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="c6bf0bcf-49a6-401c-8ad9-36bcdf7c19d5" absoluteBounds="4.765, 0.96, 1.9700000000000002, 6.6336675162116681" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>

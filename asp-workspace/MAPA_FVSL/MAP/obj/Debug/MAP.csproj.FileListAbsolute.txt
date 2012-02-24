@@ -16,3 +16,8 @@ C:\Documents and Settings\Administrador\Escritorio\asp-workspace\MAPA_FVSL\MAP\b
 C:\Documents and Settings\Administrador\Escritorio\asp-workspace\MAPA_FVSL\MAP\obj\Debug\ResolveAssemblyReference.cache
 C:\Documents and Settings\Administrador\Escritorio\asp-workspace\MAPA_FVSL\MAP\obj\Debug\MAP.dll
 C:\Documents and Settings\Administrador\Escritorio\asp-workspace\MAPA_FVSL\MAP\obj\Debug\MAP.pdb
+D:\Work\FVSL_SVN\svn\asp-workspace\MAPA_FVSL\MAP\bin\MAP.pdb
+D:\Work\FVSL_SVN\svn\asp-workspace\MAPA_FVSL\MAP\obj\Debug\ResolveAssemblyReference.cache
+D:\Work\FVSL_SVN\svn\asp-workspace\MAPA_FVSL\MAP\obj\Debug\MAP.dll
+D:\Work\FVSL_SVN\svn\asp-workspace\MAPA_FVSL\MAP\obj\Debug\MAP.pdb
+D:\Work\FVSL_SVN\svn\asp-workspace\MAPA_FVSL\MAPA_website\Bin\MAP.pdb

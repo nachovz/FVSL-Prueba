@@ -11,6 +11,7 @@ using System.Xml.Serialization;
 [XmlInclude(typeof(CooperantVO))]
 [XmlInclude(typeof(CompanyVO))]
 [XmlInclude(typeof(NetworkVO))]
+[XmlInclude(typeof(ProyectoVO))]
 public class EntityVO 
 {
     public String type = "";

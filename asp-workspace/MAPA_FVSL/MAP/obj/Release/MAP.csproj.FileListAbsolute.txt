@@ -1,0 +1,4 @@
+D:\Work\FVSL_SVN\svn\asp-workspace\MAPA_FVSL\MAP\bin\MAP.pdb
+D:\Work\FVSL_SVN\svn\asp-workspace\MAPA_FVSL\MAP\obj\Release\ResolveAssemblyReference.cache
+D:\Work\FVSL_SVN\svn\asp-workspace\MAPA_FVSL\MAP\obj\Release\MAP.dll
+D:\Work\FVSL_SVN\svn\asp-workspace\MAPA_FVSL\MAP\obj\Release\MAP.pdb

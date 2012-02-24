@@ -48,3 +48,13 @@ C:\Documents and Settings\Administrador\Escritorio\asp-workspace\MAPA_FVSL\PDFEx
 C:\Documents and Settings\Administrador\Escritorio\asp-workspace\MAPA_FVSL\PDFExport\PDFExport\obj\Debug\PDFExport.pdb
 D:\WORK\mapsvsl\asp-workspace\MAPA_FVSL\PDFExport\PDFExport\obj\Debug\ResGen.read.1.tlog
 D:\WORK\mapsvsl\asp-workspace\MAPA_FVSL\PDFExport\PDFExport\obj\Debug\ResGen.write.1.tlog
+D:\Work\FVSL_SVN\svn\asp-workspace\MAPA_FVSL\PDFExport\PDFExport\bin\PDFExport.dll
+D:\Work\FVSL_SVN\svn\asp-workspace\MAPA_FVSL\PDFExport\PDFExport\bin\PDFExport.pdb
+D:\Work\FVSL_SVN\svn\asp-workspace\MAPA_FVSL\PDFExport\PDFExport\bin\MAP.dll
+D:\Work\FVSL_SVN\svn\asp-workspace\MAPA_FVSL\PDFExport\PDFExport\bin\MAP.pdb
+D:\Work\FVSL_SVN\svn\asp-workspace\MAPA_FVSL\PDFExport\PDFExport\obj\Debug\ResolveAssemblyReference.cache
+D:\Work\FVSL_SVN\svn\asp-workspace\MAPA_FVSL\PDFExport\PDFExport\obj\Debug\PDFExport.Properties.Resources.resources
+D:\Work\FVSL_SVN\svn\asp-workspace\MAPA_FVSL\PDFExport\PDFExport\obj\Debug\ResGen.read.1.tlog
+D:\Work\FVSL_SVN\svn\asp-workspace\MAPA_FVSL\PDFExport\PDFExport\obj\Debug\ResGen.write.1.tlog
+D:\Work\FVSL_SVN\svn\asp-workspace\MAPA_FVSL\PDFExport\PDFExport\obj\Debug\PDFExport.dll
+D:\Work\FVSL_SVN\svn\asp-workspace\MAPA_FVSL\PDFExport\PDFExport\obj\Debug\PDFExport.pdb

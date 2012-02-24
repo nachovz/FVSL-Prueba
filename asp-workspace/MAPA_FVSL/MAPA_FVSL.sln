@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 10
+# Visual Web Developer Express 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MAP", "MAP\MAP.csproj", "{FD566E66-8C90-40A5-8706-AE1CCC962656}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PDFExport", "PDFExport\PDFExport\PDFExport.csproj", "{5621E172-D1F0-4CFC-AEF9-60F205B69631}"
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "MAPA_website", "MAPA_website\", "{AC1892AD-B522-439F-9AFD-6DE5289F4069}"
 	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version=v3.5"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv3.5"
 		Debug.AspNetCompiler.VirtualPath = "/MAPA_website"
 		Debug.AspNetCompiler.PhysicalPath = "MAPA_website\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\MAPA_website\"
@@ -23,6 +23,9 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "MAPA_website", "MAPA_websit
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "54414"
+	EndProjectSection
+	ProjectSection(ProjectDependencies) = postProject
+		{FD566E66-8C90-40A5-8706-AE1CCC962656} = {FD566E66-8C90-40A5-8706-AE1CCC962656}
 	EndProjectSection
 EndProject
 Global
@@ -49,7 +52,6 @@ Global
 		{5621E172-D1F0-4CFC-AEF9-60F205B69631}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5621E172-D1F0-4CFC-AEF9-60F205B69631}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5621E172-D1F0-4CFC-AEF9-60F205B69631}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{5621E172-D1F0-4CFC-AEF9-60F205B69631}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{5621E172-D1F0-4CFC-AEF9-60F205B69631}.Release|.NET.ActiveCfg = Release|Any CPU
 		{5621E172-D1F0-4CFC-AEF9-60F205B69631}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5621E172-D1F0-4CFC-AEF9-60F205B69631}.Release|Any CPU.Build.0 = Release|Any CPU

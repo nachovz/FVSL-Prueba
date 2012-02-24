@@ -34,7 +34,7 @@ public class NetworkALLextract : INetworkExtractor
             {
                 EntityVO ent = new EntityVO();
 
-                ent.type = 1;
+                ent.type = "1";
                 ent.id = net.Id.ToString();
                 ent.name = net.Nombre;
                 ent.latitude = net.Latitud.ToString();

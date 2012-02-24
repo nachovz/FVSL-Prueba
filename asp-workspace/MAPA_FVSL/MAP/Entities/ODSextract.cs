@@ -11,6 +11,7 @@ using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using System.Collections.Generic;
 using System.Data.Linq;
+using MAP;
 
 /// <summary>
 /// Summary description for ODSextract
@@ -34,7 +35,7 @@ public class ODSextract: IEntityExtractor
         try
         {
 
-            List<ODS_ODS> resultset = dbcon.MAPA_ODS_DETAILS(inods).ToList();
+            List<MAPA_ODS_DETAILSResult> resultset = dbcon.MAPA_ODS_DETAILS(inods).ToList();
 
             if (resultset.Count == 1)
             {
@@ -115,7 +116,7 @@ public class ODSextract: IEntityExtractor
         }
     }
 
-    private ODSVO FODS(ODS_ODS odsin)                                           //FODS receive (ODS_ODS) Return ODSVO object (full)
+    private ODSVO FODS(MAPA_ODS_DETAILSResult odsin)                                           //FODS receive (ODS_ODS) Return ODSVO object (full)
     {
         ODSVO aux = new ODSVO();
 

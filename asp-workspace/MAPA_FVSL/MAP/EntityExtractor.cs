@@ -18,6 +18,7 @@ public class EntityExtractor
     public static String ODS_EXTRACTOR { get{return "ods";} }
     public static String COOP_EXTRACTOR { get { return "cooperant"; } }
     public static String EMP_EXTRACTOR { get { return "company"; } }
+    public static String PRO_EXTRACTOR { get { return "proyecto"; } }
 
     public static IEntityExtractor create(String type) 
     {
@@ -30,6 +31,9 @@ public class EntityExtractor
         }
         else if (type == EMP_EXTRACTOR) {
             return new CompanyExtract();
+        }
+        else if (type == PRO_EXTRACTOR) {
+            return new ProyectoExtract();
         }
         return null;
     }

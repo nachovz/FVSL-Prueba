@@ -18,10 +18,11 @@ using System.Data.Linq.Mapping;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using MAP;
 
 
 
-[System.Data.Linq.Mapping.DatabaseAttribute(Name="C291728_vsl")]
+[System.Data.Linq.Mapping.DatabaseAttribute(Name = "PortalFVSLMapas")]
 public partial class FVSL_LINQDataContext : System.Data.Linq.DataContext
 {
 	
@@ -95,10 +96,10 @@ public partial class FVSL_LINQDataContext : System.Data.Linq.DataContext
 	}
 	
 	[Function(Name="dbo.MAPA_ODS_DETAILS")]
-	public ISingleResult<ODS_ODS> MAPA_ODS_DETAILS([Parameter(DbType="Int")] System.Nullable<int> id_in)
+	public ISingleResult<MAPA_ODS_DETAILSResult> MAPA_ODS_DETAILS([Parameter(DbType="Int")] System.Nullable<int> id_in)
 	{
 		IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id_in);
-		return ((ISingleResult<ODS_ODS>)(result.ReturnValue));
+		return ((ISingleResult<MAPA_ODS_DETAILSResult>)(result.ReturnValue));
 	}
 	
 	[Function(Name="dbo.p_Select_ODS_Perfil")]
@@ -296,6 +297,34 @@ public partial class FVSL_LINQDataContext : System.Data.Linq.DataContext
 		IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
 		return ((ISingleResult<MAPA_GET_CATALOGO_TIPO_ORGANIZACIONResult>)(result.ReturnValue));
 	}
+
+    [Function(Name = "dbo.MAPA_GET_Proyecto_ALL")]
+    public ISingleResult<MAPA_GET_Proyecto_ALLResult> MAPA_GET_Proyecto_ALL()
+    {
+        IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())));
+        return ((ISingleResult<MAPA_GET_Proyecto_ALLResult>)(result.ReturnValue));
+    }
+
+    [Function(Name = "dbo.MAPA_GET_Proyecto")]
+    public ISingleResult<MAPA_GET_ProyectoResult> MAPA_GET_Proyecto([Parameter(DbType = "Int")] System.Nullable<int> Id)
+    {
+        IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), Id);
+        return ((ISingleResult<MAPA_GET_ProyectoResult>)(result.ReturnValue));
+    }
+
+    [Function(Name = "dbo.MAPA_GET_Proyecto_AreaAtencion")]
+    public ISingleResult<MAPA_GET_Proyecto_AreaAtencionResult> MAPA_GET_Proyecto_AreaAtencion([Parameter(DbType = "Int")] System.Nullable<int> Proyecto)
+    {
+        IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), Proyecto);
+        return ((ISingleResult<MAPA_GET_Proyecto_AreaAtencionResult>)(result.ReturnValue));
+    }
+
+    [Function(Name = "dbo.MAPA_GET_Proyecto_Convocatoria")]
+    public ISingleResult<MAPA_GET_Proyecto_ConvocatoriaResult> MAPA_GET_Proyecto_Convocatoria([Parameter(DbType = "Int")] System.Nullable<int> Proyecto)
+    {
+        IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), Proyecto);
+        return ((ISingleResult<MAPA_GET_Proyecto_ConvocatoriaResult>)(result.ReturnValue));
+    }
 }
 
 [Table(Name="dbo.ODS_ODS")]
